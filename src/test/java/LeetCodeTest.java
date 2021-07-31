@@ -1,5 +1,6 @@
 import org.junit.jupiter.api.*;
 
+
 /**
  * @program: leetcode
  * @description: leetcode
@@ -40,9 +41,27 @@ public class LeetCodeTest {
 		System.out.println(x);
 		System.out.println(leetCode.reverse(x));
 	}
+
+	/**
+	 * 整数反转
+	 */
 	@Test
 	public void isPalindrome(){
 		System.out.println(leetCode.isPalindrome(123));
 	}
+
+	/**
+	 * 罗马数字转阿拉伯数字
+	 */
+	@Test
+	public void romanToInt(){
+		System.out.println(leetCode.romanToInt("IVI"));
+	}
+	@Test
+	public void longestCommonPrefix(){
+		String[] strings = {"flower", "flow", "flight"};
+		System.out.println(leetCode.longestCommonPrefix(strings));
+	}
+
 
 }
