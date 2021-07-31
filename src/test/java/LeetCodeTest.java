@@ -1,4 +1,5 @@
 import org.junit.jupiter.api.*;
+import struc.TreeNode;
 
 
 /**
@@ -61,6 +62,19 @@ public class LeetCodeTest {
 	public void longestCommonPrefix(){
 		String[] strings = {"flower", "flow", "flight"};
 		System.out.println(leetCode.longestCommonPrefix(strings));
+	}
+	@Test
+	public void verticalTraversal(){
+		TreeNode treeNode = new TreeNode(3);
+		TreeNode treeNode1 = new TreeNode(9);
+		TreeNode treeNode2 = new TreeNode(20);
+		TreeNode treeNode3 = new TreeNode(15);
+		TreeNode treeNode4 = new TreeNode(7);
+		treeNode.left = treeNode1;
+		treeNode.right = treeNode2;
+		treeNode2.left = treeNode3;
+		treeNode2.right = treeNode4;
+		System.out.println(leetCode.verticalTraversal(treeNode));
 	}
 
 

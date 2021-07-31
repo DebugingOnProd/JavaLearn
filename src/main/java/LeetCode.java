@@ -1,3 +1,6 @@
+import struc.TreeNode;
+import java.util.*;
+
 /**
  * @program: leetcode
  * @description:
@@ -5,6 +8,50 @@
  * @create: 2021-07-30 14:01
  */
 public class LeetCode {
+	/**
+	 * 每日一题之
+	 * 二叉树的垂序遍历
+	 * @param root
+	 * @return
+	 */
+	public List<List<Integer>> verticalTraversal(TreeNode root) {
+		//nodes得到深度优先遍历之后的结果
+		List<int[]> nodes = new ArrayList<int[]>();
+		dfs(root, 0, 0, nodes);
+		// 对node进行排序
+		nodes.sort(Comparator
+				// col 为第一关键字升序
+				.comparingInt((int[] x) -> x[0])
+				//row 为第二关键字升序
+				.thenComparingInt(x -> x[1])
+				//value 为第三关键字升序
+				.thenComparingInt(x -> x[2]));
+
+		List<List<Integer>> ans = new ArrayList<>();
+		int size = 0;
+		int lastcol = Integer.MIN_VALUE;
+		// 遍历排序之后的node节点
+		for (int[] tuple : nodes) {
+			int col = tuple[0], row = tuple[1], value = tuple[2];
+			if (col != lastcol) {
+				lastcol = col;
+				ans.add(new ArrayList<Integer>());
+				size++;
+			}
+			ans.get(size - 1).add(value);
+		}
+		return ans;
+	}
+	// 二叉树深度优先遍历
+	private void dfs(TreeNode node, int row, int col, List<int[]> nodes) {
+		if (node == null) {
+			return;
+		}
+		nodes.add(new int[]{col, row, node.val});
+		dfs(node.left, row + 1, col - 1, nodes);
+		dfs(node.right, row + 1, col + 1, nodes);
+	}
+
 	/**
 	 * 最长公共前缀--纵向查找法
 	 * @param strs
