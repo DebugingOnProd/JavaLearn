@@ -1,5 +1,7 @@
 import struc.TreeNode;
 import java.util.*;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 /**
  * @program: leetcode
@@ -8,6 +10,55 @@ import java.util.*;
  * @create: 2021-07-30 14:01
  */
 public class LeetCode {
+	/**
+	 * 去除重复元素
+	 * @param nums
+	 * @param val
+	 * @return
+	 */
+
+
+	public int removeElement(int[] nums, int val) {
+		if (nums==null||nums.length==0){
+			return 0;
+		}
+		int m = 0;
+		for (int i = 0; i < nums.length; i++) {
+
+			if (nums[i]!=val){
+				nums[m]=nums[i];
+				m++;
+			}
+		}
+		return m;
+	}
+
+	/**
+	 * 给你一个有序数组 nums ，请你 原地 删除重复出现的元素，使每个元素 只出现一次 ，返回删除后数组的新长度。
+	 *
+	 * 不要使用额外的数组空间，你必须在 原地 修改输入数组 并在使用 O(1) 额外空间的条件下完成。
+	 *
+	 * @param nums
+	 * @return
+	 */
+	public int removeDuplicates(int[] nums) {
+		if (nums.length<2){
+			return nums.length;
+		}
+		int m = 0;
+		//从1开始遍历
+		for (int i = 1; i < nums.length; i++) {
+			/**
+			 * 如果该数前一个数小于该数则表明,不重复，
+			 * 如果m>=i则 m下标的元素是等于i下标的元素的,则开启下一个循环,此时i+1,m没有改变
+			 * 直到找到一个m下标的值小于i下标的值(也就是下一个不重复的值),就把m+1下标的元素赋予这个元素
+			 */
+			if (nums[m]<nums[i]){
+				nums[++m]=nums[i];
+			}
+		}
+		return ++m;
+	}
 	/**
 	 * 每日一题之
 	 * 二叉树的垂序遍历

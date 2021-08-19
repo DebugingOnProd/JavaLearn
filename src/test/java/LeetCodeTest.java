@@ -76,6 +76,13 @@ public class LeetCodeTest {
 		treeNode2.right = treeNode4;
 		System.out.println(leetCode.verticalTraversal(treeNode));
 	}
+	@Test
+	public void aVoid(){
+		int[] nums =new int[]{0,0,1,1,1,2,2,3,3,4};
+		int i = leetCode.removeDuplicates(nums);
+		int i1 = leetCode.removeElement(nums, 2);
+		System.out.println(i+","+i1);
+	}
 
 
 }
