@@ -77,11 +77,15 @@ public class LeetCodeTest {
 		System.out.println(leetCode.verticalTraversal(treeNode));
 	}
 	@Test
-	public void aVoid(){
+	public void removeElement(){
 		int[] nums =new int[]{0,0,1,1,1,2,2,3,3,4};
 		int i = leetCode.removeDuplicates(nums);
 		int i1 = leetCode.removeElement(nums, 2);
 		System.out.println(i+","+i1);
+	}
+	@Test
+	public void aeiou(){
+		System.out.println(leetCode.reverseVowels("Hello"));
 	}
 
 

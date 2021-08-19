@@ -1,7 +1,8 @@
 import struc.TreeNode;
-import java.util.*;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * @program: leetcode
@@ -10,6 +11,44 @@ import java.util.stream.Collectors;
  * @create: 2021-07-30 14:01
  */
 public class LeetCode {
+	/**
+	 *反转字符串中的元音字母
+	 * @param s
+	 * @return
+	 */
+	public String reverseVowels(String s) {
+		int left = 0;
+		int right = s.length() - 1;
+
+		char[] ss = s.toCharArray();
+		while (left < right) {
+			// 如果左边小于右边并且左边是元音
+			while(left < right && isVowel(ss[left])) {
+				left++;
+			}
+			// 如果左边小于右边并且右边边是元音
+			while(left < right && isVowel(ss[right])) {
+				right--;
+			}
+			//左右互换
+			if(left < right) {
+				char temp = ss[left];
+				ss[left] = ss[right];
+				ss[right] = temp;
+				//游标移动
+				left ++;
+				right --;
+			}
+
+
+		}
+		return new String(ss);
+	}
+	public boolean isVowel(char ch) {
+		return "aeiouAEIOU".indexOf(ch) < 0;
+	}
+
+
 	/**
 	 * 去除重复元素
 	 * @param nums
@@ -83,10 +122,10 @@ public class LeetCode {
 		int lastcol = Integer.MIN_VALUE;
 		// 遍历排序之后的node节点
 		for (int[] tuple : nodes) {
-			int col = tuple[0], row = tuple[1], value = tuple[2];
+			int col = tuple[0], value = tuple[2];
 			if (col != lastcol) {
 				lastcol = col;
-				ans.add(new ArrayList<Integer>());
+				ans.add(new ArrayList<>());
 				size++;
 			}
 			ans.get(size - 1).add(value);
