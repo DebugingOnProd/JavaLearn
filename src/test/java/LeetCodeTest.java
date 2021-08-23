@@ -1,6 +1,8 @@
 import org.junit.jupiter.api.*;
 import struc.TreeNode;
 
+import java.util.Arrays;
+
 
 /**
  * @program: leetcode
@@ -86,6 +88,18 @@ public class LeetCodeTest {
 	@Test
 	public void aeiou(){
 		System.out.println(leetCode.reverseVowels("Hello"));
+	}
+	@Test
+	public void kWeakestRows(){
+		int[][] array = {
+				{1,1,1,1,1},
+				{1,1,1,0,0},
+				{1,1,1,1,0},
+				{1,0,0,0,0},
+				{0,0,0,0,0},
+				{1,1,1,1,0},
+		};
+		System.out.println(Arrays.toString(leetCode.kWeakestRows(array, 3)));
 	}
 
 
