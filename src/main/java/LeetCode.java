@@ -1,13 +1,6 @@
 import struc.TreeNode;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.Deque;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @program: leetcode
@@ -16,6 +9,67 @@ import java.util.Map;
  * @create: 2021-07-30 14:01
  */
 public class LeetCode {
+	public int lengthOfLongestSubstring(String s) {
+
+		// 用来存放字符与他的
+		HashMap<Character, Integer> windows = new HashMap<>();
+		int max = 0, left = 0;
+		for (int right = 0;right<s.length();){
+			// 获取右边指针的字符
+			char c = s.charAt(right);
+			// 指针右移
+			right++;
+			Integer integer = windows.get(c);
+			integer = integer == null ? 0 : integer;
+			windows.put(c,++integer);
+			// 如果该字符的值大于1则说明这个字符出超过一次
+			while (windows.get(c)>1){
+				//获取右边左边边界的字符
+				char c1 = s.charAt(left);
+				//左边边界++
+				left++;
+				Integer integer1 = windows.get(c1);
+				integer1 = integer1 == null ? 0 :integer1;
+				//使得该字符
+				windows.put(c1,--integer1);
+			}
+			max = Math.max(max,right-left);
+		}
+		return max;
+	}
+
+
+
+
+
+
+	public boolean carPooling(int[][] trips, int capacity) {
+		//创建一个以下车顺序的小根堆
+		PriorityQueue<int[]> heap=new PriorityQueue<>(Comparator.comparingInt(o -> o[2]));
+		//对上车顺序排序
+		Arrays.sort(trips, Comparator.comparingInt(o -> o[1]));
+		//便利行程表
+		for (int[] trip : trips) {
+			//先上车 减少车的空位
+			capacity -= trip[0];
+			//当座位为负值的时候就要踢人下车
+			if (capacity < 0) {
+				// 如果下车堆不为空, 并且下车的站小于等于当前要上车的
+				while (!heap.isEmpty() && heap.peek()[2] <= trip[1]) {
+					// 车的容量就加上当前要下车的人数,然后在堆里移除这个行程
+					capacity += heap.poll()[0];
+				}
+				//能下的都下完,如果这个时候位置还是小于0,就说明行程表不满足
+				if (capacity < 0) {
+					return false;
+					//能下完的 下完还不行就返回
+				}
+			}
+			//吧这个行程表加到堆里,并按照下车顺序排序
+			heap.offer(trip);
+		}
+		return true;
+	}
 	/**
 	 * 二分查找
 	 * @param nums

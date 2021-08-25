@@ -101,6 +101,11 @@ public class LeetCodeTest {
 		};
 		System.out.println(Arrays.toString(leetCode.kWeakestRows(array, 3)));
 	}
+	@Test
+	public void lengthOfLongestSubstring(){
+		String s = "abcabcbb";
+		System.out.println(leetCode.lengthOfLongestSubstring(s));
+	}
 
 
 }
