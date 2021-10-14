@@ -1,4 +1,8 @@
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import struc.TreeNode;
 
 import java.util.Arrays;
@@ -106,6 +110,24 @@ public class LeetCodeTest {
 		String s = "abcabcbb";
 		System.out.println(leetCode.lengthOfLongestSubstring(s));
 	}
-
+	@Test
+	public void catBunana(){
+		int[] banana1 = {3,6,7,11};
+		int[] banana2 = {30,11,23,4,20};
+		int[] banana3 = {30,11,23,4,20};
+		int[] banana4 = {312884470};
+		int h1 = 8;
+		int h2 = 5;
+		int h3 = 6;
+		int h4 = 312884469;
+		int result = leetCode.minEatingSpeed(banana1, h1);
+		int result2 = leetCode.minEatingSpeed(banana2, h2);
+		int result3 = leetCode.minEatingSpeed(banana3, h3);
+		int result4 = leetCode.minEatingSpeed(banana4, h4);
+		System.out.println(result);
+		System.out.println(result2);
+		System.out.println(result3);
+		System.out.println(result4);
+	}
 
 }

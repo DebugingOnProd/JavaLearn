@@ -71,9 +71,41 @@ public class LeetCode {
 		return true;
 	}
 	/**
+	 * 爱吃香蕉
+	 * @param piles
+	 * @param h
+	 * @return
+	 */
+	public int minEatingSpeed(int[] piles, int h) {
+		// 从小到大排序
+		//List<Integer> pile = Arrays.stream(piles).sorted().boxed().collect(Collectors.toList());
+		Arrays.sort(piles);
+		// 获取最大值
+		Integer right = piles[piles.length-1];
+		int left  = 1;
+		while (left<right){
+			int mid = left + (right-left)/2;
+			if (!canEat(piles,h,mid)){
+				left = mid+1;
+			}else {
+				right = mid;
+			}
+		}
+
+		return left;
+	}
+	private boolean canEat(int[] pile,int h,int k){
+		int sumTime = 0;
+		for (Integer p : pile) {
+			double i2 = p;
+			double i3 = k;
+			double i1 = Math.ceil(i2/i3);
+			sumTime+=i1;
+		}
+		return sumTime <= h;
+	}
+	/**
 	 * 二分查找
-	 * @param nums
-	 * @param target
 	 * @return
 	 */
 	public int search(int[] nums, int target) {
@@ -240,7 +272,7 @@ public class LeetCode {
 		for (int i = 0; i < n; i++) {
 			char ch = s.charAt(i);
 			if (pairs.containsKey(ch)) {
-				if (stack.isEmpty() || stack.peek() != pairs.get(ch)) {
+				if (stack.isEmpty() || !stack.peek().equals(pairs.get(ch))) {
 					return false;
 				}
 				stack.pop();
