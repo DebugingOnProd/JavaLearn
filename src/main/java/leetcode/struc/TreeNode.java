@@ -1,4 +1,4 @@
-package struc;
+package leetcode.struc;
 
 /**
  * @program: leetcode

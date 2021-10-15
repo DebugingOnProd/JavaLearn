@@ -1,4 +1,4 @@
-import struc.TreeNode;
+import leetcode.struc.TreeNode;
 
 import java.util.*;
 
