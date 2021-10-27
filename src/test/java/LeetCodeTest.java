@@ -130,5 +130,11 @@ public class LeetCodeTest {
 		System.out.println(result3);
 		System.out.println(result4);
 	}
+	@Test
+	public void plusOne(){
+		int[] one = {3,6,7,9};
+		int[] ints = leetCode.plusOne(one);
+		Arrays.stream(ints).boxed().forEach(System.out::println);
+	}
 
 }
