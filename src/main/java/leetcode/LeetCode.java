@@ -1,3 +1,5 @@
+package leetcode;
+
 import leetcode.struc.TreeNode;
 
 import java.util.*;
