@@ -1,12 +1,16 @@
+import cn.hutool.core.date.DateUnit;
+import cn.hutool.core.date.DateUtil;
 import leetcode.LeetCode;
+import leetcode.struc.TreeNode;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import leetcode.struc.TreeNode;
 
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 
 
 /**
@@ -16,6 +20,7 @@ import java.util.Arrays;
  */
 
 public class LeetCodeTest {
+
 	LeetCode leetCode;
 	@BeforeAll
 	public static void before(){
@@ -135,6 +140,14 @@ public class LeetCodeTest {
 		int[] one = {3,6,7,9};
 		int[] ints = leetCode.plusOne(one);
 		Arrays.stream(ints).boxed().forEach(System.out::println);
+	}
+	@Test
+	public void nanning(){
+		Calendar instance = Calendar.getInstance();
+		instance.set(2021,5,25);
+		Date time = instance.getTime();
+		long between = DateUtil.between(time, new Date(), DateUnit.DAY);
+		System.out.println(between);
 	}
 
 }

@@ -287,7 +287,7 @@ public class LeetCode {
 			return false;
 		}
 
-		Map<Character, Character> pairs = new HashMap<>() {{
+		Map<Character, Character> pairs = new HashMap<Character, Character>() {{
 			put(')', '(');
 			put(']', '[');
 			put('}', '{');
