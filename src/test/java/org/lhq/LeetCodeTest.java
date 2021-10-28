@@ -1,7 +1,10 @@
+package org.lhq;
+
 import cn.hutool.core.date.DateUnit;
 import cn.hutool.core.date.DateUtil;
-import leetcode.LeetCode;
-import leetcode.struc.TreeNode;
+import lombok.extern.slf4j.Slf4j;
+import org.lhq.leetcode.LeetCode;
+import org.lhq.leetcode.struc.TreeNode;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -14,30 +17,30 @@ import java.util.Date;
 
 
 /**
- * @program: leetcode
- * @description: leetcode
+ * @program: org.lhq.leetcode
+ * @description: org.lhq.leetcode
  * @create: 2021-07-29 13:45
  */
-
+@Slf4j
 public class LeetCodeTest {
 
 	LeetCode leetCode;
 	@BeforeAll
 	public static void before(){
-		System.out.println("-------开始执行测试用例--------");
+		log.info("-------开始执行测试用例--------");
 	}
 	@AfterAll
 	public static void after(){
-		System.out.println("-------测试用例执行完成--------");
+		log.info("-------测试用例执行完成--------");
 	}
 	@BeforeEach
 	public void beforeEach(){
-		System.out.println("--------------测试对象实例化--------------");
+		log.info("--------------测试对象实例化--------------");
 		leetCode = new LeetCode();
 	}
 	@AfterEach
 	public void afterEach(){
-		System.out.println("----------------------------");
+		log.info("----------------------------");
 	}
 
 	/**
@@ -147,7 +150,11 @@ public class LeetCodeTest {
 		instance.set(2021,5,25);
 		Date time = instance.getTime();
 		long between = DateUtil.between(time, new Date(), DateUnit.DAY);
-		System.out.println(between);
+		log.trace("我离开南宁的{}天",between);
+		log.info("我离开南宁的{}天",between);
+		log.debug("我离开南宁的{}天",between);
+		log.warn("我离开南宁的{}天",between);
+		log.error("我离开南宁的{}天",between);
 	}
 
 }

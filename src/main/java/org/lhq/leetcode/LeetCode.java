@@ -1,11 +1,11 @@
-package leetcode;
+package org.lhq.leetcode;
 
-import leetcode.struc.TreeNode;
+import org.lhq.leetcode.struc.TreeNode;
 
 import java.util.*;
 
 /**
- * @program: leetcode
+ * @program: org.lhq.leetcode
  * @description:
  * @author: LittleCuteWangDF
  * @create: 2021-07-30 14:01

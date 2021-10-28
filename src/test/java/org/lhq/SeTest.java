@@ -1,18 +1,23 @@
+package org.lhq;
+
 import com.google.common.collect.Lists;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import se.CollectionStudy;
+import org.lhq.se.CollectionStudy;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 public class SeTest {
+
 	CollectionStudy collectionStudy;
 	@BeforeEach
 	public void beforeEach(){
-		System.out.println("--------------测试对象实例化--------------");
+		log.info("--------------测试对象实例化--------------");
 		collectionStudy = new CollectionStudy();
 	}
 
@@ -20,16 +25,16 @@ public class SeTest {
     public void paixu(){
 
 		Map<String, List<String>> stringListMap = collectionStudy.stringListMap();
-        System.out.println("排序前————————————————————————————————————————————————");
+		log.info("-------排序前--------------");
 		stringListMap.forEach((s, strings) -> {
-			System.out.println(s+":"+strings.size());
+			log.info(s+":"+strings.size());
 		});
         ArrayList<Map.Entry<String, List<String>>> entries = Lists.newArrayList(stringListMap.entrySet());
         Comparator<Map.Entry<String, List<String>>> entryComparator = Comparator.comparingInt(o -> o.getValue().size());
         entries.sort(entryComparator);
-        System.out.println("排序后————————————————————————————————————————————————");
+        log.info("排序后————————————————————————————————————————————————");
         entries.forEach(stringListEntry -> {
-            System.out.println(stringListEntry.getKey()+":"+stringListEntry.getValue().size());
+			log.info(stringListEntry.getKey()+":"+stringListEntry.getValue().size());
         });
 
 

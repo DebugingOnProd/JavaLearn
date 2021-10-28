@@ -1,7 +1,8 @@
-package se;
+package org.lhq.se;
 
 
 import cn.hutool.core.util.IdUtil;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,10 +13,12 @@ import java.util.Random;
 /**
  * @author Wallace
  */
+@Slf4j
 public class CollectionStudy {
 
 	public Map<String, List<String>> stringListMap(){
-		HashMap<String, List<String>> stringListHashMap = new HashMap<>();
+		log.info("生产map");
+		HashMap<String, List<String>> stringListHashMap = new HashMap<>(16);
 		ArrayList<String> strings = new ArrayList<>();
 		ArrayList<String> strings2 = new ArrayList<>();
 		ArrayList<String> strings3 = new ArrayList<>();
@@ -33,10 +36,6 @@ public class CollectionStudy {
 		for (int j = 0; j < random.nextInt(10); j++) {
 			strings4.add(IdUtil.fastSimpleUUID());
 		}
-		System.out.println(strings.size());
-		System.out.println(strings2.size());
-		System.out.println(strings3.size());
-		System.out.println(strings4.size());
 		stringListHashMap.put("List1",strings);
 		stringListHashMap.put("List2",strings2);
 		stringListHashMap.put("List3",strings3);

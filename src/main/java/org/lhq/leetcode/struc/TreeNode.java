@@ -1,7 +1,7 @@
-package leetcode.struc;
+package org.lhq.leetcode.struc;
 
 /**
- * @program: leetcode
+ * @program: org.lhq.leetcode
  * @description: TreeNode
  * @author: LittleCuteWangDF
  * @create: 2021-07-31 17:22
