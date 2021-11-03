@@ -1,5 +1,6 @@
 package org.lhq.leetcode;
 
+import lombok.extern.slf4j.Slf4j;
 import org.lhq.leetcode.struc.TreeNode;
 
 import java.util.*;
@@ -10,6 +11,7 @@ import java.util.*;
  * @author: LittleCuteWangDF
  * @create: 2021-07-30 14:01
  */
+@Slf4j
 public class LeetCode {
 	/**
 	 * 66. 加一
@@ -427,7 +429,7 @@ public class LeetCode {
 	 * @param s
 	 * @return
 	 */
-	public int romanToInt(String s) {
+	public Integer romanToInt(String s) {
 		int sum = 0;
 		// 获取第一个阿拉伯数字
 		int pre = _getValue(s.charAt(0));

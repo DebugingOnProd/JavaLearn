@@ -32,11 +32,10 @@ public class SeTest {
         ArrayList<Map.Entry<String, List<String>>> entries = Lists.newArrayList(stringListMap.entrySet());
         Comparator<Map.Entry<String, List<String>>> entryComparator = Comparator.comparingInt(o -> o.getValue().size());
         entries.sort(entryComparator);
-        log.info("排序后————————————————————————————————————————————————");
-        entries.forEach(stringListEntry -> {
-			log.info(stringListEntry.getKey()+":"+stringListEntry.getValue().size());
-        });
+        log.info("排序后———————————————");
+        entries.forEach(stringListEntry -> log.info(stringListEntry.getKey()+":"+stringListEntry.getValue().size()));
 
 
     }
+
 }

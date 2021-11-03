@@ -17,8 +17,8 @@
 
         <!--*********************文件日志***********************-->
         <RollingFile name="fileAppender"
-                     fileName="${LOG_HOME}/log4j2-demo.log"
-                     filePattern="${LOG_HOME}/log4j2-demo-%d{yyyy-MM-dd}-%i.log">
+                     fileName="${LOG_HOME}/JavaLearn.log"
+                     filePattern="${LOG_HOME}/JavaLearn-%d{yyyy-MM-dd}-%i.log">
             <!--设置日志格式-->
             <PatternLayout>
                 <pattern>[%d][%p][%t][%C] %m%n</pattern>

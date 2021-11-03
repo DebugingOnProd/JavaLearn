@@ -3,13 +3,13 @@ package org.lhq;
 import cn.hutool.core.date.DateUnit;
 import cn.hutool.core.date.DateUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.lhq.leetcode.LeetCode;
-import org.lhq.leetcode.struc.TreeNode;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.lhq.leetcode.LeetCode;
+import org.lhq.leetcode.struc.TreeNode;
 
 import java.util.Arrays;
 import java.util.Calendar;
@@ -49,13 +49,13 @@ public class LeetCodeTest {
 	@Test
 	public void reverse(){
 		int x = 1534236469;
-		System.out.println((1<<31)-1);
-		System.out.println(Integer.MAX_VALUE/10);
-		System.out.println("------------------");
-		System.out.println(-1<<31);
-		System.out.println(Integer.MIN_VALUE/10);
-		System.out.println(x);
-		System.out.println(leetCode.reverse(x));
+		log.info(String.valueOf((1<<31)-1));
+		log.info(String.valueOf(Integer.MAX_VALUE/10));
+		log.info("------------------");
+		log.info(String.valueOf(-1<<31));
+		log.info(String.valueOf(Integer.MIN_VALUE/10));
+		log.info(String.valueOf(x));
+		log.info(String.valueOf(leetCode.reverse(x)));
 	}
 
 	/**
@@ -63,7 +63,7 @@ public class LeetCodeTest {
 	 */
 	@Test
 	public void isPalindrome(){
-		System.out.println(leetCode.isPalindrome(123));
+		log.info(String.valueOf(leetCode.isPalindrome(123)));
 	}
 
 	/**
@@ -71,12 +71,12 @@ public class LeetCodeTest {
 	 */
 	@Test
 	public void romanToInt(){
-		System.out.println(leetCode.romanToInt("IVI"));
+		log.info(leetCode.romanToInt("IVI").toString());
 	}
 	@Test
 	public void longestCommonPrefix(){
 		String[] strings = {"flower", "flow", "flight"};
-		System.out.println(leetCode.longestCommonPrefix(strings));
+		log.info(leetCode.longestCommonPrefix(strings));
 	}
 	@Test
 	public void verticalTraversal(){
@@ -89,18 +89,18 @@ public class LeetCodeTest {
 		treeNode.right = treeNode2;
 		treeNode2.left = treeNode3;
 		treeNode2.right = treeNode4;
-		System.out.println(leetCode.verticalTraversal(treeNode));
+		log.info(leetCode.verticalTraversal(treeNode).toString());
 	}
 	@Test
 	public void removeElement(){
 		int[] nums =new int[]{0,0,1,1,1,2,2,3,3,4};
 		int i = leetCode.removeDuplicates(nums);
 		int i1 = leetCode.removeElement(nums, 2);
-		System.out.println(i+","+i1);
+		log.info(i+","+i1);
 	}
 	@Test
 	public void aeiou(){
-		System.out.println(leetCode.reverseVowels("Hello"));
+		log.info(leetCode.reverseVowels("Hello"));
 	}
 	@Test
 	public void kWeakestRows(){
@@ -112,12 +112,12 @@ public class LeetCodeTest {
 				{0,0,0,0,0},
 				{1,1,1,1,0},
 		};
-		System.out.println(Arrays.toString(leetCode.kWeakestRows(array, 3)));
+		log.info(Arrays.toString(leetCode.kWeakestRows(array, 3)));
 	}
 	@Test
 	public void lengthOfLongestSubstring(){
 		String s = "abcabcbb";
-		System.out.println(leetCode.lengthOfLongestSubstring(s));
+		log.info(String.valueOf(leetCode.lengthOfLongestSubstring(s)));
 	}
 	@Test
 	public void catBunana(){
@@ -133,16 +133,16 @@ public class LeetCodeTest {
 		int result2 = leetCode.minEatingSpeed(banana2, h2);
 		int result3 = leetCode.minEatingSpeed(banana3, h3);
 		int result4 = leetCode.minEatingSpeed(banana4, h4);
-		System.out.println(result);
-		System.out.println(result2);
-		System.out.println(result3);
-		System.out.println(result4);
+		log.info(String.valueOf(result));
+		log.info(String.valueOf(result2));
+		log.info(String.valueOf(result3));
+		log.info(String.valueOf(result4));
 	}
 	@Test
 	public void plusOne(){
 		int[] one = {3,6,7,9};
 		int[] ints = leetCode.plusOne(one);
-		Arrays.stream(ints).boxed().forEach(System.out::println);
+		Arrays.stream(ints).boxed().forEach(integer -> log.info(integer.toString()));
 	}
 	@Test
 	public void nanning(){
@@ -151,8 +151,8 @@ public class LeetCodeTest {
 		Date time = instance.getTime();
 		long between = DateUtil.between(time, new Date(), DateUnit.DAY);
 		log.trace("我离开南宁的{}天",between);
-		log.info("我离开南宁的{}天",between);
 		log.debug("我离开南宁的{}天",between);
+		log.info("我离开南宁的{}天",between);
 		log.warn("我离开南宁的{}天",between);
 		log.error("我离开南宁的{}天",between);
 	}
