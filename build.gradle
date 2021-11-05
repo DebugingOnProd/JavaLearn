@@ -1,7 +1,8 @@
 plugins {
     id 'java'
+    id 'maven-publish'
+    //id 'maven'
 }
-
 group 'org.lhq'
 version '1.0'
 
@@ -17,17 +18,15 @@ repositories {
 }
 
 dependencies {
-    implementation group: 'cn.hutool', name: 'hutool-all', version: '5.7.14'
+    implementation group: 'cn.hutool', name: 'hutool-all', version: '5.7.15'
     compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.22'
     testCompileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.22'
     annotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.22'
     testAnnotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.22'
     implementation group: 'com.google.guava', name: 'guava', version: '31.0.1-jre'
     implementation group: 'com.lmax', name: 'disruptor', version: '3.4.4'
-    implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.32'
     implementation 'org.apache.logging.log4j:log4j-slf4j-impl:2.14.1'
-    implementation 'org.apache.logging.log4j:log4j-api:2.14.1'
-    implementation 'org.apache.logging.log4j:log4j-core:2.14.1'
+    implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.26'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 }

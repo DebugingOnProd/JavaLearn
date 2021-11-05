@@ -17,11 +17,10 @@ public class PatternTest {
 	public void singleton(){
 		for (int i = 0; i < 200; i++) {
 			log.info("测试单例");
-			Thread thread = new Thread(()->{
+			new Thread(()->{
 				Singleton singleton = Singleton.getSingleton();
 				log.info("{}",singleton);
-			});
-			thread.start();
+			}).start();
 		}
 	}
 }

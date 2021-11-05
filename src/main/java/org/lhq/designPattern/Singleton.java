@@ -1,6 +1,9 @@
 package org.lhq.designPattern;
 
+
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @program: JavaLearn
@@ -10,10 +13,10 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public class Singleton {
+	//private static final Logger log = LoggerFactory.getLogger(Singleton.class);
 	private volatile static Singleton singleton;
 	private Singleton (){}
 	public static Singleton getSingleton() {
-		log.info("开始获取对象");
 		if (singleton == null) {
 			log.info("第一道锁");
 			synchronized (Singleton.class) {

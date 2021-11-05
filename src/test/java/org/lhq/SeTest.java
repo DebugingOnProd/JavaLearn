@@ -4,12 +4,14 @@ import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.lhq.entity.User;
 import org.lhq.se.CollectionStudy;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Slf4j
 public class SeTest {
@@ -37,5 +39,23 @@ public class SeTest {
 
 
     }
+	@Test
+	public void xx(){
+		ArrayList<User> users = new ArrayList<>();
+		for (int i = 0; i < 10; i++) {
+			User user = new User();
+			user.setUserId((long) i);
+			user.setUsername(String.valueOf(i));
+			user.setNickname(String.valueOf(i));
+			users.add(user);
+		}
+		List<User> collect = users.stream().map(user -> {
+			User newUser = new User();
+			newUser.setUsername(user.getUsername());
+			newUser.setNickname(user.getNickname());
+			return newUser;
+		}).collect(Collectors.toList());
+		log.info(String.valueOf(collect));
+	}
 
 }
