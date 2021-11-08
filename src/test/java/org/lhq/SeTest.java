@@ -14,7 +14,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Slf4j
-public class SeTest {
+class SeTest {
 
 	CollectionStudy collectionStudy;
 	@BeforeEach

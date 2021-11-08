@@ -40,7 +40,7 @@ public class LeetCodeTest {
 	}
 	@AfterEach
 	public void afterEach(){
-		log.info("----------------------------");
+		log.info("--------------测试用例结束--------------");
 	}
 
 	/**
@@ -139,15 +139,15 @@ public class LeetCodeTest {
 		log.info(String.valueOf(result4));
 	}
 	@Test
-	public void plusOne(){
+	void plusOne(){
 		int[] one = {3,6,7,9};
 		int[] ints = leetCode.plusOne(one);
 		Arrays.stream(ints).boxed().forEach(integer -> log.info(integer.toString()));
 	}
 	@Test
-	public void nanning(){
+	void nanning(){
 		Calendar instance = Calendar.getInstance();
-		instance.set(2021,5,25);
+		instance.set(2021, Calendar.JUNE,25);
 		Date time = instance.getTime();
 		long between = DateUtil.between(time, new Date(), DateUnit.DAY);
 		log.trace("我离开南宁的{}天",between);
