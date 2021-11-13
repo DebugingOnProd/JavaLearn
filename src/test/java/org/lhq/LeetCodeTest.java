@@ -150,11 +150,13 @@ public class LeetCodeTest {
 		instance.set(2021, Calendar.JUNE,25);
 		Date time = instance.getTime();
 		long between = DateUtil.between(time, new Date(), DateUnit.DAY);
-		log.trace("我离开南宁的{}天",between);
-		log.debug("我离开南宁的{}天",between);
-		log.info("我离开南宁的{}天",between);
-		log.warn("我离开南宁的{}天",between);
-		log.error("我离开南宁的{}天",between);
+		Calendar today = Calendar.getInstance();
+		log.trace("今天是{}年{}月{}日,我离开南宁的{}天",today.get(Calendar.YEAR),today.get(Calendar.MONTH)+1,today.get(Calendar.DATE),between);
+		log.debug("今天是{}年{}月{}日,我离开南宁的{}天",today.get(Calendar.YEAR),today.get(Calendar.MONTH)+1,today.get(Calendar.DATE),between);
+		log.info("今天是{}年{}月{}日,我离开南宁的{}天",today.get(Calendar.YEAR),today.get(Calendar.MONTH)+1,today.get(Calendar.DATE),between);
+		log.warn("今天是{}年{}月{}日,我离开南宁的{}天",today.get(Calendar.YEAR),today.get(Calendar.MONTH)+1,today.get(Calendar.DATE),between);
+		log.error("今天是{}年{}月{}日,我离开南宁的{}天",today.get(Calendar.YEAR),today.get(Calendar.MONTH)+1,today.get(Calendar.DATE),between);
+
 	}
 
 }

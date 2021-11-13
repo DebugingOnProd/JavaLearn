@@ -24,5 +24,8 @@ class TreeLearnTest {
         //先序遍历
         log.info("二叉树的先序遍历");
         treeLearn.preorderTraversal(binaryTree);
+
+        // 二叉树的后序遍历
+        treeLearn.postOrderTraversal(binaryTree);
     }
 }
