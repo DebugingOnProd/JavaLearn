@@ -24,7 +24,7 @@ class SeTest {
 	}
 
     @Test
-    public void paixu(){
+	void paixu(){
 
 		Map<String, List<String>> stringListMap = collectionStudy.stringListMap();
 		log.info("-------排序前--------------");
@@ -56,6 +56,23 @@ class SeTest {
 			return newUser;
 		}).collect(Collectors.toList());
 		log.info(String.valueOf(collect));
+	}
+
+
+	@Test
+	public void xxl(){
+		System.out.println(add(10));
+	}
+	private int add(int num){
+		int sum = 0;
+		if (num<0){
+			return sum;
+		}else {
+			sum++;
+			num--;
+			add(num);
+		}
+		return num;
 	}
 
 }
