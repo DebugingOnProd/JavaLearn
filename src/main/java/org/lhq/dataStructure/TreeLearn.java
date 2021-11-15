@@ -105,6 +105,7 @@ public class TreeLearn {
             }
             // 取出栈顶节点
             TreeNode<T> top = stack.peek();
+            assert top != null;
             if (top.getRightNode() == null || top.getRightNode().equals(prev)) {
                 result.add(top.getValue());
                 prev = top;

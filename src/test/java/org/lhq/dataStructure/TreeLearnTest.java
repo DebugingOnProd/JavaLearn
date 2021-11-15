@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.lhq.entity.TreeNode;
 
 import java.util.LinkedList;
+import java.util.List;
 
 @Slf4j
 class TreeLearnTest {
@@ -21,15 +22,15 @@ class TreeLearnTest {
         TreeNode<Character> binaryTree = treeLearn.createBinaryTree(treeNodes);
         //层次遍历
         log.info("二叉树的层次遍历");
-        var levelTraversal = treeLearn.levelTraversal(binaryTree);
+        List<Character> levelTraversal = treeLearn.levelTraversal(binaryTree);
         log.info("{}",levelTraversal);
         //先序遍历
         log.info("二叉树的先序遍历");
-        var pre = treeLearn.preOrderTraversal(binaryTree);
+        List<Character> pre = treeLearn.preOrderTraversal(binaryTree);
         log.info("{}",pre);
         // 二叉树的后序遍历
         log.info("二叉树的后序遍历");
-        var list = treeLearn.postOrderTraversal(binaryTree);
+        List<Character> list = treeLearn.postOrderTraversal(binaryTree);
         log.info("{}",list);
     }
 }

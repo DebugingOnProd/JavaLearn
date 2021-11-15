@@ -14,7 +14,7 @@ import org.lhq.designPattern.Singleton;
 public class PatternTest {
 
 	@Test
-	public void singleton(){
+	void singleton(){
 		for (int i = 0; i < 200; i++) {
 			log.info("测试单例");
 			new Thread(()->{

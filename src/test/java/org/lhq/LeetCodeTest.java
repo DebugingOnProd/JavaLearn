@@ -2,18 +2,15 @@ package org.lhq;
 
 import cn.hutool.core.date.DateUnit;
 import cn.hutool.core.date.DateUtil;
-import cn.hutool.core.lang.Console;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.lhq.leetcode.LeetCode;
 import org.lhq.leetcode.struc.TreeNode;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Date;
 
 
@@ -146,17 +143,20 @@ public class LeetCodeTest {
 		Arrays.stream(ints).boxed().forEach(integer -> log.info(integer.toString()));
 	}
 	@Test
-	void nanning(){
-		Calendar instance = Calendar.getInstance();
-		instance.set(2021, Calendar.JUNE,25);
-		Date time = instance.getTime();
-		long between = DateUtil.between(time, new Date(), DateUnit.DAY);
-		Calendar today = Calendar.getInstance();
-		log.trace("今天是{}年{}月{}日,我离开南宁的{}天",today.get(Calendar.YEAR),today.get(Calendar.MONTH)+1,today.get(Calendar.DATE),between);
-		log.debug("今天是{}年{}月{}日,我离开南宁的{}天",today.get(Calendar.YEAR),today.get(Calendar.MONTH)+1,today.get(Calendar.DATE),between);
-		log.info("今天是{}年{}月{}日,我离开南宁的{}天",today.get(Calendar.YEAR),today.get(Calendar.MONTH)+1,today.get(Calendar.DATE),between);
-		log.warn("今天是{}年{}月{}日,我离开南宁的{}天",today.get(Calendar.YEAR),today.get(Calendar.MONTH)+1,today.get(Calendar.DATE),between);
-		log.error("今天是{}年{}月{}日,我离开南宁的{}天",today.get(Calendar.YEAR),today.get(Calendar.MONTH)+1,today.get(Calendar.DATE),between);
+	void dayCal(){
+		LocalDate time = LocalDate.of(2021, 5, 25);
+		Instant instant = time.atStartOfDay(ZoneId.systemDefault()).toInstant();
+		Date leaveDate = Date.from(instant);
+		long between = DateUtil.between(leaveDate, new Date(), DateUnit.DAY);
+		LocalDate now = LocalDate.now();
+		int year = now.getYear();
+		int month = now.getMonth().getValue();
+		int dayOfMonth = now.getDayOfMonth();
+		log.trace("今天是{}年{}月{}日,我离开南宁的{}天",year,month,dayOfMonth,between);
+		log.debug("今天是{}年{}月{}日,我离开南宁的{}天",year,month,dayOfMonth,between);
+		log.info("今天是{}年{}月{}日,我离开南宁的{}天",year,month,dayOfMonth,between);
+		log.warn("今天是{}年{}月{}日,我离开南宁的{}天",year,month,dayOfMonth,between);
+		log.error("今天是{}年{}月{}日,我离开南宁的{}天",year,month,dayOfMonth,between);
 
 	}
 
