@@ -11,7 +11,6 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public class Singleton {
-	//private static final Logger log = LoggerFactory.getLogger(Singleton.class);
 	private volatile static Singleton singleton;
 	private Singleton (){}
 	public static Singleton getSingleton() {

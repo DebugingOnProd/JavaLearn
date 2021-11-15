@@ -2,6 +2,7 @@ package org.lhq.dataStructure;
 
 import lombok.extern.slf4j.Slf4j;
 import org.lhq.entity.TreeNode;
+import sun.reflect.generics.tree.Tree;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -116,4 +117,21 @@ public class TreeLearn {
         }
         return result;
     }
+
+    /**
+     * 二叉树的中序遍历
+     * @param root
+     * @param <T>
+     * @return
+     */
+    public <T> List<T> inOrderTraversal(TreeNode<T> root){
+        if (root==null){
+            return Collections.emptyList();
+        }
+        TreeNode<T> cur = root;
+        ArrayList<T> result = new ArrayList<>();
+        LinkedList<TreeNode<T>> stack = new LinkedList<>();
+        return result;
+    }
+
 }
