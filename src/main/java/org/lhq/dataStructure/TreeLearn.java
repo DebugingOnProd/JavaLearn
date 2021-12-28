@@ -2,7 +2,6 @@ package org.lhq.dataStructure;
 
 import lombok.extern.slf4j.Slf4j;
 import org.lhq.entity.TreeNode;
-import sun.reflect.generics.tree.Tree;
 
 import java.util.ArrayList;
 import java.util.Collections;

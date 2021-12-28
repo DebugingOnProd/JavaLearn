@@ -2,6 +2,7 @@ package org.lhq;
 
 import cn.hutool.core.date.DateUnit;
 import cn.hutool.core.date.DateUtil;
+import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 import org.lhq.leetcode.LeetCode;
@@ -144,8 +145,8 @@ public class LeetCodeTest {
 	}
 	@Test
 	void dayCal(){
-		LocalDate time = LocalDate.of(2021, 5, 25);
-		Instant instant = time.atStartOfDay(ZoneId.systemDefault()).toInstant();
+		LocalDate time = LocalDate.of(2021, 5, 26);
+		Instant instant = time.atStartOfDay(ZoneId.of("Asia/Shanghai")).toInstant();
 		Date leaveDate = Date.from(instant);
 		long between = DateUtil.between(leaveDate, new Date(), DateUnit.DAY);
 		LocalDate now = LocalDate.now();

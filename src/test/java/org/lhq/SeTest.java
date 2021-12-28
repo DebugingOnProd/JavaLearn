@@ -6,11 +6,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.lhq.entity.User;
 import org.lhq.se.CollectionStudy;
+import org.lhq.utils.ConvertUtil;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -60,19 +59,20 @@ class SeTest {
 
 
 	@Test
-	public void xxl(){
-		System.out.println(add(10));
+	void xxl(){
+		User user = new User();
+		user.setUsername("wdf");
+		List<String> strings = ConvertUtil.resultToList(Collections.singletonList(user), User::getUsername);
+		log.info("{}",strings);
 	}
-	private int add(int num){
-		int sum = 0;
-		if (num<0){
-			return sum;
-		}else {
-			sum++;
-			num--;
-			add(num);
-		}
-		return num;
+
+	@Test
+	void oneDayWork(){
+		log.info("打开IDEA");
+		log.info("构建数据库，链接tomcat，crud一顿输出");
+		log.info("嘴角疯狂上扬");
+		log.error("接口报错");
+		log.info("心态崩了，卸载IDEA");
 	}
 
 }
