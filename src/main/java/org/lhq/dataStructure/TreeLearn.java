@@ -124,12 +124,24 @@ public class TreeLearn {
      * @return
      */
     public <T> List<T> inOrderTraversal(TreeNode<T> root){
-        if (root==null){
+        if (root == null) {
             return Collections.emptyList();
         }
+        LinkedList<TreeNode<T>> stack = new LinkedList<>();
         TreeNode<T> cur = root;
         ArrayList<T> result = new ArrayList<>();
-        LinkedList<TreeNode<T>> stack = new LinkedList<>();
+        while (cur != null || !stack.isEmpty()) {
+            while (cur != null) {
+                stack.push(cur);
+                cur = cur.getLeftNode();
+            }
+            if (!stack.isEmpty()) {
+                cur = stack.removeFirst();
+                result.add(cur.getValue());
+                cur = cur.getRightNode();
+            }
+        }
+
         return result;
     }
 
