@@ -1,0 +1,16 @@
+status = warn
+
+appender.console.type = Console
+appender.console.name = LogToConsole
+appender.console.layout.type = PatternLayout
+appender.console.layout.pattern = [%style{%-d{HH:mm:ss}}{bright,green}][%highlight{%p}][%style{%t}{bright,blue}][%style{%C}{bright,yellow}]->%msg%n%style{%throwable}{red}
+appender.console.layout.pattern.disable-ansi = false;
+appender.console.layout.pattern.noConsoleNoAnsi = false;
+
+
+# Log to console and rolling file
+logger.app.name = org.lhq
+logger.app.level = debug
+logger.app.additivity = false
+#logger.app.appenderRef.rolling.ref = LogToRollingFile
+logger.app.appenderRef.console.ref = LogToConsole
