@@ -13,13 +13,17 @@ import java.util.concurrent.ArrayBlockingQueue;
 public class ConnectionPool {
 
     private static ArrayBlockingQueue<Connection> SOURCE_POOL  = new ArrayBlockingQueue<>(100);
-
+    static {
+        // 类加载时初始化数据库连接池
+        initPool();
+    }
 
     private static void initPool(){
         log.info("初始化连接池");
         DbConfig dbConfig = DbUtils.loadDbConfig();
         int connections = dbConfig.getConnections();
         for (int i = 0; i < connections; i++) {
+            log.debug("正在初始化第{}个,共{}个",i,connections);
             Connection connection = initConnection(dbConfig);
             SOURCE_POOL.add(connection);
         }
@@ -32,6 +36,7 @@ public class ConnectionPool {
     }
 
     public static Connection getConnection(){
+        log.info("获取链接");
         try {
             return SOURCE_POOL.take();
         } catch (InterruptedException e) {
@@ -41,6 +46,7 @@ public class ConnectionPool {
     }
 
     public static void returnConnection(Connection connection){
+        log.info("归还链接");
         try {
             SOURCE_POOL.put(connection);
         } catch (InterruptedException e) {

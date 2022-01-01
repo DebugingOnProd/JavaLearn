@@ -19,11 +19,13 @@ public class DbUtils {
     public static final String USERNAME = "username";
     public static final String PASSWORD = "password";
     public static final String CONNECTIONS = "connections";
+    public static final String DAO = "dao";
 
     public static DbConfig loadDbConfig(){
         log.info("加载数据库配置");
         Properties properties = new Properties();
         File file = new File(DB_CONFIG);
+        log.info("当前目录是:{}",file.getAbsolutePath());
         try (FileInputStream fileInputStream = new FileInputStream(file)){
             properties.load(fileInputStream);
             DbConfig dbConfig = new DbConfig();
@@ -32,6 +34,7 @@ public class DbUtils {
             String username = properties.getProperty(USERNAME);
             String password = properties.getProperty(PASSWORD);
             String connections = properties.getProperty(CONNECTIONS);
+            String dao = properties.getProperty(DAO);
             dbConfig.setDriver(driver);
             dbConfig.setUrl(url);
             dbConfig.setUsername(username);

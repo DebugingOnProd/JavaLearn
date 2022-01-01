@@ -9,7 +9,6 @@ import java.sql.Statement;
 import java.util.List;
 
 public class DefaultResultHandler implements ResultSetHandler {
-    private final
 
     @Override
     public <E> List<E> handleResultSets(Statement stmt) throws SQLException {
