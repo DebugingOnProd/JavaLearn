@@ -4,6 +4,8 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 import lombok.extern.java.Log;
 
+import java.time.LocalDateTime;
+
 /**
  * @program: JavaLearn
  * @description:
@@ -16,7 +18,53 @@ import lombok.extern.java.Log;
 @Accessors(chain = true)
 public class User {
 
-    private Long userId;
-    private String username;
+    /**
+     * 主键
+     */
+    private Long id;
+
+    /**
+     * 邮箱
+     */
+    private String email;
+
+    /**
+     * 密码
+     */
+    private String password;
+
+    /**
+     * 昵称
+     */
     private String nickname;
+
+    /**
+     * 个人简介
+     */
+    private String introduction;
+
+    /**
+     * 用户头像
+     */
+    private String avatar;
+
+    /**
+     * 个人资料背景图
+     */
+    private String background;
+
+    /**
+     * 账号创建日期时间
+     */
+    private LocalDateTime gmtCreate;
+
+    /**
+     * 更新时间
+     */
+    private LocalDateTime gmtModified;
+    private Boolean status;
+    /**
+     * 逻辑删除，1可用，0不可用
+     */
+    private Boolean state;
 }

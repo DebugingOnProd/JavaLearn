@@ -1,6 +1,6 @@
 package org.lhq.jdbc.transaction;
 
-import org.lhq.jdbc.sql.TransactionIsolationLevel;
+
 
 import javax.sql.DataSource;
 import java.sql.Connection;

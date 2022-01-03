@@ -1,6 +1,7 @@
 package org.lhq.jdbc.factory;
 
 import lombok.extern.slf4j.Slf4j;
+import org.lhq.anno.Select;
 import org.lhq.jdbc.proxy.MapperMethod;
 import org.lhq.jdbc.session.SqlSession;
 
@@ -59,9 +60,11 @@ public class MapperProxy<T> implements InvocationHandler, Serializable {
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+        String name = method.getName();
+        Class<?> declaringClass = method.getDeclaringClass();
+        log.debug("代理的方法名称{}.{}",declaringClass.getName(),name);
         if (Object.class.equals(method.getDeclaringClass())) {
             return method.invoke(this, args);
-
         } else {
             return cachedInvoker(method).invoke(proxy,method,args,sqlSession);
         }
@@ -105,7 +108,10 @@ public class MapperProxy<T> implements InvocationHandler, Serializable {
 
         @Override
         public Object invoke(Object proxy, Method method, Object[] args, SqlSession sqlSession) throws Throwable {
-            return mapperMethod.execute(sqlSession, args);
+            Select select = method.getAnnotation(Select.class);
+            String sql = select.sql();
+            Class<?> returnType = method.getReturnType();
+            return mapperMethod.execute(sqlSession, args,sql,returnType);
         }
     }
     private MethodHandle getMethodHandleJava9(Method method)

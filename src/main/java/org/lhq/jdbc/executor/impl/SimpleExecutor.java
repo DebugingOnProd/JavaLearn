@@ -4,7 +4,6 @@ import org.lhq.jdbc.config.Config;
 import org.lhq.jdbc.transaction.Transaction;
 
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Collections;
 import java.util.List;
 

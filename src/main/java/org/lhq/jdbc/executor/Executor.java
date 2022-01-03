@@ -2,6 +2,7 @@ package org.lhq.jdbc.executor;
 
 import org.lhq.jdbc.transaction.Transaction;
 
+import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -18,7 +19,7 @@ public interface Executor {
 
     void clearLocalCache();
 
-    <E> List<E> query() throws SQLException;
+    <E> List<E> query(String sql, Object param, Class<?> returnType) throws SQLException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, ClassNotFoundException;
 
 
 

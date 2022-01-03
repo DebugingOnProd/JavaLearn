@@ -1,4 +1,4 @@
-package org.lhq.jdbc.sql;
+package org.lhq.jdbc.transaction;
 
 import java.sql.Connection;
 

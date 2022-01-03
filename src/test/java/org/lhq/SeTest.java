@@ -43,14 +43,14 @@ class SeTest {
 		ArrayList<User> users = new ArrayList<>();
 		for (int i = 0; i < 10; i++) {
 			User user = new User();
-			user.setUserId((long) i);
-			user.setUsername(String.valueOf(i));
+			user.setId((long) i);
+			user.setNickname(String.valueOf(i));
 			user.setNickname(String.valueOf(i));
 			users.add(user);
 		}
 		List<User> collect = users.stream().map(user -> {
 			User newUser = new User();
-			newUser.setUsername(user.getUsername());
+			newUser.setNickname(user.getNickname());
 			newUser.setNickname(user.getNickname());
 			return newUser;
 		}).collect(Collectors.toList());
@@ -61,8 +61,8 @@ class SeTest {
 	@Test
 	void xxl(){
 		User user = new User();
-		user.setUsername("wdf");
-		List<String> strings = ConvertUtil.resultToList(Collections.singletonList(user), User::getUsername);
+		user.setNickname("wdf");
+		List<String> strings = ConvertUtil.resultToList(Collections.singletonList(user), User::getNickname);
 		log.info("{}",strings);
 	}
 

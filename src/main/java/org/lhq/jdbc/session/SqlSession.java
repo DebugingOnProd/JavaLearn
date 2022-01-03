@@ -1,7 +1,9 @@
 package org.lhq.jdbc.session;
 
 import java.io.Closeable;
+import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 
 public interface SqlSession extends Closeable {
@@ -13,7 +15,7 @@ public interface SqlSession extends Closeable {
      *          the statement
      * @return Mapped object
      */
-    <T> T selectOne(String statement);
+    <T> T selectOne(String statement) throws SQLException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, ClassNotFoundException;
 
     /**
      * Retrieve a single row mapped from the statement key and parameter.
@@ -22,7 +24,7 @@ public interface SqlSession extends Closeable {
      * @param parameter A parameter object to pass to the statement.
      * @return Mapped object
      */
-    <T> T selectOne(String statement, Object parameter);
+    <T> T selectOne(String statement, Object parameter,Class<?> returnType) throws SQLException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, ClassNotFoundException;
 
     /**
      * Retrieve a list of mapped objects from the statement key.

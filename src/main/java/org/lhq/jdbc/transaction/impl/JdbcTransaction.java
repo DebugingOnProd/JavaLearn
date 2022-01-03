@@ -1,8 +1,8 @@
 package org.lhq.jdbc.transaction.impl;
 
 import lombok.extern.slf4j.Slf4j;
-import org.lhq.jdbc.sql.TransactionIsolationLevel;
 import org.lhq.jdbc.transaction.Transaction;
+import org.lhq.jdbc.transaction.TransactionIsolationLevel;
 
 import javax.sql.DataSource;
 import java.sql.Connection;

@@ -6,6 +6,7 @@ import org.lhq.jdbc.executor.Executor;
 import org.lhq.jdbc.session.SqlSession;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
@@ -29,13 +30,21 @@ public class SqlSessionImpl implements SqlSession {
     }
 
     @Override
-    public <T> T selectOne(String statement) {
-        return null;
+    public <T> T selectOne(String statement) throws SQLException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+        List<Object> query = executor.query(statement, null, null);
+        if (query.size()>1) {
+            throw new RuntimeException("结果太多了");
+        }
+        return (T)query.get(0);
     }
 
     @Override
-    public <T> T selectOne(String statement, Object parameter) {
-        return null;
+    public <T> T selectOne(String statement, Object parameter,Class<?> returnType) throws SQLException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+        List<Object> query = executor.query(statement, parameter, returnType);
+        if (query.size()>1) {
+            throw new RuntimeException("结果太多了");
+        }
+        return (T)query.get(0);
     }
 
     @Override
