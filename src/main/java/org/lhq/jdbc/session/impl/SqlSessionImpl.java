@@ -1,7 +1,6 @@
 package org.lhq.jdbc.session.impl;
 
 import org.lhq.jdbc.config.Config;
-import org.lhq.jdbc.executor.ErrorContext;
 import org.lhq.jdbc.executor.Executor;
 import org.lhq.jdbc.session.SqlSession;
 
@@ -77,7 +76,6 @@ public class SqlSessionImpl implements SqlSession {
             executor.close(isCommitOrRollbackRequired(false));
             dirty = false;
         } finally {
-            ErrorContext.instance().reset();
         }
     }
 
