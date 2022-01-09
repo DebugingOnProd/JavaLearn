@@ -6,13 +6,12 @@ import org.lhq.entity.User;
 import org.lhq.jdbc.ConnectionPool;
 import org.lhq.jdbc.config.Config;
 import org.lhq.jdbc.dao.UserDao;
-import org.lhq.jdbc.mapping.MapperScan;
+import org.lhq.jdbc.mapping.BeanScan;
 import org.lhq.jdbc.session.SqlSession;
 import org.lhq.jdbc.session.SqlSessionFactory;
 import org.lhq.jdbc.session.SqlSessionFactoryBuilder;
 
 import java.sql.Connection;
-import java.util.List;
 import java.util.Set;
 import java.util.concurrent.*;
 
@@ -21,7 +20,7 @@ class JdbcTest {
     @Test
     void getConnit() throws InterruptedException {
         Config config = new Config();
-        Set<Class<?>> classes = MapperScan.mapperScan("org.lhq.jdbc.dao");
+        Set<Class<?>> classes = BeanScan.mapperScan("org.lhq.jdbc.dao");
         classes.forEach(config::addMapper);
         SqlSessionFactory build = new SqlSessionFactoryBuilder().build(config);
         ExecutorService executorService = Executors.newFixedThreadPool(100);

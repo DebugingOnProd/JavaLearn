@@ -3,31 +3,53 @@ package org.lhq.ioc;
 import cn.hutool.core.text.CharSequenceUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.lhq.anno.AutoInject;
+import org.lhq.anno.Component;
+import org.lhq.jdbc.mapping.BeanScan;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 @Slf4j
 public class BeanFactory {
+
+    private BeanFactory(){}
+
     private static Map<String, Object> beanCache = new ConcurrentHashMap<>();
 
-    public <T> T getBean(Class<T> clazz) {
+    private static Map<String,List<String>> beanDepend = new HashMap<>();
+
+    public static <T> T getBean(Class<T> clazz) {
         return (T) beanCache.get(clazz.getName());
     }
 
-    public Object getBean(String beanName) {
+    public void getDependBean(Class<?> clazz){
+        Field[] declaredFields = clazz.getDeclaredFields();
+        List<? extends Class<?>> classList = Arrays.stream(declaredFields)
+                .filter(field -> field.getAnnotation(AutoInject.class) != null)
+                .map(Field::getDeclaringClass)
+                .collect(Collectors.toList());
+    }
+
+    public void beanScan(String packageName){
+        Set<Class<?>> classes = BeanScan.mapperScan(packageName);
+        List<Class<?>> beanList = classes.stream()
+                .filter(clazz -> clazz.getAnnotation(Component.class) != null)
+                .collect(Collectors.toList());
+        beanList.forEach(bean->setBean(bean,bean.getName()));
+
+    }
+
+    public static Object getBean(String beanName) {
         return beanCache.get(beanName);
     }
 
 
-    public void setBean(Class<?> clazz, String beanName, String... dependBeans) {
+    public static void setBean(Class<?> clazz, String beanName, String... dependBeans) {
         Object[] dependBeansInsts = new Object[dependBeans.length];
 
         for (int i = 0; i < dependBeans.length; i++) {
@@ -45,13 +67,17 @@ public class BeanFactory {
             throw new RuntimeException("没有找到合适实例化bean");
         }
 
-
         beanCache.put(beanName, createBean);
 
 
     }
+    public static void startContainer(){
+        beanCache.forEach((bean,beanInstance) -> dependencyInjectionReflection(beanInstance,beanCache));
+    }
 
-    public void dependencyInjectionReflection(Object beanInstance, Map<String, Object> beanCache) {
+
+
+    public static void dependencyInjectionReflection(Object beanInstance, Map<String, Object> beanCache) {
         log.info("反射注入开始");
         List<Field> fields = Arrays.stream(beanInstance.getClass().getDeclaredFields())
                 .filter(field -> field.getAnnotation(AutoInject.class) != null)
@@ -68,7 +94,7 @@ public class BeanFactory {
         });
     }
 
-    public void dependencyInjectionSetter(Object beanInstance, Map<String, Object> beanCache) {
+    public static void dependencyInjectionSetter(Object beanInstance, Map<String, Object> beanCache) {
         List<Method> methods = Arrays.stream(beanInstance.getClass().getMethods())
                 .filter(method -> method.getAnnotation(AutoInject.class) != null)
                 .collect(Collectors.toList());
@@ -84,13 +110,12 @@ public class BeanFactory {
         });
     }
 
-    public void dependencyInjectionConstructor(Object beanInstance, Map<String, Object> beanCache) {
+    public static void dependencyInjectionConstructor(Object beanInstance, Map<String, Object> beanCache) {
         List<Constructor<?>> constructorList = Arrays.stream(beanInstance.getClass().getDeclaredConstructors())
                 .filter(constructor -> constructor.getAnnotation(AutoInject.class) != null)
                 .collect(Collectors.toList());
         constructorList.forEach(constructor -> {
             Class<?>[] parameterTypes = constructor.getParameterTypes();
-
         });
     }
 }

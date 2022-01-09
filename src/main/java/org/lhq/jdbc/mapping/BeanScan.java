@@ -14,8 +14,8 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 @Slf4j
-public class MapperScan {
-    private MapperScan() {
+public class BeanScan {
+    private BeanScan() {
     }
 
     public static Set<Class<?>> mapperScan(String packageName) {
