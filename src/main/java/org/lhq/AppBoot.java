@@ -6,9 +6,8 @@ import org.lhq.web.HttpServer;
 
 @Slf4j
 @ComponentScan
-public class ServerBoot {
+public class AppBoot {
     public static void main(String[] args) {
-        log.info("服务启动");
 		HttpServer.run(0,args);
     }
 }
