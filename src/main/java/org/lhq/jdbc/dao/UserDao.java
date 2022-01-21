@@ -1,6 +1,6 @@
 package org.lhq.jdbc.dao;
 
-import org.lhq.anno.Select;
+import org.lhq.anno.orm.Select;
 import org.lhq.entity.User;
 
 import java.util.List;

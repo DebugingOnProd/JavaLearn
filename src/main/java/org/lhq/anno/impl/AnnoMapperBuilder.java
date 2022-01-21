@@ -1,6 +1,6 @@
 package org.lhq.anno.impl;
 
-import org.lhq.anno.Select;
+import org.lhq.anno.orm.Select;
 
 import java.lang.annotation.Annotation;
 import java.util.Set;

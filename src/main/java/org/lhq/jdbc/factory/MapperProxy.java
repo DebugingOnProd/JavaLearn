@@ -1,7 +1,7 @@
 package org.lhq.jdbc.factory;
 
 import lombok.extern.slf4j.Slf4j;
-import org.lhq.anno.Select;
+import org.lhq.anno.orm.Select;
 import org.lhq.jdbc.proxy.MapperMethod;
 import org.lhq.jdbc.session.SqlSession;
 

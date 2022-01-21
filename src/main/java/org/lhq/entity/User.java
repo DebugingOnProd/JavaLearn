@@ -14,7 +14,6 @@ import java.time.LocalDateTime;
  */
 
 @Data
-@Log
 @Accessors(chain = true)
 public class User {
 

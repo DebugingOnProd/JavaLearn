@@ -2,8 +2,8 @@ package org.lhq.ioc;
 
 import cn.hutool.core.text.CharSequenceUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.lhq.anno.AutoInject;
-import org.lhq.anno.Component;
+import org.lhq.anno.ioc.AutoInject;
+import org.lhq.anno.ioc.Component;
 import org.lhq.jdbc.mapping.BeanScan;
 
 import java.lang.reflect.Constructor;

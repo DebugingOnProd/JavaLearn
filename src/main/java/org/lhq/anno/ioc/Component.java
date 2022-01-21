@@ -1,8 +1,8 @@
-package org.lhq.anno;
+package org.lhq.anno.ioc;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 @Retention(RetentionPolicy.RUNTIME)
-public @interface AutoInject {
+public @interface Component {
 }

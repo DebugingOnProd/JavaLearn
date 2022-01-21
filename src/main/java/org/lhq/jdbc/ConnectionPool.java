@@ -23,12 +23,14 @@ public class ConnectionPool {
     private static void initPool(){
         log.info("初始化连接池");
         DbConfig dbConfig = DbUtils.loadDbConfig();
-        int connections = dbConfig.getConnections();
+		TimeInterval total = DateUtil.timer();
+		int connections = dbConfig.getConnections();
         for (int i = 1; i <= connections;++i) {
-            log.debug("正在初始化第{}个,共{}个",i,connections);
+			TimeInterval timer = DateUtil.timer();
             Connection connection = initConnection(dbConfig);
             SOURCE_POOL.add(connection);
-        }
+			log.debug("正在初始化第{}个,共{}个,耗时{}毫秒,总耗时{}毫秒",i,connections,timer.intervalRestart(),total.interval());
+		}
         log.info("初始化结束");
 
     }

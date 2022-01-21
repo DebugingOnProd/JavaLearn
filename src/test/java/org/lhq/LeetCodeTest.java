@@ -252,18 +252,38 @@ public class LeetCodeTest {
 		entries.stream()
 				.filter(item -> item.getValue() < 0)
 				.forEach(item -> {
-					if ("元旦".equals(item.getKey())) {
-						long betweenDay = DateUtil.betweenDay(date, getDayOfHoliday(year + 1, HolidayEnum.NewYear), false);
-						item.setValue(betweenDay);
+					String key = item.getKey();
+					long betweenDay;
+					switch (key){
+						case "元旦":
+							betweenDay = DateUtil.betweenDay(date, getDayOfHoliday(year + 1, HolidayEnum.NewYear), false);
+							item.setValue(betweenDay);
+							break;
+						case "春节":
+							betweenDay = DateUtil.betweenDay(date, getDayOfHoliday(year + 1, HolidayEnum.ChineseNewYear), false);
+							item.setValue(betweenDay);
+							break;
+						case "清明":
+							log.debug("清明节是哪一天啊");
+						case "五一":
+							betweenDay = DateUtil.betweenDay(date, getDayOfHoliday(year + 1, HolidayEnum.InternationalLaborDay), false);
+							item.setValue(betweenDay);
+							break;
+						case "端午":
+							betweenDay = DateUtil.betweenDay(date, getDayOfHoliday(year + 1, HolidayEnum.DragonBoatFestival), false);
+							item.setValue(betweenDay);
+							break;
+						case "中秋":
+							betweenDay = DateUtil.betweenDay(date, getDayOfHoliday(year + 1, HolidayEnum.MidAutumnFestival), false);
+							item.setValue(betweenDay);
+							break;
+						case "国庆":
+							betweenDay = DateUtil.betweenDay(date, getDayOfHoliday(year + 1, HolidayEnum.NationalDay), false);
+							item.setValue(betweenDay);
+							break;
 					}
-					if ("春节".equals(item.getKey())) {
-						long betweenDay = DateUtil.betweenDay(date, getDayOfHoliday(year + 1, HolidayEnum.ChineseNewYear), false);
-						item.setValue(betweenDay);
-					}
-					if ("五一".equals(item.getKey())){
-						long betweenDay = DateUtil.betweenDay(date, getDayOfHoliday(year + 1, HolidayEnum.InternationalLaborDay), false);
-						item.setValue(betweenDay);
-					}
+
+
 				});
 		entries.sort((o1, o2) -> Math.toIntExact(o1.getValue() - o2.getValue()));
 		if (DateUtil.isAM(date)) {
@@ -274,7 +294,7 @@ public class LeetCodeTest {
 		log.info("工作再累，一定不要忘记摸鱼哦！");
 		log.info("有事没事起身去茶水间去厕所去廊道走走，别老在工位上坐着，钱是老板的，但命是自己的 ！");
 		entries.forEach(item -> log.info("距离[{}]还有:{}天", item.getKey(), item.getValue()));
-		log.info("是帮老板赚钱，摸鱼是赚老板的钱！");
+		log.info("努力工作是帮老板赚钱，摸鱼是赚老板的钱！");
 		log.info("最后，祝愿天下所有摸鱼人，都能愉快的渡过每一天…");
 	}
 

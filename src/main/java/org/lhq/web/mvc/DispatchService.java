@@ -1,4 +1,4 @@
-package org.lhq.web;
+package org.lhq.web.mvc;
 
 public class DispatchService {
 }

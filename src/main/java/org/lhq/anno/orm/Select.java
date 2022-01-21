@@ -1,4 +1,4 @@
-package org.lhq.anno;
+package org.lhq.anno.orm;
 
 import java.lang.annotation.*;
 
