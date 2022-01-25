@@ -1,6 +1,7 @@
 package org.lhq.leetcode;
 
 import lombok.extern.slf4j.Slf4j;
+import org.lhq.leetcode.struc.ListNode;
 import org.lhq.leetcode.struc.TreeNode;
 
 import java.util.*;
@@ -13,6 +14,38 @@ import java.util.*;
  */
 @Slf4j
 public class LeetCode {
+
+	public void merge(int[] nums1, int m, int[] nums2, int n) {
+		int total = m+n;
+		int p = m-1;
+		int p2 = n-1;
+		int tail = total -1;
+		int cur;
+		while (p>=0 || p2>=0){
+			if (nums1[p]>nums2[p2]){
+				cur = nums1[p--];
+			}if (nums2[p2]>nums1[p]){
+				cur = nums2[p2--];
+			}
+			//nums1[tail--] = cur;
+		}
+	}
+
+
+	public ListNode deleteDuplicates(ListNode head) {
+		ListNode current;
+		current = head;
+		while (current!=null&& current.next!=null){
+			if (current.val==current.next.val){
+				current.next = current.next.next;
+			}else {
+				current = current.next;
+			}
+		}
+		return head;
+	}
+
+
 	/**
 	 * 66. 加一
 	 * @param digits

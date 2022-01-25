@@ -7,12 +7,14 @@ import cn.hutool.core.date.DateUtil;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.lhq.leetcode.LeetCode;
+import org.lhq.leetcode.struc.ListNode;
 import org.lhq.leetcode.struc.TreeNode;
 import org.lhq.utils.HolidayEnum;
 
@@ -296,6 +298,22 @@ public class LeetCodeTest {
 		entries.forEach(item -> log.info("距离[{}]还有:{}天", item.getKey(), item.getValue()));
 		log.info("努力工作是帮老板赚钱，摸鱼是赚老板的钱！");
 		log.info("最后，祝愿天下所有摸鱼人，都能愉快的渡过每一天…");
+	}
+
+
+	@Test
+	void deleteDuplicates(){
+		ListNode node1 = new ListNode(1);
+		ListNode node2 = new ListNode(1);
+		ListNode node3 = new ListNode(2);
+		ListNode node4 = new ListNode(3);
+		ListNode node5 = new ListNode(3);
+		node1.next = node2;
+		node2.next = node3;
+		node3.next = node4;
+		node4.next = node5;
+		leetCode.deleteDuplicates(node1);
+		log.info("{}",node1);
 	}
 
 
