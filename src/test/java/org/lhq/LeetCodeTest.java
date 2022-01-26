@@ -13,6 +13,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Timeout;
 import org.lhq.leetcode.LeetCode;
 import org.lhq.leetcode.struc.ListNode;
 import org.lhq.leetcode.struc.TreeNode;
@@ -24,8 +25,10 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiFunction;
 
 
 /**
@@ -63,6 +66,7 @@ public class LeetCodeTest {
 	 * 整数反转
 	 */
 	@Test
+	@Timeout(1)
 	public void reverse() {
 		int x = 1534236469;
 		log.info(String.valueOf((1 << 31) - 1));
@@ -78,6 +82,7 @@ public class LeetCodeTest {
 	 * 整数反转
 	 */
 	@Test
+	@Timeout(1)
 	public void isPalindrome() {
 		log.info(String.valueOf(leetCode.isPalindrome(123)));
 	}
@@ -86,18 +91,21 @@ public class LeetCodeTest {
 	 * 罗马数字转阿拉伯数字
 	 */
 	@Test
-	public void romanToInt() {
+	@Timeout(1)
+	void romanToInt() {
 		log.info(leetCode.romanToInt("IVI").toString());
 	}
 
 	@Test
-	public void longestCommonPrefix() {
+	@Timeout(1)
+	void longestCommonPrefix() {
 		String[] strings = {"flower", "flow", "flight"};
 		log.info(leetCode.longestCommonPrefix(strings));
 	}
 
 	@Test
-	public void verticalTraversal() {
+	@Timeout(1)
+	void verticalTraversal() {
 		TreeNode treeNode = new TreeNode(3);
 		TreeNode treeNode1 = new TreeNode(9);
 		TreeNode treeNode2 = new TreeNode(20);
@@ -111,7 +119,8 @@ public class LeetCodeTest {
 	}
 
 	@Test
-	public void removeElement() {
+	@Timeout(1)
+	void removeElement() {
 		int[] nums = new int[]{0, 0, 1, 1, 1, 2, 2, 3, 3, 4};
 		int i = leetCode.removeDuplicates(nums);
 		int i1 = leetCode.removeElement(nums, 2);
@@ -119,7 +128,8 @@ public class LeetCodeTest {
 	}
 
 	@Test
-	public void aeiou() {
+	@Timeout(1)
+	void aeiou() {
 		log.info(leetCode.reverseVowels("Hello"));
 	}
 
@@ -206,6 +216,15 @@ public class LeetCodeTest {
 	@Test
 	void countdown() {
 		String[] holidays = {"元旦", "春节", "清明", "五一", "端午", "中秋", "国庆"};
+		 HashMap<String, BiFunction<Integer,String,Date>> functionHashMap = new HashMap<>();
+		 HashMap<String, HolidayEnum> holidayEnumMap = new HashMap<>();
+		holidayEnumMap.put("元旦",HolidayEnum.NewYear);
+		holidayEnumMap.put("春节",HolidayEnum.ChineseNewYear);
+		holidayEnumMap.put("五一",HolidayEnum.InternationalLaborDay);
+		holidayEnumMap.put("端午",HolidayEnum.DragonBoatFestival);
+		holidayEnumMap.put("中秋",HolidayEnum.MidAutumnFestival);
+		holidayEnumMap.put("国庆",HolidayEnum.NationalDay);
+		Arrays.stream(holidays).forEach(festival -> functionHashMap.put(festival,(year, holiday) -> this.getDayOfHoliday(year,holidayEnumMap.get(holiday))));
 		DateTime now = DateTime.now();
 		int year = now.year();
 		int month = now.month()+1;
@@ -213,79 +232,18 @@ public class LeetCodeTest {
 		Date date = now.toJdkDate();
 		LinkedHashMap<String, Long> festivalMap = Maps.newLinkedHashMap();
 		Arrays.stream(holidays).forEach(holiday->{
-			switch (holiday){
-				case "元旦":
-					Date newYear = getDayOfHoliday(year, HolidayEnum.NewYear);
-					long betweenNewYear = DateUtil.between(date, newYear, DateUnit.DAY,false);
-					festivalMap.put(holiday, betweenNewYear);
-					break;
-				case "春节":
-					Date chineseNewYear = getDayOfHoliday(year, HolidayEnum.ChineseNewYear);
-					long betweenChineseNewYear = DateUtil.between(chineseNewYear, date, DateUnit.DAY);
-					festivalMap.put(holiday, betweenChineseNewYear);
-					break;
-				case "清明":
-					log.debug("清明节不确定日期");
-					break;
-				case "五一":
-					Date labor = getDayOfHoliday(year,HolidayEnum.InternationalLaborDay);
-					long betweenDay = DateUtil.between(date, labor, DateUnit.DAY,false);
-					festivalMap.put(holiday,betweenDay);
-					break;
-				case "端午":
-					Date dragonBoat = getDayOfHoliday(year, HolidayEnum.DragonBoatFestival);
-					long dragonBoatBetweenDay = DateUtil.between(date, dragonBoat, DateUnit.DAY,false);
-					festivalMap.put(holiday,dragonBoatBetweenDay);
-					break;
-				case "中秋":
-					Date midAutumn = getDayOfHoliday(year, HolidayEnum.MidAutumnFestival);
-					long midAutumnBetweenDay = DateUtil.between(date, midAutumn, DateUnit.DAY,false);
-					festivalMap.put(holiday,midAutumnBetweenDay);
-					break;
-				case "国庆":
-					Date nationalDay = getDayOfHoliday(year, HolidayEnum.NationalDay);
-					long nationalDayBetweenDay = DateUtil.between(date, nationalDay, DateUnit.DAY,false);
-					festivalMap.put(holiday,nationalDayBetweenDay);
-					break;
-				default:break;
-			}
+			Date apply = functionHashMap.get(holiday).apply(year, holiday);
+			long between = DateUtil.between(date, apply, DateUnit.DAY, false);
+			festivalMap.put(holiday,between);
 		});
 		ArrayList<Map.Entry<String, Long>> entries = Lists.newArrayList(festivalMap.entrySet());
 		entries.stream()
 				.filter(item -> item.getValue() < 0)
 				.forEach(item -> {
 					String key = item.getKey();
-					long betweenDay;
-					switch (key){
-						case "元旦":
-							betweenDay = DateUtil.betweenDay(date, getDayOfHoliday(year + 1, HolidayEnum.NewYear), false);
-							item.setValue(betweenDay);
-							break;
-						case "春节":
-							betweenDay = DateUtil.betweenDay(date, getDayOfHoliday(year + 1, HolidayEnum.ChineseNewYear), false);
-							item.setValue(betweenDay);
-							break;
-						case "清明":
-							log.debug("清明节是哪一天啊");
-						case "五一":
-							betweenDay = DateUtil.betweenDay(date, getDayOfHoliday(year + 1, HolidayEnum.InternationalLaborDay), false);
-							item.setValue(betweenDay);
-							break;
-						case "端午":
-							betweenDay = DateUtil.betweenDay(date, getDayOfHoliday(year + 1, HolidayEnum.DragonBoatFestival), false);
-							item.setValue(betweenDay);
-							break;
-						case "中秋":
-							betweenDay = DateUtil.betweenDay(date, getDayOfHoliday(year + 1, HolidayEnum.MidAutumnFestival), false);
-							item.setValue(betweenDay);
-							break;
-						case "国庆":
-							betweenDay = DateUtil.betweenDay(date, getDayOfHoliday(year + 1, HolidayEnum.NationalDay), false);
-							item.setValue(betweenDay);
-							break;
-					}
-
-
+					Date newDate = functionHashMap.get(key).apply(year + 1, key);
+					long between = DateUtil.between(date, newDate, DateUnit.DAY, false);
+					item.setValue(between);
 				});
 		entries.sort((o1, o2) -> Math.toIntExact(o1.getValue() - o2.getValue()));
 		if (DateUtil.isAM(date)) {
