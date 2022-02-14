@@ -7,11 +7,11 @@ import cn.hutool.core.date.DateUtil;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
-import lombok.val;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
 import org.lhq.leetcode.LeetCode;
@@ -214,27 +214,22 @@ public class LeetCodeTest {
 	}
 
 	@Test
+	@DisplayName("摸鱼人提示")
 	void countdown() {
-		String[] holidays = {"元旦", "春节", "清明", "五一", "端午", "中秋", "国庆"};
-		 HashMap<String, BiFunction<Integer,String,Date>> functionHashMap = new HashMap<>();
-		 HashMap<String, HolidayEnum> holidayEnumMap = new HashMap<>();
-		holidayEnumMap.put("元旦",HolidayEnum.NewYear);
-		holidayEnumMap.put("春节",HolidayEnum.ChineseNewYear);
-		holidayEnumMap.put("五一",HolidayEnum.InternationalLaborDay);
-		holidayEnumMap.put("端午",HolidayEnum.DragonBoatFestival);
-		holidayEnumMap.put("中秋",HolidayEnum.MidAutumnFestival);
-		holidayEnumMap.put("国庆",HolidayEnum.NationalDay);
-		Arrays.stream(holidays).forEach(festival -> functionHashMap.put(festival,(year, holiday) -> this.getDayOfHoliday(year,holidayEnumMap.get(holiday))));
+		HashMap<String, BiFunction<Integer, String, Date>> functionHashMap = new HashMap<>();
+		HashMap<String, HolidayEnum> holidayEnumMap = new HashMap<>();
+		Arrays.stream(HolidayEnum.values()).forEach(holidayEnum -> holidayEnumMap.put(holidayEnum.getHolidayName(), holidayEnum));
+		Arrays.stream(HolidayEnum.values()).forEach(holidayEnum -> functionHashMap.put(holidayEnum.getHolidayName(), (year, holiday) -> this.getDayOfHoliday(year, holidayEnumMap.get(holidayEnum.getHolidayName()))));
+		LinkedHashMap<String, Long> festivalMap = Maps.newLinkedHashMap();
 		DateTime now = DateTime.now();
 		int year = now.year();
-		int month = now.month()+1;
+		int month = now.month() + 1;
 		int day = now.dayOfMonth();
 		Date date = now.toJdkDate();
-		LinkedHashMap<String, Long> festivalMap = Maps.newLinkedHashMap();
-		Arrays.stream(holidays).forEach(holiday->{
-			Date apply = functionHashMap.get(holiday).apply(year, holiday);
+		Arrays.stream(HolidayEnum.values()).forEach(holidayEnum -> {
+			Date apply = functionHashMap.get(holidayEnum.getHolidayName()).apply(year, holidayEnum.getHolidayName());
 			long between = DateUtil.between(date, apply, DateUnit.DAY, false);
-			festivalMap.put(holiday,between);
+			festivalMap.put(holidayEnum.getHolidayName(), between);
 		});
 		ArrayList<Map.Entry<String, Long>> entries = Lists.newArrayList(festivalMap.entrySet());
 		entries.stream()
@@ -247,9 +242,9 @@ public class LeetCodeTest {
 				});
 		entries.sort((o1, o2) -> Math.toIntExact(o1.getValue() - o2.getValue()));
 		if (DateUtil.isAM(date)) {
-			log.info("{}月{}日,早上好摸鱼人！",month,day);
+			log.info("{}月{}日,早上好摸鱼人！", month, day);
 		} else if (DateUtil.isPM(date)) {
-			log.info("{}月{}日,下午好摸鱼人！",month,day);
+			log.info("{}月{}日,下午好摸鱼人！", month, day);
 		}
 		log.info("工作再累，一定不要忘记摸鱼哦！");
 		log.info("有事没事起身去茶水间去厕所去廊道走走，别老在工位上坐着，钱是老板的，但命是自己的 ！");
@@ -260,7 +255,7 @@ public class LeetCodeTest {
 
 
 	@Test
-	void deleteDuplicates(){
+	void deleteDuplicates() {
 		ListNode node1 = new ListNode(1);
 		ListNode node2 = new ListNode(1);
 		ListNode node3 = new ListNode(2);
@@ -271,7 +266,22 @@ public class LeetCodeTest {
 		node3.next = node4;
 		node4.next = node5;
 		leetCode.deleteDuplicates(node1);
-		log.info("{}",node1);
+		log.info("{}", node1);
+	}
+
+
+	@Test
+	void containsDuplicate() {
+		boolean result = leetCode.containsDuplicate(new int[]{1, 2, 3, 4});
+		log.info("{}", result);
+		final boolean duplicate = leetCode.containsNearbyDuplicate(new int[]{1, 0, 1, 1}, 1);
+		log.info("{}",duplicate);
+		final int i = leetCode.missingNumber(new int[]{3, 0, 1});
+		log.info("{}",i);
+		final boolean b = leetCode.wordPattern("abba",
+				"dog cat cat dog");
+		log.info("{}",b);
+
 	}
 
 
