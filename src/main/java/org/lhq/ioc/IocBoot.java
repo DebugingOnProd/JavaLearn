@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 public class IocBoot {
     public static void run(){
       log.info("ioc容器启动");
+      BeanFactory.beanScan("org.lhq.controller");
       BeanFactory.startContainer();
     }
 }

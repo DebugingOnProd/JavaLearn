@@ -41,7 +41,6 @@ public class HttpServer {
 		} catch (IOException e) {
 			log.error("服务器启动失败...",e);
 		}
-		//System.in.read();
 	}
 
 	/**
@@ -70,7 +69,6 @@ public class HttpServer {
 				poll(selector);
 			} catch (IOException e) {
 				log.info("服务器异常退出...");
-				e.printStackTrace();
 			}
 		}, "Selector-IO").start();
 	}

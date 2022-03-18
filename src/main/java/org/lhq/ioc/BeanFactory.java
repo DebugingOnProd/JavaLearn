@@ -10,7 +10,11 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
@@ -21,7 +25,7 @@ public class BeanFactory {
 
     private static Map<String, Object> beanCache = new ConcurrentHashMap<>();
 
-    private static Map<String,List<String>> beanDepend = new HashMap<>();
+    private static Map<String, List<String>> beanDepend = new HashMap<>();
 
     public static <T> T getBean(Class<T> clazz) {
         return (T) beanCache.get(clazz.getName());
@@ -35,7 +39,7 @@ public class BeanFactory {
                 .collect(Collectors.toList());
     }
 
-    public void beanScan(String packageName){
+    public static void beanScan(String packageName){
         Set<Class<?>> classes = BeanScan.mapperScan(packageName);
         List<Class<?>> beanList = classes.stream()
                 .filter(clazz -> clazz.getAnnotation(Component.class) != null)

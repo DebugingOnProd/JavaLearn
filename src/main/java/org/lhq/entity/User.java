@@ -2,7 +2,6 @@ package org.lhq.entity;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
-import lombok.extern.java.Log;
 
 import java.time.LocalDateTime;
 
@@ -35,9 +34,9 @@ public class User {
     /**
      * 昵称
      */
-    private String nickname;
+	private String nickname;
 
-    /**
+	/**
      * 个人简介
      */
     private String introduction;
@@ -61,6 +60,11 @@ public class User {
      * 更新时间
      */
     private LocalDateTime gmtModified;
+
+    private String name;
+    private String mobile;
+    private LocalDateTime createTime;
+
     private Boolean status;
     /**
      * 逻辑删除，1可用，0不可用

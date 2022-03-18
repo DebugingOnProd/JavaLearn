@@ -4,6 +4,7 @@ import cn.hutool.core.date.ChineseDate;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.date.DateUnit;
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.date.Week;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +30,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.BiFunction;
+import java.util.stream.Collectors;
 
 
 /**
@@ -182,7 +184,7 @@ public class LeetCodeTest {
 	@Test
 	void dayCal() {
 		LocalDate time = LocalDate.of(2021, 5, 26);
-		LocalDate goHome = LocalDate.of(2022, 1, 29);
+		LocalDate goHome = LocalDate.of(2023, 1, 22);
 		Instant instant = time.atStartOfDay(ZoneId.systemDefault()).toInstant();
 		Date leaveDate = Date.from(instant);
 		Instant comeBack = goHome.atStartOfDay(ZoneId.systemDefault()).toInstant();
@@ -193,11 +195,11 @@ public class LeetCodeTest {
 		int year = now.getYear();
 		int month = now.getMonth().getValue();
 		int dayOfMonth = now.getDayOfMonth();
-		log.trace("今天是{}年{}月{}日,我离开南宁的{}天,距离回家还有{}天", year, month, dayOfMonth, betweenLeave, goHomeDay);
-		log.debug("今天是{}年{}月{}日,我离开南宁的{}天,距离回家还有{}天", year, month, dayOfMonth, betweenLeave, goHomeDay);
-		log.info("今天是{}年{}月{}日,我离开南宁的{}天,距离回家还有{}天", year, month, dayOfMonth, betweenLeave, goHomeDay);
-		log.warn("今天是{}年{}月{}日,我离开南宁的{}天,距离回家还有{}天", year, month, dayOfMonth, betweenLeave, goHomeDay);
-		log.error("今天是{}年{}月{}日,我离开南宁的{}天,距离回家还有{}天", year, month, dayOfMonth, betweenLeave, goHomeDay);
+		log.trace("今天是{}年{}月{}日,我离开南宁的{}天,下一个春节还有{}天", year, month, dayOfMonth, betweenLeave, goHomeDay);
+		log.debug("今天是{}年{}月{}日,我离开南宁的{}天,下一个春节还有{}天", year, month, dayOfMonth, betweenLeave, goHomeDay);
+		log.info("今天是{}年{}月{}日,我离开南宁的{}天,下一个春节还有{}天", year, month, dayOfMonth, betweenLeave, goHomeDay);
+		log.warn("今天是{}年{}月{}日,我离开南宁的{}天,下一个春节还有{}天", year, month, dayOfMonth, betweenLeave, goHomeDay);
+		log.error("今天是{}年{}月{}日,我离开南宁的{}天,下一个春节还有{}天", year, month, dayOfMonth, betweenLeave, goHomeDay);
 
 	}
 
@@ -242,9 +244,9 @@ public class LeetCodeTest {
 				});
 		entries.sort((o1, o2) -> Math.toIntExact(o1.getValue() - o2.getValue()));
 		if (DateUtil.isAM(date)) {
-			log.info("{}月{}日,早上好摸鱼人！", month, day);
+			log.info("{}月{}日,{},早上好摸鱼人！", month, day,DateUtil.dayOfWeekEnum(date).toChinese());
 		} else if (DateUtil.isPM(date)) {
-			log.info("{}月{}日,下午好摸鱼人！", month, day);
+			log.info("{}月{}日,{},下午好摸鱼人！", month, day,DateUtil.dayOfWeekEnum(date).toChinese());
 		}
 		log.info("工作再累，一定不要忘记摸鱼哦！");
 		log.info("有事没事起身去茶水间去厕所去廊道走走，别老在工位上坐着，钱是老板的，但命是自己的 ！");
@@ -281,7 +283,6 @@ public class LeetCodeTest {
 		final boolean b = leetCode.wordPattern("abba",
 				"dog cat cat dog");
 		log.info("{}",b);
-
 	}
 
 

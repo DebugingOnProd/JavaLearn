@@ -8,7 +8,7 @@ import lombok.Getter;
 public enum HolidayEnum {
 	//农历节日
 	ChineseNewYear("春节",1,1,true),
-	//TombSweepingDay("清明节",1,1),
+	TombSweepingDay("清明节",4,5,false),
 	DragonBoatFestival("端午节",5,5,true),
 	MidAutumnFestival("中秋节",8,15,true),
 	//公历节日

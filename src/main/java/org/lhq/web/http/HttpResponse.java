@@ -10,4 +10,5 @@ public class HttpResponse {
 	private String status;  // 状态信息
 	private Map<String, String> headers; // 响应头
 	private String body;    // 响应数据
+	private byte[] data;
 }

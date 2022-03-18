@@ -15,6 +15,124 @@ import java.util.*;
 @Slf4j
 public class LeetCode {
 
+	public void rotate(int[] nums, int k) {
+
+	}
+
+
+
+	public int[] sortedSquares(int[] nums) {
+		int left  = 0;
+		int right = nums.length - 1;
+		int[] ans = new  int[nums.length];
+		int pos = nums.length-1;
+		while (left<=right ){
+			nums[left]  = nums[left] * nums[left];
+			nums[right] = nums[right] * nums[right];
+			if (nums[left]>=nums[right]){
+				ans[pos] = nums[left];
+				left++;
+			}else {
+				ans[pos] = nums[right];
+				right--;
+			}
+			pos--;
+
+		}
+		return ans;
+	}
+
+	 
+
+	public int[] intersection(int[] nums1, int[] nums2) {
+		Set<Integer> set = new HashSet<>();
+		Set<Integer> set2 = new HashSet<>();
+		for (int i : nums1) {
+			set.add(i);
+		}
+		for (int i : nums2) {
+			 if (set.contains(i)){
+				 set2.add(i);
+			 }
+		}
+		return set2.stream().mapToInt(i -> i).toArray();
+
+	}
+
+
+	public boolean wordPattern(String pattern, String s) {
+		Map<Character,String> char2Str = new HashMap<>();
+		Map<String, Character> str2Char = new HashMap<>();
+		int m = s.length();
+		int p = 0;
+		for (int i = 0; i < pattern.length(); ++i) {
+			char ch = pattern.charAt(i);
+			if (p>=m){
+				return false;
+			}
+			int j= p;
+			while (j<m && s.charAt(j) != ' '){
+				j++;
+			}
+			String subString = s.substring(p, j);
+			if (str2Char.containsKey(subString) && str2Char.get(subString) != ch){
+				return false;
+			}
+			if (char2Str.containsKey(ch) && !char2Str.get(ch).equals(subString)){
+				return false;
+			}
+			str2Char.put(subString,ch);
+			char2Str.put(ch,subString);
+			p = j+ 1;
+		}
+		return p >= m;
+
+	}
+
+
+	public int missingNumber(int[] nums) {
+		int n = nums.length;
+		Set<Integer> set = new HashSet<>();
+		for (int num : nums) {
+			set.add(num);
+		}
+		int miss = 0;
+		for (int i = 0; i <= n; i++) {
+			if (!set.contains(i)){
+				miss = i;
+				break;
+			}
+		}
+		return miss;
+	}
+
+	public boolean containsNearbyDuplicate(int[] nums, int k) {
+		Map<Integer, Integer> map = new HashMap<>();
+		for (int i = 0; i < nums.length; i++) {
+			int  value = nums[i];
+			boolean key = map.containsKey(value);
+			if (key&&Math.abs(i-map.get(value))<=k){
+				return true;
+			}
+			map.put(value,i);
+		}
+		return false;
+	}
+
+
+
+	public boolean containsDuplicate(int[] nums) {
+		Set<Integer> set = new HashSet<>();
+		for (int num : nums) {
+			 boolean add = set.add(num);
+			 if (!add){
+				 return true;
+			 }
+		}
+		return false;
+
+	}
+
 	public void merge(int[] nums1, int m, int[] nums2, int n) {
 		int total = m+n;
 		int p = m-1;

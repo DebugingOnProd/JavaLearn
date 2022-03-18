@@ -39,13 +39,14 @@ public class ConnectionPool {
         return JdbcUtil.getConnection(dbConfig);
     }
 
-    public static synchronized Connection getConnection(){
-        log.info("获取链接,连接池中剩余{}个链接",SOURCE_POOL.size());
+    public static  Connection getConnection(){
         if (SOURCE_POOL.isEmpty()){
             log.info("没有连接了呢！请耐心守候");
         }
         try {
-            return SOURCE_POOL.take();
+			Connection connection = SOURCE_POOL.take();
+			log.info("获取链接,连接池中剩余{}个链接",SOURCE_POOL.size());
+			return connection;
         } catch (InterruptedException e) {
             log.error(e.getMessage());
             return null;
