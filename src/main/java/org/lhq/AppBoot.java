@@ -6,10 +6,10 @@ import org.lhq.ioc.IocBoot;
 import org.lhq.web.HttpServer;
 
 @Slf4j
-@ComponentScan
+@ComponentScan({"org.lhq.controller","org.lhq.service"})
 public class AppBoot {
     public static void main(String[] args) {
+        IocBoot.run(AppBoot.class,args);
 		HttpServer.run(0,args);
-		IocBoot.run();
     }
 }

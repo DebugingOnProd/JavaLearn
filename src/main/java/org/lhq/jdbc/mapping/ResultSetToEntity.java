@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class ResultSetToEntity {
     /**
-     * @param <T>   ：泛型
+     * @param <E>   ：泛型
      * @param clazz ：实体类的Class
      * @param rs    ：查询的结果集
      * @return 返回类型 ：List<T>

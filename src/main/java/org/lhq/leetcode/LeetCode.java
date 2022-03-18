@@ -5,7 +5,6 @@ import org.lhq.leetcode.struc.ListNode;
 import org.lhq.leetcode.struc.TreeNode;
 
 import java.util.*;
-
 /**
  * @program: org.lhq.leetcode
  * @description:
@@ -133,6 +132,263 @@ public class LeetCode {
 
 	}
 
+
+	public boolean uniqueOccurrences(int[] arr) {
+		HashMap<Integer, Integer> integerMap = new HashMap<>();
+		Arrays.stream(arr).forEach(item-> integerMap.put(item,integerMap.getOrDefault(item,0)+1));
+		HashSet<Integer> hashSet = new HashSet<>();
+		integerMap.forEach((key, value) -> hashSet.add(value));
+		return hashSet.size()==integerMap.size();
+	}
+
+	public ListNode removeNthFromEnd(ListNode head, int n) {
+		ListNode fast=head,slow=head;
+		ListNode superSlow=null;
+		for (int i = 0; i < n; i++) {
+			fast = fast.next;
+		}
+		while (fast!=null){
+			superSlow = slow;
+			fast=fast.next;
+			slow = slow.next;
+		}
+		superSlow = superSlow.next.next;
+		return head;
+
+	}
+	public int[] twoSum(int[] numbers, int target) {
+
+
+
+
+		int lenght = numbers.length;
+		int left = 0;
+		int right = lenght-1;
+		while (left<right){
+			int sum = numbers[left] + numbers[right];
+			if (sum == target){
+				return new int[]{left,right};
+			}else if (sum< target){
+				left++;
+			}else {
+				right--;
+			}
+		}
+		return null;
+	}
+
+
+	public ListNode middleNode(ListNode head) {
+		ListNode fast =head ,slow = head;
+		while(fast.next!=null){
+			fast = fast.next.next;
+			slow = slow.next;
+		}
+		return slow;
+
+	}
+
+
+	public void moveZeroes(int[] nums) {
+		int left = 0,right=0;
+		while (left<nums.length){
+			if (nums[right]!=0){
+				swap(nums,left,right);
+				left++;
+			}
+			right++;
+		}
+
+	}
+	public void swap(int[] nums, int left, int right) {
+		int temp = nums[left];
+		nums[left] = nums[right];
+		nums[right] = temp;
+	}
+
+
+
+	public String reverseWords(String s) {
+		String[] strings = s.split(" ");
+		StringBuffer stringBuffer = new StringBuffer();
+		Arrays.stream(strings).forEach(item->{
+			char[] chars = item.toCharArray();
+			int length = chars.length;
+			int left = 0;
+			int right = length-1;
+			while (left<right){
+				char tmp = chars[left];
+				chars[left] = chars[right];
+				chars[right] = tmp;
+				left++;
+				right--;
+			}
+			stringBuffer.append(chars.toString()).append(" ");
+		});
+		stringBuffer.deleteCharAt(stringBuffer.length());
+		return stringBuffer.toString();
+	}
+
+
+	public int searchInsert(int[] nums, int target) {
+		int left = 0;
+		int right = nums.length;
+		while (left<=right){
+			int mid = left+(right-left)/2;
+			if(nums[mid]==target){
+				return mid;
+			} else if (nums[mid]>target) {
+				right = mid-1;
+			}else if (nums[mid]<target){
+				left = mid+1;
+			}
+		}
+		return right;
+	}
+
+
+
+	public char findTheDifference(String s, String t) {
+		char[] chars = s.toCharArray();
+		char[] chars1 = t.toCharArray();
+		Set<Character> set = new HashSet<>();
+		Set<Character> set2 = new HashSet<>();
+		for (char c : chars) {
+			set.add(c);
+		}
+		for (char c : chars1) {
+			set.remove(c);
+		}
+		return '2';
+
+	}
+
+
+
+	public List<Integer> findDisappearedNumbers(int[] nums) {
+		int  n = nums.length;
+		HashSet<Integer> integers = new HashSet<>();
+		for (int i = 1; i <= n; i++) {
+			integers.add(i);
+		}
+		for (int num : nums) {
+			integers.remove(num);
+		}
+		return new ArrayList<>(integers);
+	}
+	public int countKDifference(int[] nums, int k) {
+		Map<Integer,Integer> map = new HashMap<>();
+		int count = 0;
+		for (int num : nums) {
+			count += map.getOrDefault(num,0);
+			map.put(num+k,map.get(num+k)+1);
+			map.put(num-k,map.get(num-k)+1);
+		}
+		return count;
+	}
+
+	public int numJewelsInStones(String jewels, String stones) {
+		char[] jeweksChar = jewels.toCharArray();
+		char[] stonesChar = stones.toCharArray();
+		int count = 0;
+		Set<Character> set = new HashSet<>();
+		for (char c : jeweksChar) {
+			set.add(c);
+		}
+		for (char c : stonesChar) {
+			if (set.contains(c)) {
+				count++;
+			}
+		}
+		return count;
+	}
+
+
+	public boolean isIsomorphic(String s, String t) {
+		HashMap<Character, Character> map = new HashMap<>();
+		char[] chars = s.toCharArray();
+		char[] chars1 = t.toCharArray();
+		for (int i = 0; i < chars.length; i++) {
+			Character character = map.putIfAbsent(chars[i], chars1[i]);
+			log.info("{}...{}:{}:{}",chars[i],chars1[i],map.get(chars[i]),chars1[i] != map.get(chars[i]));
+			log.info("{}",character);
+			if (character!=null && character!=chars1[i] ){
+				return false;
+			}
+		}
+
+
+	
+		return true;
+
+	}
+
+
+	public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+		Set<ListNode> set = new HashSet<>();
+		while (headA!=null){
+			set.add(headA);
+			headA = headA.next;
+		}
+		while (headB!=null){
+			if (set.contains(headB)){
+				return headB;
+			}
+			headB = headB.next;
+		}
+		return null;
+
+	}
+
+
+	public boolean hasCycle(ListNode head) {
+		Set<Integer> set = new HashSet<>();
+		while (head.next!=null){
+			if (set.contains(head.hashCode())){
+				return true;
+			}
+			set.add(head.hashCode());
+			head = head.next;
+		}
+		return false;
+	}
+	public boolean isHappy(int n) {
+		Set<Integer> set = new HashSet<>();
+		while (n>1){
+			boolean contains = set.contains(n);
+			if (contains){return false;}
+			set.add(n);
+			n = getNext(n);
+		}
+		return n==1;
+	}
+	private  int getNext(int n){
+		int sum = 0;
+		while (n>0){
+			int tmp = n%10;
+			n = n/10;
+			sum += tmp*tmp;
+		}
+		return sum;
+	}
+
+
+
+	public int majorityElement(int[] nums) {
+		Map<Integer, Integer> count = new LinkedHashMap<>();
+		for (int num : nums) {
+			count.computeIfPresent(num,(key, value) -> value + 1);
+			count.putIfAbsent(num, 1);
+		}
+		Map.Entry<Integer,Integer> entity = null;
+		for (Map.Entry<Integer, Integer> entry : count.entrySet()) {
+			if (entity==null || entry.getValue()>entity.getValue()){
+				entity = entry;
+			}
+		}
+		return entity.getKey();
+	}
+
 	public void merge(int[] nums1, int m, int[] nums2, int n) {
 		int total = m+n;
 		int p = m-1;
@@ -147,6 +403,28 @@ public class LeetCode {
 			}
 			//nums1[tail--] = cur;
 		}
+	}
+
+
+
+	public List<Integer> inorderTraversal(TreeNode root) {
+		LinkedList<TreeNode> stack = new LinkedList<>();
+		List<Integer> result = new ArrayList<>();
+		if (root == null) {
+			return Collections.emptyList();
+		}
+		TreeNode cur = root;
+		while (cur != null || !stack.isEmpty()) {
+			if (cur != null) {
+				stack.push(cur);
+				cur = cur.left;
+			}
+			cur = stack.pop();
+			result.add(cur.val);
+			cur = cur.right;
+
+		}
+		return result;
 	}
 
 

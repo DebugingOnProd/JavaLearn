@@ -31,21 +31,32 @@ public class BeanFactory {
         return (T) beanCache.get(clazz.getName());
     }
 
-    public void getDependBean(Class<?> clazz){
+    /**
+     * 获取这个bean的依赖
+     * @param clazz
+     * @return
+     */
+    public List<? extends Class<?>> getDependBean(Class<?> clazz){
         Field[] declaredFields = clazz.getDeclaredFields();
-        List<? extends Class<?>> classList = Arrays.stream(declaredFields)
+        return Arrays.stream(declaredFields)
                 .filter(field -> field.getAnnotation(AutoInject.class) != null)
                 .map(Field::getDeclaringClass)
                 .collect(Collectors.toList());
     }
 
     public static void beanScan(String packageName){
+    /**
+     * 根据包名扫描bean
+     * @param packageName
+     */
+    public List<Class<?>> beanScan(String packageName){
         Set<Class<?>> classes = BeanScan.mapperScan(packageName);
         List<Class<?>> beanList = classes.stream()
                 .filter(clazz -> clazz.getAnnotation(Component.class) != null)
                 .collect(Collectors.toList());
         beanList.forEach(bean->setBean(bean,bean.getName()));
 
+        return beanList;
     }
 
     public static Object getBean(String beanName) {

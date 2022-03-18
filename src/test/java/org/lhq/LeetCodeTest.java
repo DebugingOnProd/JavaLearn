@@ -255,6 +255,13 @@ public class LeetCodeTest {
 		log.info("最后，祝愿天下所有摸鱼人，都能愉快的渡过每一天…");
 	}
 
+	@Test
+	void merge(){
+		int [] nums1 = {1,2,3,0,0,0};
+		int [] nums3 = {1,2,3};
+		leetCode.merge(nums1,3,nums3,3);
+	}
+
 
 	@Test
 	void deleteDuplicates() {
@@ -267,7 +274,7 @@ public class LeetCodeTest {
 		node2.next = node3;
 		node3.next = node4;
 		node4.next = node5;
-		leetCode.deleteDuplicates(node1);
+		//leetCode.deleteDuplicates(node1);
 		log.info("{}", node1);
 	}
 
@@ -283,6 +290,18 @@ public class LeetCodeTest {
 		final boolean b = leetCode.wordPattern("abba",
 				"dog cat cat dog");
 		log.info("{}",b);
+	}
+
+	@Test
+	void majorityElement() {
+		int i = leetCode.majorityElement(new int[]{3, 2, 3});
+		log.info("{}",i);
+		boolean happy = leetCode.isHappy(19);
+		log.info("happy?{}",happy);
+		boolean isomorphic = leetCode.isIsomorphic("badc", "baba");
+		//boolean isomorphic = leetCode.isIsomorphic("add", "egg");
+		log.info("isomorphic:{}",isomorphic);
+
 	}
 
 
