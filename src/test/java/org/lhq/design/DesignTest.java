@@ -6,6 +6,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import org.lhq.design.adapter.AudioPlayer;
+import org.lhq.design.bridge.DriverManger;
+import org.lhq.design.bridge.DriverMangerImpl;
+import org.lhq.design.bridge.MySqlDriver;
 import org.lhq.design.builder.Builder;
 import org.lhq.design.factory.ICommodity;
 import org.lhq.design.factory.StoreFactory;
@@ -58,5 +61,11 @@ public class DesignTest {
 		audioPlayer.play("mp4", "alone.mp4");
 		audioPlayer.play("vlc", "far far away.vlc");
 		audioPlayer.play("avi", "mind me.avi");
+	}
+	@Test
+	@DisplayName("桥接模式")
+	void bridge(){
+		DriverManger driverManger =  new DriverMangerImpl("1","2","3",new MySqlDriver());
+		driverManger.doDriver();
 	}
 }
