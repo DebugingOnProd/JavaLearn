@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import org.lhq.design.adapter.AudioPlayer;
 import org.lhq.design.builder.Builder;
 import org.lhq.design.factory.ICommodity;
 import org.lhq.design.factory.StoreFactory;
@@ -46,5 +47,16 @@ public class DesignTest {
 		log.info(builder.levelTwo(98.25D).getDetail());
 		// 现代简约
 		log.info(builder.levelThree(85.43D).getDetail());
+	}
+
+	@Test
+	@DisplayName("适配器模式")
+	void adapter(){
+		AudioPlayer audioPlayer = new AudioPlayer();
+
+		audioPlayer.play("mp3", "beyond the horizon.mp3");
+		audioPlayer.play("mp4", "alone.mp4");
+		audioPlayer.play("vlc", "far far away.vlc");
+		audioPlayer.play("avi", "mind me.avi");
 	}
 }
