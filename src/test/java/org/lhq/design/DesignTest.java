@@ -1,0 +1,50 @@
+package org.lhq.design;
+
+import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import org.lhq.design.builder.Builder;
+import org.lhq.design.factory.ICommodity;
+import org.lhq.design.factory.StoreFactory;
+import org.lhq.design.factory.abstracts.CacheService;
+import org.lhq.design.factory.abstracts.factory.impl.MySQlCacheAdapter;
+import org.lhq.design.factory.abstracts.factory.impl.OracleCacheAdapter;
+import org.lhq.design.factory.abstracts.factory.proxy.JDKProxy;
+import org.lhq.design.factory.abstracts.impl.CacheServiceImpl;
+
+@Slf4j
+public class DesignTest {
+	@Test
+	@DisplayName("测试工厂模式")
+	void test() {
+		StoreFactory storeFactory = new StoreFactory();
+		ICommodity commodityService = storeFactory.getCommodityService(1);
+		commodityService.sendCommodity("1","2","3",null);
+		ICommodity commodityService2 = storeFactory.getCommodityService(2);
+		commodityService2.sendCommodity("1","2","3",null);
+
+
+	}
+	@SneakyThrows
+	@Test
+	@DisplayName("抽象工厂模式")
+	void absFactory(){
+		CacheService mysqlProxy = JDKProxy.getProxy(CacheService.class, MySQlCacheAdapter.class);
+		String mysql = mysqlProxy.get("");
+		CacheService oracleProxy = JDKProxy.getProxy(CacheService.class, OracleCacheAdapter.class);
+		String oracle = oracleProxy.get("");
+	}
+	@Test
+	@DisplayName("建造者模式")
+	void builder(){
+		Builder builder = new Builder();
+		// 豪华欧式
+		log.info(builder.levelOne(132.52D).getDetail());
+		// 轻奢田园
+		log.info(builder.levelTwo(98.25D).getDetail());
+		// 现代简约
+		log.info(builder.levelThree(85.43D).getDetail());
+	}
+}

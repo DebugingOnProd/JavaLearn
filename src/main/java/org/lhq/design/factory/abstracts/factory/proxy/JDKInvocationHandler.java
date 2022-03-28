@@ -1,9 +1,10 @@
 package org.lhq.design.factory.abstracts.factory.proxy;
 
-import cn.hutool.core.util.ClassLoaderUtil;
 import org.lhq.design.factory.abstracts.factory.ICacheAdapter;
+import org.lhq.utils.ClassLoaderUtils;
 
 import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 public class JDKInvocationHandler implements InvocationHandler {
@@ -13,7 +14,7 @@ public class JDKInvocationHandler implements InvocationHandler {
 		this.cacheAdapter = cacheAdapter;
 	}
 
-	public Object invoke(Object proxy, Method method, Object[] args) {
-		return null;
+	public Object invoke(Object proxy, Method method, Object[] args) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+		return ICacheAdapter.class.getMethod(method.getName(), ClassLoaderUtils.getClazzByArgs(args)).invoke(cacheAdapter, args);
 	}
 }

@@ -10,6 +10,6 @@ public class CacheServiceImpl implements CacheService  {
 	@Override
 	public String get(String key) {
 		log.info("根据key 获取缓存里面的值");
-		return null;
+		return "默认值";
 	}
 }

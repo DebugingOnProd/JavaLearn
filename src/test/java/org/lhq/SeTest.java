@@ -91,4 +91,11 @@ class SeTest {
 		}
 	}
 
+
+	@Test
+	void longTest(){
+		long l = Long.parseLong("-1");
+		log.info("{}",l);
+	}
+
 }

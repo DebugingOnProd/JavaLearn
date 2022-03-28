@@ -43,20 +43,18 @@ public class BeanFactory {
                 .map(Field::getDeclaringClass)
                 .collect(Collectors.toList());
     }
-
+	/**
+	 * 根据包名扫描bean
+	 * @param packageName
+	 */
     public static void beanScan(String packageName){
-    /**
-     * 根据包名扫描bean
-     * @param packageName
-     */
-    public List<Class<?>> beanScan(String packageName){
+
         Set<Class<?>> classes = BeanScan.mapperScan(packageName);
         List<Class<?>> beanList = classes.stream()
                 .filter(clazz -> clazz.getAnnotation(Component.class) != null)
                 .collect(Collectors.toList());
         beanList.forEach(bean->setBean(bean,bean.getName()));
 
-        return beanList;
     }
 
     public static Object getBean(String beanName) {
