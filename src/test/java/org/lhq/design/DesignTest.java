@@ -10,6 +10,10 @@ import org.lhq.design.bridge.DriverManger;
 import org.lhq.design.bridge.DriverMangerImpl;
 import org.lhq.design.bridge.MySqlDriver;
 import org.lhq.design.builder.Builder;
+import org.lhq.design.corp.AbstractLogger;
+import org.lhq.design.corp.ConsoleLogger;
+import org.lhq.design.corp.DebugLogger;
+import org.lhq.design.corp.ErrorLogger;
 import org.lhq.design.factory.ICommodity;
 import org.lhq.design.factory.StoreFactory;
 import org.lhq.design.factory.abstracts.CacheService;
@@ -84,4 +88,22 @@ public class DesignTest {
 		log.info("十进制数字:10");
 		subject.setState(10);
 	}
+	@Test
+	@DisplayName("责任链模式")
+	void chainPattern(){
+		AbstractLogger chainOfLoggers = getChainOfLoggers();
+		chainOfLoggers.logMessage(AbstractLogger.INFO,"infoMessage");
+		chainOfLoggers.logMessage(AbstractLogger.ERROR,"errorMessage");
+		chainOfLoggers.logMessage(AbstractLogger.DEBUG,"debugMessage");
+	}
+
+	private static AbstractLogger getChainOfLoggers(){
+		AbstractLogger errorLogger = new ErrorLogger(AbstractLogger.ERROR);
+		AbstractLogger consoleLogger = new ConsoleLogger(AbstractLogger.INFO);
+		AbstractLogger debugLogger = new DebugLogger(AbstractLogger.DEBUG);
+		errorLogger.setNextLogger(consoleLogger);
+		consoleLogger.setNextLogger(debugLogger);
+		return errorLogger;
+	}
+
 }
