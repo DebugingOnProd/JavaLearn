@@ -16,7 +16,10 @@ import org.lhq.design.factory.abstracts.CacheService;
 import org.lhq.design.factory.abstracts.factory.impl.MySQlCacheAdapter;
 import org.lhq.design.factory.abstracts.factory.impl.OracleCacheAdapter;
 import org.lhq.design.factory.abstracts.factory.proxy.JDKProxy;
-import org.lhq.design.factory.abstracts.impl.CacheServiceImpl;
+import org.lhq.design.observer.BinaryObserver;
+import org.lhq.design.observer.HexaObserver;
+import org.lhq.design.observer.OctalObserver;
+import org.lhq.design.observer.Subject;
 
 @Slf4j
 public class DesignTest {
@@ -67,5 +70,18 @@ public class DesignTest {
 	void bridge(){
 		DriverManger driverManger =  new DriverMangerImpl("1","2","3",new MySqlDriver());
 		driverManger.doDriver();
+	}
+	@Test
+	@DisplayName("观察者模式")
+	void observer(){
+		Subject subject = new Subject();
+		new HexaObserver(subject);
+		new OctalObserver(subject);
+		new BinaryObserver(subject);
+
+		log.info("十进制数字:15");
+		subject.setState(15);
+		log.info("十进制数字:10");
+		subject.setState(10);
 	}
 }
