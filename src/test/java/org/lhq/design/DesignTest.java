@@ -75,6 +75,18 @@ public class DesignTest {
 		DriverManger driverManger =  new DriverMangerImpl("1","2","3",new MySqlDriver());
 		driverManger.doDriver();
 	}
+
+	/**
+	 *当一个对象发生改变的时候，所有依赖他的对象都会被通知到,并自动更新
+	 *
+	 * 在抽象类中放一个数组来存放观察者们
+	 *
+	 * 注意 ：
+	 * java中已经对Observer类,
+	 * 避免循环引用
+	 * 如果循序执行如果一个错误就会影响下面的执行，最好用异步执行
+	 *
+	 */
 	@Test
 	@DisplayName("观察者模式")
 	void observer(){

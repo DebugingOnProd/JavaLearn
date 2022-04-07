@@ -1,5 +1,6 @@
 package org.lhq;
 
+import cn.hutool.core.date.TimeInterval;
 import cn.hutool.system.HostInfo;
 import cn.hutool.system.JavaInfo;
 import cn.hutool.system.JavaRuntimeInfo;
@@ -15,14 +16,17 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.lhq.se.CollectionStudy;
+import org.lhq.utils.AsyncThreadPoolUtil;
 import org.lhq.utils.DateUtil;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutionException;
 
 @Slf4j
 class SeTest {
@@ -84,18 +88,57 @@ class SeTest {
 		log.info(String.valueOf(runtimeInfo));
 		log.info(String.valueOf(hostInfo));
 	}
+
 	@Test
-	void threadLocalTest(){
-		for (int i = 0; i < 20; i++) {
-			new Thread(()-> DateUtil.getFormatDate(new Date(), "yyyy-MM-dd")).start();
+	void threadLocalTest() throws ExecutionException, InterruptedException {
+		ArrayList<Object> list = Lists.newArrayList();
+		TimeInterval timer = cn.hutool.core.date.DateUtil.timer();
+		//CountDownLatch latch = new CountDownLatch(2000);
+		for (int i = 0; i < 2000; i++) {
+			//Future<String> dateString = AsyncThreadPoolUtil.getInstance().submit(() -> DateUtil.getFormatDate(new Date(), "yyyy-MM-dd"));
+			CompletableFuture<String> stringCompletableFuture = CompletableFuture.supplyAsync(() -> {
+						String formatDate = DateUtil.getFormatDate(new Date(), "yyyy-MM-dd HH:mm:ss.SSS");
+						//latch.countDown();
+						return formatDate;
+					},
+					AsyncThreadPoolUtil.getInstance());
+			//stringCompletableFuture.thenAccept(item -> log.info(String.valueOf(item)));
+
+			stringCompletableFuture.thenAccept(list::add);
+
 		}
+		//latch.await();
+		long l = timer.intervalRestart();
+
+		ArrayList<String> list1 = Lists.newArrayList();
+		timer.start();
+		for (int i = 0; i < 2000; i++) {
+			String formatDate = DateUtil.getFormatDate(new Date(), "yyyy-MM-dd HH:mm:ss.SSS");
+			list1.add(formatDate);
+		}
+		long restart = timer.intervalRestart();
+
+
+		log.info("list大小:{}", list.size());
+		log.info(String.valueOf(list));
+		log.info("消耗时间:{}毫秒", l);
+		log.info("++++++++++++++++++++++++++++++++++++++++++++++");
+		log.info("list大小:{}", list1.size());
+		log.info(String.valueOf(list1));
+		log.info("消耗时间:{}毫秒", restart);
+
 	}
 
 
 	@Test
-	void longTest(){
+	void longTest() {
 		long l = Long.parseLong("-1");
-		log.info("{}",l);
+		log.info("{}", l);
+	}
+
+	@Test
+	void threadTest() {
+
 	}
 
 }
