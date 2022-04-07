@@ -1,4 +1,4 @@
-package org.lhq;
+package org.lhq.se;
 
 import cn.hutool.core.date.TimeInterval;
 import cn.hutool.system.HostInfo;
@@ -13,7 +13,9 @@ import cn.hutool.system.SystemUtil;
 import cn.hutool.system.UserInfo;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.lhq.se.CollectionStudy;
 import org.lhq.utils.AsyncThreadPoolUtil;
@@ -37,6 +39,10 @@ class SeTest {
 	public void beforeEach() {
 		log.info("--------------测试对象实例化--------------");
 		collectionStudy = new CollectionStudy();
+	}
+	@AfterEach
+	public void afterEach() {
+		log.info("--------------测试用例结束--------------");
 	}
 
 	@Test
@@ -90,7 +96,8 @@ class SeTest {
 	}
 
 	@Test
-	void threadLocalTest() throws ExecutionException, InterruptedException {
+	@DisplayName("多线程测试")
+	void threadLocalTest() {
 		ArrayList<Object> list = Lists.newArrayList();
 		TimeInterval timer = cn.hutool.core.date.DateUtil.timer();
 		//CountDownLatch latch = new CountDownLatch(2000);
