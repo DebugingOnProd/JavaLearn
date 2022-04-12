@@ -12,6 +12,7 @@ import cn.hutool.system.RuntimeInfo;
 import cn.hutool.system.SystemUtil;
 import cn.hutool.system.UserInfo;
 import com.google.common.collect.Lists;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,6 +30,7 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
 
 @Slf4j
 class SeTest {
@@ -142,10 +144,26 @@ class SeTest {
 		long l = Long.parseLong("-1");
 		log.info("{}", l);
 	}
-
 	@Test
-	void threadTest() {
-
+	@DisplayName("睡眠排序法")
+	void sleepSort() throws InterruptedException {
+		ArrayList<Integer> list = Lists.newArrayList(1,2,5,-7,8,4,6);
+		CountDownLatch latch = new CountDownLatch(list.size());
+		list.forEach(item -> new Thread(() -> {
+			try {
+				TimeUnit.SECONDS.sleep(item);
+				log.info("{}",item);
+				latch.countDown();
+			} catch (InterruptedException e) {
+				log.error("线程被中断",e);
+			}
+		}).start());
+		latch.await();
 	}
+
+
+
+
+
 
 }

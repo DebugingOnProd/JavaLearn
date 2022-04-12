@@ -2,6 +2,7 @@ package org.lhq.design;
 
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -73,6 +74,7 @@ public class DesignTest {
 	@DisplayName("桥接模式")
 	void bridge(){
 		DriverManger driverManger =  new DriverMangerImpl("1","2","3",new MySqlDriver());
+		Assertions.assertNotNull(driverManger);
 		driverManger.doDriver();
 	}
 

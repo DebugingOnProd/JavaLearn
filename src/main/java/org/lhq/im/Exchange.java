@@ -17,6 +17,9 @@ import java.util.concurrent.LinkedBlockingQueue;
  * @create: 2022-03-16 11:23
  */
 public class Exchange {
+	/**
+	 *未读消息队列
+	 */
 	private volatile Map<Integer, LinkedBlockingQueue<Message>> unreadMessageMap = Maps.newConcurrentMap();
 	private static volatile Exchange exchange;
 	private Exchange(){}
