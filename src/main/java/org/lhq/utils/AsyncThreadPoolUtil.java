@@ -1,5 +1,7 @@
 package org.lhq.utils;
 
+import com.google.common.util.concurrent.ListeningExecutorService;
+import com.google.common.util.concurrent.MoreExecutors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,7 +13,16 @@ import java.util.concurrent.TimeUnit;
 public class AsyncThreadPoolUtil {
 	private static final Logger log = LoggerFactory.getLogger(AsyncThreadPoolUtil.class);
 	private volatile static ThreadPoolExecutor executor = null;
+	private volatile static  ListeningExecutorService listeningExecutor;
+
 	private AsyncThreadPoolUtil() { }
+	public static ListeningExecutorService getGuavaExecutor() {
+		if (listeningExecutor == null) {
+			listeningExecutor = MoreExecutors.listeningDecorator(AsyncThreadPoolUtil.getInstance());
+		}
+		return listeningExecutor;
+	}
+
 	public static ExecutorService getInstance() {
 		if (executor == null){
 			synchronized (AsyncThreadPoolUtil.class) {

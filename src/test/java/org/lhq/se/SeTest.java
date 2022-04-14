@@ -12,13 +12,11 @@ import cn.hutool.system.RuntimeInfo;
 import cn.hutool.system.SystemUtil;
 import cn.hutool.system.UserInfo;
 import com.google.common.collect.Lists;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.lhq.se.CollectionStudy;
 import org.lhq.utils.AsyncThreadPoolUtil;
 import org.lhq.utils.DateUtil;
 
@@ -29,10 +27,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
+@DisplayName("JavaAPI测试")
 class SeTest {
 
 	CollectionStudy collectionStudy;
