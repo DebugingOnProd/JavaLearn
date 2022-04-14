@@ -5,6 +5,8 @@ import org.lhq.leetcode.struc.ListNode;
 import org.lhq.leetcode.struc.TreeNode;
 
 import java.util.*;
+import java.util.stream.Collectors;
+
 /**
  * @program: org.lhq.leetcode
  * @description:
@@ -14,8 +16,25 @@ import java.util.*;
 @Slf4j
 public class LeetCode {
 
-	public void rotate(int[] nums, int k) {
-
+	public int[] kWeakestRows(int[][] mat, int k) {
+		Map<Integer, Integer> resultMap = new LinkedHashMap<>();
+		for (int i = 0; i < mat.length; i++) {
+			int start = 0;
+			int end = mat[0].length -1;
+			while (start <end){
+				int mid = start + (end - start) / 2;
+				if (mat[mid][i] < 0){
+					end = mid  - 1;
+				}else {
+					start = mid ;
+				}
+			}
+			resultMap.put(i, start);
+		}
+		List<Map.Entry<Integer, Integer>> entries = new ArrayList<>(resultMap.entrySet());
+		Comparator<Map.Entry<Integer, Integer>> comparator = Comparator.comparingInt(Map.Entry::getValue);
+		entries.sort(comparator);
+		return new int[0];
 	}
 
 
@@ -744,7 +763,7 @@ public class LeetCode {
 	 * @param k
 	 * @return
 	 */
-	public int[] kWeakestRows(int[][] mat, int k) {
+	public int[] kWeakestRows2(int[][] mat, int k) {
 		// 定义数组记录士兵的个数和行数
 		int[][] sort = new int[mat.length][2];
 		// 双层循环遍历数组的值

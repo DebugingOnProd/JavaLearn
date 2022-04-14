@@ -114,8 +114,22 @@ public class NioTest {
 	}
 
 	@Test
-	@DisplayName("这是啥")
-	void scatter() {
+	@DisplayName("通道实例2")
+	void channel2() throws IOException {
+		//----------------   服务端    ----------------------
+
+		//服务端通过服务端Socket创建Channel
+		ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
+
+		//给服务端Channel绑定8088端口
+		serverSocketChannel.bind(new InetSocketAddress(8088));
+
+		//服务端监听客户端连接，建立SocketChannel连接
+		SocketChannel socketChannel = serverSocketChannel.accept();
+
+		//----------------   客户端    ----------------------------
+		//客户端通道连接远程主机端口和IP
+		SocketChannel socketChannel1 = SocketChannel.open(new InetSocketAddress("127.0.0.1",8088));
 
 	}
 }
