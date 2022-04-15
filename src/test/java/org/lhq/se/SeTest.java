@@ -12,6 +12,7 @@ import cn.hutool.system.RuntimeInfo;
 import cn.hutool.system.SystemUtil;
 import cn.hutool.system.UserInfo;
 import com.google.common.collect.Lists;
+import com.google.common.util.concurrent.ListeningExecutorService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,9 +24,11 @@ import org.lhq.utils.DateUtil;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
@@ -157,6 +160,34 @@ class SeTest {
 			}
 		}).start());
 		latch.await();
+	}
+
+	@Test
+	@DisplayName("并发修改错误")
+	void parallelModification() {
+		HashMap<Double, Double> map = new HashMap<>();
+		ListeningExecutorService guavaExecutor = AsyncThreadPoolUtil.getGuavaExecutor();
+		CountDownLatch countDownLatch = new CountDownLatch(10);
+		for (int i = 0; i < 100; i++) {
+			guavaExecutor.execute(()-> map.put(Math.random(), Math.random()));
+			countDownLatch.countDown();
+			//log.info("添加成功:{33}");
+		}
+		map.forEach((key,value) -> log.info("{}:{}",key,value));
+	}
+
+	@Test
+	@DisplayName("并发修改错误2")
+	void parallelModification2() throws InterruptedException {
+		Map<Double, Double> map = new ConcurrentHashMap<>() ;
+		ListeningExecutorService guavaExecutor = AsyncThreadPoolUtil.getGuavaExecutor();
+		CountDownLatch countDownLatch = new CountDownLatch(10);
+		for (int i = 0; i < 10; i++) {
+			guavaExecutor.execute(()-> map.put(Math.random(), Math.random()));
+			countDownLatch.countDown();
+		}
+		countDownLatch.await();
+		map.forEach((key,value) -> log.info("{}:{}",key,value));
 	}
 
 

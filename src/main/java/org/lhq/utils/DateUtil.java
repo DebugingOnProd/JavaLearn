@@ -8,6 +8,9 @@ import java.util.Date;
 
 @Slf4j
 public class DateUtil {
+
+
+	private DateUtil(){}
 	private static final String DATE_FORMAT = "yyyy-MM-dd";
 	public static final ThreadLocal<DateFormat> threadLocal = ThreadLocal.withInitial(() -> new SimpleDateFormat(DATE_FORMAT));
 
