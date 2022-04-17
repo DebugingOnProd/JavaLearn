@@ -303,6 +303,17 @@ public class LeetCodeTest {
 		log.info("isomorphic:{}",isomorphic);
 
 	}
+	@Test
+	@DisplayName("完全平方数")
+	void isPerfectSquare(){
+	//boolean perfectSquare = leetCode.isPerfectSquare(2147483647);
+		//int i = leetCode.mySqrt(4);
+		//int[] ints = leetCode.searchRange(new int[]{5, 7, 7, 8, 8, 10}, 8);
+		int martix[][] = new int[][] {{1,3,5,7},{10,11,16,20},{23,30,34,60}};
+		boolean b = leetCode.searchMatrix(martix, 3);
+		log.info("是否完全平方数{}",b);
+		log.info("xxxxx:{}",b);
+}
 
 
 }

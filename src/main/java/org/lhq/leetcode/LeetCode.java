@@ -5,7 +5,7 @@ import org.lhq.leetcode.struc.ListNode;
 import org.lhq.leetcode.struc.TreeNode;
 
 import java.util.*;
-import java.util.stream.Collectors;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * @program: org.lhq.leetcode
@@ -16,27 +16,229 @@ import java.util.stream.Collectors;
 @Slf4j
 public class LeetCode {
 
-	public int[] kWeakestRows(int[][] mat, int k) {
-		Map<Integer, Integer> resultMap = new LinkedHashMap<>();
-		for (int i = 0; i < mat.length; i++) {
-			int start = 0;
-			int end = mat[0].length -1;
-			while (start <end){
-				int mid = start + (end - start) / 2;
-				if (mat[mid][i] < 0){
-					end = mid  - 1;
-				}else {
-					start = mid ;
-				}
+
+	public boolean judgeSquareSum(int c) {
+		for (long a = 0; a * a <= c; a++) {
+			double b = Math.sqrt(c - a * a);
+			if (b == (int) b) {
+				return true;
 			}
-			resultMap.put(i, start);
 		}
-		List<Map.Entry<Integer, Integer>> entries = new ArrayList<>(resultMap.entrySet());
-		Comparator<Map.Entry<Integer, Integer>> comparator = Comparator.comparingInt(Map.Entry::getValue);
-		entries.sort(comparator);
-		return new int[0];
+		return false;
 	}
 
+
+	public int[] intersect(int[] nums1, int[] nums2) {
+		if (nums1.length<nums2.length){
+			intersect(nums2,nums1);
+		}
+		HashMap<Integer, Integer> map = new HashMap<>();
+		for (int i : nums2) {
+			map.putIfAbsent(i, 1);
+			map.computeIfPresent(i,(key,value)-> value++);
+		}
+
+		int [] intersect = new int[nums2.length];
+		int index = 0;
+		for (int i : nums1) {
+			Integer integer = map.getOrDefault(i, 0);
+			if (integer>0){
+				intersect[index++] = integer;
+				integer--;
+				if (integer>0){
+					map.put(i,integer);
+				}else {
+					map.remove(i);
+				}
+			}
+		}
+		return Arrays.copyOfRange(intersect,0,index);
+
+	}
+
+
+
+
+	public boolean checkIfExist(int[] arr) {
+		HashSet<Integer> set = new HashSet<>();
+		for (int i : arr) {
+			if (set.contains(i*2)||(i%2!=0&&set.contains(i/2))){
+				return true;
+			}
+			set.add(i);
+		}
+		return false;
+	}
+
+	public boolean searchMatrix(int[][] matrix, int target) {
+		int row = searchRow(matrix, target);
+		if (row < 0){
+			return false;
+		}
+		return searchCol(matrix[row], target);
+	}
+
+	public boolean searchCol(int[] matrix,int target){
+		int start = 0;
+		int end = matrix.length;
+		while (start<end){
+			int mid = start + (end-start)/2;
+			if (matrix[mid] == target){
+				return true;
+			}else if (matrix[mid] < target){
+				start = mid + 1;
+			}else  {
+				end = mid - 1;
+			}
+		}
+		return false;
+	}
+
+	public int searchRow(int[][] matrix,int target){
+		int start = -1;
+		int end = matrix.length -1;
+		while (start<end){
+			int mid = start + 1 + (end - start)/2;
+			if (matrix[mid][0] <= target){
+				start = mid;
+			}else {
+				end = mid - 1;
+			}
+		}
+		return start;
+	}
+	public int countNegatives(int[][] grid) {
+		AtomicLong sum = new AtomicLong();
+		Arrays.asList(grid).forEach(ints -> {
+			long count = Arrays.stream(ints).filter(item -> item < 0).count();
+			sum.addAndGet(count);
+		});
+		long l = sum.get();
+		return Math.toIntExact(l);
+	}
+
+
+
+	public int[] searchRange(int[] nums, int target) {
+		if(nums.length == 0){
+			return new int[]{-1,-1};
+		}
+		int start = findStart(nums, target);
+		int end = findEnd(nums, target);
+		return new int[] {start,end};
+
+	}
+
+	public int findStart(int[] nums,int target){
+		int start = 0,end = nums.length -1;
+		while (start<end){
+			int mid = start + (end-start)/2;
+			if (nums[mid] < target){
+				start = mid+1;
+			}else if (nums[mid] == target){
+				end = mid;
+			}else {
+				end = mid - 1;
+			}
+		}
+		if (nums[start] == target) return start;
+		return -1;
+	}
+	public int findEnd(int[] nums,int target){
+		int start = 0,end = nums.length -1;
+		while (start<end){
+			int mid = start + (end-start)/2;
+			if (nums[mid] > target){
+				end = mid - 1;
+			}else if (nums[mid] == target){
+				end = mid;
+			}else {
+				start = mid + 1;
+			}
+		}
+		if (nums[start] == target) return start;
+		return -1;
+	}
+
+
+	public char nextGreatestLetter(char[] letters, char target) {
+		int end = letters.length - 1;
+		if (target >=letters[end]){
+			return letters[0];
+		}
+		int start = 0;
+		while (start<end){
+			int mid = start + (end - start)/2;
+			if (letters[mid]>target){
+				end = mid ;
+			}else {
+				start = mid +1;
+			}
+		}
+		return letters[start];
+	}
+
+
+	public int mySqrt(int x) {
+		int start = 0,end = x;
+		int result = 0;
+
+		while (start<end){
+			int mid = start + (end - start)/2;
+			int squareRoot = x/mid;
+			long square = (long)mid * mid;
+			if (square <= x){
+				result = mid;
+				start = mid + 1;
+			}else {
+				end = mid  - 1;
+			}
+		}
+		return result;
+	}
+
+
+	public int findTheDistanceValue(int[] arr1, int[] arr2, int d) {
+		Arrays.sort(arr1);
+		Arrays.sort(arr2);
+		return 0;
+	}
+
+
+	public int binarySearch(int[] arr, int target) {
+		int low = 0, high = arr.length - 1;
+		if (arr[high] < target) {
+			return high + 1;
+		}
+		while (low < high) {
+			int mid = (high - low) / 2 + low;
+			if (arr[mid] < target) {
+				low = mid + 1;
+			} else {
+				high = mid;
+			}
+		}
+		return low;
+	}
+
+
+	public boolean isPerfectSquare(int num) {
+		int start = 0,end = num;
+		while (start<end){
+			int mid = start + (end - start)/2;
+			long square = mid*mid;
+			if (square == num){
+				return true;
+			}else if (square < num){
+				start = mid + 1;
+			}else if (square > num){
+				end = mid -1;
+			}else {
+				return false;
+			}
+		}
+		return false;
+	}
 
 
 	public int[] sortedSquares(int[] nums) {
