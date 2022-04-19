@@ -18,6 +18,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.lhq.entity.Address;
+import org.lhq.entity.Person;
 import org.lhq.utils.AsyncThreadPoolUtil;
 import org.lhq.utils.DateUtil;
 
@@ -43,6 +45,7 @@ class SeTest {
 		log.info("--------------测试对象实例化--------------");
 		collectionStudy = new CollectionStudy();
 	}
+
 	@AfterEach
 	public void afterEach() {
 		log.info("--------------测试用例结束--------------");
@@ -145,18 +148,19 @@ class SeTest {
 		long l = Long.parseLong("-1");
 		log.info("{}", l);
 	}
+
 	@Test
 	@DisplayName("睡眠排序法")
 	void sleepSort() throws InterruptedException {
-		ArrayList<Integer> list = Lists.newArrayList(1,2,5,-7,8,4,6);
+		ArrayList<Integer> list = Lists.newArrayList(1, 2, 5, -7, 8, 4, 6);
 		CountDownLatch latch = new CountDownLatch(list.size());
 		list.forEach(item -> new Thread(() -> {
 			try {
 				TimeUnit.SECONDS.sleep(item);
-				log.info("{}",item);
+				log.info("{}", item);
 				latch.countDown();
 			} catch (InterruptedException e) {
-				log.error("线程被中断",e);
+				log.error("线程被中断", e);
 			}
 		}).start());
 		latch.await();
@@ -169,30 +173,34 @@ class SeTest {
 		ListeningExecutorService guavaExecutor = AsyncThreadPoolUtil.getGuavaExecutor();
 		CountDownLatch countDownLatch = new CountDownLatch(10);
 		for (int i = 0; i < 100; i++) {
-			guavaExecutor.execute(()-> map.put(Math.random(), Math.random()));
+			guavaExecutor.execute(() -> map.put(Math.random(), Math.random()));
 			countDownLatch.countDown();
 			//log.info("添加成功:{33}");
 		}
-		map.forEach((key,value) -> log.info("{}:{}",key,value));
+		map.forEach((key, value) -> log.info("{}:{}", key, value));
 	}
 
 	@Test
 	@DisplayName("并发修改错误2")
 	void parallelModification2() throws InterruptedException {
-		Map<Double, Double> map = new ConcurrentHashMap<>() ;
+		Map<Double, Double> map = new ConcurrentHashMap<>();
 		ListeningExecutorService guavaExecutor = AsyncThreadPoolUtil.getGuavaExecutor();
 		CountDownLatch countDownLatch = new CountDownLatch(10);
 		for (int i = 0; i < 10; i++) {
-			guavaExecutor.execute(()-> map.put(Math.random(), Math.random()));
+			guavaExecutor.execute(() -> map.put(Math.random(), Math.random()));
 			countDownLatch.countDown();
 		}
 		countDownLatch.await();
-		map.forEach((key,value) -> log.info("{}:{}",key,value));
+		map.forEach((key, value) -> log.info("{}:{}", key, value));
 	}
 
-
-
-
+	@Test
+	@DisplayName("深拷贝与浅拷贝")
+	void cloneable() {
+		Person person = new Person(new Address("hangzhou"));
+		Person clone = person.clone();
+		log.info("{}", person.getAddress() == clone.getAddress());
+	}
 
 
 }
