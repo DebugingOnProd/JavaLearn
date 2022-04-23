@@ -11,6 +11,10 @@ import org.lhq.design.agent.dao.UserDao;
 import org.lhq.design.bridge.DriverManger;
 import org.lhq.design.bridge.DriverMangerImpl;
 import org.lhq.design.bridge.MySqlDriver;
+import org.lhq.design.bridge.pay.channel.AliPay;
+import org.lhq.design.bridge.pay.channel.WxPay;
+import org.lhq.design.bridge.pay.mode.PayFace;
+import org.lhq.design.bridge.pay.mode.PayFingerprint;
 import org.lhq.design.builder.Builder;
 import org.lhq.design.corp.AbstractLogger;
 import org.lhq.design.corp.ConsoleLogger;
@@ -28,6 +32,8 @@ import org.lhq.design.observer.OctalObserver;
 import org.lhq.design.observer.Subject;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import java.math.BigDecimal;
 
 @Slf4j
 public class DesignTest {
@@ -129,6 +135,18 @@ public class DesignTest {
 		BeanFactory beanFactory = new ClassPathXmlApplicationContext("spring-config.xml");
 		UserDao userDao = beanFactory.getBean("userDao", UserDao.class);
 		userDao.queryUserById(1L);
+	}
+
+	@Test
+	@DisplayName("桥接模式测试2")
+	void bridgeTest2(){
+		log.info("支付宝转账,刷脸支付");
+		AliPay aliPay = new AliPay(new PayFace());
+		aliPay.transfer("老王","001",new BigDecimal(100));
+
+		log.info("微信支付,指纹");
+		WxPay wxPay = new WxPay(new PayFingerprint());
+		wxPay.transfer("小王","002",new BigDecimal(200));
 	}
 
 }
