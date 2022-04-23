@@ -145,7 +145,7 @@ public class LeetCodeTest {
 				{0, 0, 0, 0, 0},
 				{1, 1, 1, 1, 0},
 		};
-		log.info(Arrays.toString(leetCode.kWeakestRows(array, 3)));
+		log.info(Arrays.toString(leetCode.kWeakestRows2(array, 3)));
 	}
 
 	@Test

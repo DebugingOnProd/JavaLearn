@@ -7,6 +7,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import org.lhq.design.adapter.AudioPlayer;
+import org.lhq.design.agent.dao.UserDao;
 import org.lhq.design.bridge.DriverManger;
 import org.lhq.design.bridge.DriverMangerImpl;
 import org.lhq.design.bridge.MySqlDriver;
@@ -25,6 +26,8 @@ import org.lhq.design.observer.BinaryObserver;
 import org.lhq.design.observer.HexaObserver;
 import org.lhq.design.observer.OctalObserver;
 import org.lhq.design.observer.Subject;
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 @Slf4j
 public class DesignTest {
@@ -118,6 +121,14 @@ public class DesignTest {
 		errorLogger.setNextLogger(consoleLogger);
 		consoleLogger.setNextLogger(debugLogger);
 		return errorLogger;
+	}
+
+	@Test
+	@DisplayName("代理模式测试")
+	void agentTest(){
+		BeanFactory beanFactory = new ClassPathXmlApplicationContext("spring-config.xml");
+		UserDao userDao = beanFactory.getBean("userDao", UserDao.class);
+		userDao.queryUserById(1L);
 	}
 
 }

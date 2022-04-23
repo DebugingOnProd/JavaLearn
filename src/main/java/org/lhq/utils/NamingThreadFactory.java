@@ -1,6 +1,5 @@
 package org.lhq.utils;
 
-import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -18,7 +17,7 @@ public class NamingThreadFactory implements ThreadFactory {
 
 
 	@Override
-	public Thread newThread(@NotNull Runnable runnable) {
+	public Thread newThread( Runnable runnable) {
 		Thread thread = factory.newThread(runnable);
 		thread.setName(threadName + "[#"+threadNum.getAndIncrement() + "]");
 		return thread;
