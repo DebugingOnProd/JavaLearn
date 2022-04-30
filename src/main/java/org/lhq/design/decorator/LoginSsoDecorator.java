@@ -7,7 +7,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Slf4j
 public class LoginSsoDecorator  extends SsoDecorator{
-    private static Map<String, String> authMap = new ConcurrentHashMap<String, String>();
+    private static final Map<String, String> authMap = new ConcurrentHashMap<>();
 
     static {
         authMap.put("huahua", "queryUserInfo");
