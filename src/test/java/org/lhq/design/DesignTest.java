@@ -19,6 +19,12 @@ import org.lhq.design.bridge.pay.channel.WxPay;
 import org.lhq.design.bridge.pay.mode.PayFace;
 import org.lhq.design.bridge.pay.mode.PayFingerprint;
 import org.lhq.design.builder.Builder;
+import org.lhq.design.command.Invoker;
+import org.lhq.design.command.Order;
+import org.lhq.design.command.impl.BuyOrder;
+import org.lhq.design.command.impl.BuyReceiver;
+import org.lhq.design.command.impl.SaleOrder;
+import org.lhq.design.command.impl.SaleReceiver;
 import org.lhq.design.composite.aggregates.TreeRich;
 import org.lhq.design.composite.service.engine.IEngine;
 import org.lhq.design.composite.service.engine.impl.TreeNodeHandle;
@@ -30,6 +36,11 @@ import org.lhq.design.corp.AbstractLogger;
 import org.lhq.design.corp.ConsoleLogger;
 import org.lhq.design.corp.DebugLogger;
 import org.lhq.design.corp.ErrorLogger;
+import org.lhq.design.corp.approval.AuthLink;
+import org.lhq.design.corp.approval.AuthService;
+import org.lhq.design.corp.approval.impl.AuthLinkSec;
+import org.lhq.design.corp.approval.impl.AuthLinkThr;
+import org.lhq.design.corp.approval.impl.AuthLinkTop;
 import org.lhq.design.decorator.LoginSsoDecorator;
 import org.lhq.design.decorator.SsoInterceptor;
 import org.lhq.design.factory.ICommodity;
@@ -46,10 +57,9 @@ import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Slf4j
 public class DesignTest {
@@ -338,9 +348,52 @@ public class DesignTest {
         LoginSsoDecorator ssoDecorator = new LoginSsoDecorator(new SsoInterceptor());
         String request = "1successhuahua";
         boolean success = ssoDecorator.preHandle(request, "ewcdqwt40liuiu", "t");
-        log.info("登录校验:{},{}",request,success);
+        log.info("登录校验:{},{}", request, success);
 
     }
 
+
+    @Test
+    void authLink() throws ParseException {
+
+        AuthLink authLink = new AuthLinkTop("1000013", "王工")
+                .appendNext(new AuthLinkSec("1000012", "张经理")
+                        .appendNext(new AuthLinkThr("1000011", "段总")));
+
+        SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date currentDate = f.parse("2020-06-18 23:49:46");
+
+        log.info("测试结果：{}", JSONUtil.toJsonStr(authLink.doAuth("老王", "1000998004813441", currentDate)));
+
+        // 模拟三级负责人审批
+        AuthService.auth("1000013", "1000998004813441");
+        log.info("测试结果：{}", "模拟三级负责人审批，王工");
+        log.info("测试结果：{}", JSONUtil.toJsonStr(authLink.doAuth("老王", "1000998004813441", currentDate)));
+
+        // 模拟二级负责人审批
+        AuthService.auth("1000012", "1000998004813441");
+        log.info("测试结果：{}", "模拟二级负责人审批，张经理");
+        log.info("测试结果：{}", JSONUtil.toJsonStr(authLink.doAuth("老王", "1000998004813441", currentDate)));
+
+        // 模拟一级负责人审批
+        AuthService.auth("1000011", "1000998004813441");
+        log.info("测试结果：{}", "模拟一级负责人审批，段总");
+        log.info("测试结果：{}", JSONUtil.toJsonStr(authLink.doAuth("小傅哥", "1000998004813441", currentDate)));
+
+
+    }
+    @Test
+    void command(){
+        Order order = new BuyOrder(new BuyReceiver());
+        Order selaOrder = new SaleOrder(new SaleReceiver());
+
+        Invoker invoker = new Invoker();
+        invoker.takeOrder(order);
+        invoker.takeOrder(selaOrder);
+
+        invoker.placeOrders();
+
+
+    }
 
 }
