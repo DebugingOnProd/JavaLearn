@@ -19,12 +19,12 @@ import org.lhq.design.bridge.pay.channel.WxPay;
 import org.lhq.design.bridge.pay.mode.PayFace;
 import org.lhq.design.bridge.pay.mode.PayFingerprint;
 import org.lhq.design.builder.Builder;
+import org.lhq.design.command.Command;
 import org.lhq.design.command.Invoker;
-import org.lhq.design.command.Order;
-import org.lhq.design.command.impl.BuyOrder;
-import org.lhq.design.command.impl.BuyReceiver;
-import org.lhq.design.command.impl.SaleOrder;
-import org.lhq.design.command.impl.SaleReceiver;
+import org.lhq.design.command.impl.CmdReceiver;
+import org.lhq.design.command.impl.DeleteCommand;
+import org.lhq.design.command.impl.MoveCommand;
+import org.lhq.design.command.impl.PowerShellReceiver;
 import org.lhq.design.composite.aggregates.TreeRich;
 import org.lhq.design.composite.service.engine.IEngine;
 import org.lhq.design.composite.service.engine.impl.TreeNodeHandle;
@@ -384,12 +384,14 @@ public class DesignTest {
     }
     @Test
     void command(){
-        Order order = new BuyOrder(new BuyReceiver());
-        Order selaOrder = new SaleOrder(new SaleReceiver());
+        Command deleteCommand = new DeleteCommand(new CmdReceiver(),"删除命令");
+        Command deleteCommandPowerShell = new DeleteCommand(new PowerShellReceiver(),"删除命令");
+        Command moveCommand = new MoveCommand(new PowerShellReceiver(),"移动命令");
 
         Invoker invoker = new Invoker();
-        invoker.takeOrder(order);
-        invoker.takeOrder(selaOrder);
+        invoker.takeOrder(deleteCommand);
+        invoker.takeOrder(moveCommand);
+        invoker.takeOrder(deleteCommandPowerShell);
 
         invoker.placeOrders();
 

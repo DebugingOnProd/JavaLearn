@@ -1,5 +1,5 @@
 package org.lhq.design.command;
 
-public interface Order {
+public interface Command {
     void execute();
 }
