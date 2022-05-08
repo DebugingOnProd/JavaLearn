@@ -2,6 +2,7 @@ package org.lhq.design;
 
 import cn.hutool.json.JSON;
 import cn.hutool.json.JSONUtil;
+import lombok.Data;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
@@ -49,6 +50,8 @@ import org.lhq.design.factory.abstracts.CacheService;
 import org.lhq.design.factory.abstracts.factory.impl.MySQlCacheAdapter;
 import org.lhq.design.factory.abstracts.factory.impl.OracleCacheAdapter;
 import org.lhq.design.factory.abstracts.factory.proxy.JDKProxy;
+import org.lhq.design.memento.CareTaker;
+import org.lhq.design.memento.Originator;
 import org.lhq.design.observer.BinaryObserver;
 import org.lhq.design.observer.HexaObserver;
 import org.lhq.design.observer.OctalObserver;
@@ -383,6 +386,7 @@ public class DesignTest {
 
     }
     @Test
+    @DisplayName("命令模式")
     void command(){
         Command deleteCommand = new DeleteCommand(new CmdReceiver(),"删除命令");
         Command deleteCommandPowerShell = new DeleteCommand(new PowerShellReceiver(),"删除命令");
@@ -396,6 +400,34 @@ public class DesignTest {
         invoker.placeOrders();
 
 
+    }
+    @Test
+    @DisplayName("备忘录模式")
+    void memento(){
+        /**
+         * 发起人（Originator）角色：记录当前时刻的内部状态信息，提供创建备忘录和恢复备忘录数据的功能，实现其他业务功能，它可以访问备忘录里的所有信息。
+         * 备忘录（Memento）角色：负责存储发起人的内部状态，在需要的时候提供这些内部状态给发起人。
+         * 管理者（Caretaker）角色：对备忘录进行管理，提供保存与获取备忘录的功能，但其不能对备忘录的内容进行访问与修改。
+         */
+
+        //创建状态发起者
+        Originator originator = new Originator();
+        //创建状态管理者
+        CareTaker careTaker = new CareTaker();
+
+        originator.setHistory("状态 #1");
+        originator.setHistory("状态 #2");
+        //把状态保存到
+        careTaker.add(originator.saveStateToMemento());
+        originator.setHistory("状态 #3");
+        careTaker.add(originator.saveStateToMemento());
+        originator.setHistory("状态 #4");
+
+        log.info("当前状态 State: " + originator.getHistory());
+        originator.getStateFromMemento(careTaker.get(0));
+        log.info("First saved State: " + originator.getHistory());
+        originator.getStateFromMemento(careTaker.get(1));
+        log.info("Second saved State: " + originator.getHistory());
     }
 
 }
