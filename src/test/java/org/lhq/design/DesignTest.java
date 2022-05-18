@@ -48,6 +48,13 @@ import org.lhq.design.factory.abstracts.CacheService;
 import org.lhq.design.factory.abstracts.factory.impl.MySQlCacheAdapter;
 import org.lhq.design.factory.abstracts.factory.impl.OracleCacheAdapter;
 import org.lhq.design.factory.abstracts.factory.proxy.JDKProxy;
+import org.lhq.design.filter.AndCriteria;
+import org.lhq.design.filter.Criteria;
+import org.lhq.design.filter.CriteriaFemale;
+import org.lhq.design.filter.CriteriaMale;
+import org.lhq.design.filter.CriteriaSingle;
+import org.lhq.design.filter.OrCriteria;
+import org.lhq.design.filter.Person;
 import org.lhq.design.memento.CareTaker;
 import org.lhq.design.memento.Originator;
 import org.lhq.design.observer.BinaryObserver;
@@ -438,6 +445,28 @@ class DesignTest {
 		System.out.println();
 		game = new Basketball();
 		game.play();
+	}
+	@Test
+	@DisplayName("过滤器模式")
+	void filter(){
+		List<Person> persons = new ArrayList<>();
+
+		persons.add(new Person("Robert","Male", "Single"));
+		persons.add(new Person("John","Male", "Married"));
+		persons.add(new Person("Laura","Female", "Married"));
+		persons.add(new Person("Diana","Female", "Single"));
+		persons.add(new Person("Mike","Male", "Single"));
+		persons.add(new Person("Bobby","Male", "Single"));
+
+
+		Criteria male = new CriteriaMale();
+		Criteria female = new CriteriaFemale();
+		Criteria single = new CriteriaSingle();
+		Criteria singleMale = new AndCriteria(single, male);
+		Criteria singleOrFemale = new OrCriteria(single, female);
+
+
+		log.info("male:{}",male.meetCriteria(persons));
 	}
 
 }
