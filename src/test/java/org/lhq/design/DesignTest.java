@@ -1,7 +1,6 @@
 package org.lhq.design;
 
 import cn.hutool.json.JSONUtil;
-import lombok.Data;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
@@ -61,6 +60,9 @@ import org.lhq.design.observer.BinaryObserver;
 import org.lhq.design.observer.HexaObserver;
 import org.lhq.design.observer.OctalObserver;
 import org.lhq.design.observer.Subject;
+import org.lhq.design.state.Context;
+import org.lhq.design.state.StartState;
+import org.lhq.design.state.StopState;
 import org.lhq.design.template.Basketball;
 import org.lhq.design.template.Cricket;
 import org.lhq.design.template.Game;
@@ -70,7 +72,11 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Slf4j
 class DesignTest {
@@ -467,6 +473,21 @@ class DesignTest {
 
 
 		log.info("male:{}",male.meetCriteria(persons));
+	}
+	@Test
+	@DisplayName("状态模式")
+	void state(){
+		Context context = new Context();
+
+		StartState startState = new StartState();
+		startState.doAction(context);
+
+		log.info(context.getState().toString());
+
+		StopState stopState = new StopState();
+		stopState.doAction(context);
+
+		log.info(context.getState().toString());
 	}
 
 }
