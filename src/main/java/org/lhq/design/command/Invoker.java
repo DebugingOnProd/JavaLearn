@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Invoker {
-    private List<Command> orderList = new ArrayList<Command>();
+    private List<Command> orderList = new ArrayList<>();
 
     public void takeOrder(Command order) {
         orderList.add(order);

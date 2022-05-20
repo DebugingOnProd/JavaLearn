@@ -24,6 +24,7 @@ import org.lhq.utils.AsyncThreadPoolUtil;
 import org.lhq.utils.DateUtil;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
@@ -33,6 +34,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 @Slf4j
 @DisplayName("JavaAPI测试")
@@ -200,6 +202,12 @@ class SeTest {
 		Person person = new Person(new Address("hangzhou"));
 		Person clone = person.clone();
 		log.info("{}", person.getAddress() == clone.getAddress());
+	}
+	@Test
+	void forEachTest(){
+		List<Double> list = Arrays.asList(34.857, 35.637, 36.000, 36.286,38.250,38.667,38.667,41.231,43.428,43.428,44.000);
+		Double avg = list.stream().collect(Collectors.averagingDouble(Double::doubleValue));
+		log.info("avg:{}",avg);
 	}
 
 

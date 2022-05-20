@@ -1,7 +1,7 @@
 package org.lhq.orm.session;
 
 import lombok.AllArgsConstructor;
-import org.lhq.orm.binding.MapperRegistry;
+
 @AllArgsConstructor
 public class DefaultSqlSession implements SqlSession{
 
@@ -9,7 +9,6 @@ public class DefaultSqlSession implements SqlSession{
     /**
      * 映射器注册机
      */
-    private MapperRegistry mapperRegistry;
 
 
     @Override
@@ -25,6 +24,6 @@ public class DefaultSqlSession implements SqlSession{
 
     @Override
     public <T> T getMapper(Class<T> type) {
-        return mapperRegistry.getMapper(type, this);
+		return null;
     }
 }
