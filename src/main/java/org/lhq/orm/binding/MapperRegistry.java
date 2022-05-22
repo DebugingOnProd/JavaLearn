@@ -1,6 +1,7 @@
 package org.lhq.orm.binding;
 
 import cn.hutool.core.lang.ClassScanner;
+import org.lhq.orm.session.Configuration;
 import org.lhq.orm.session.SqlSession;
 
 import java.util.HashMap;
@@ -8,11 +9,13 @@ import java.util.Map;
 import java.util.Set;
 
 public class MapperRegistry {
-    /**
-     * 将已添加的映射器代理加入到 HashMap
-     */
-    private final Map<Class<?>, MapperProxyFactory<?>> knownMappers = new HashMap<>();
+    private Configuration configuration;
 
+    public MapperRegistry(Configuration  configuration){
+        this.configuration = configuration;
+    }
+
+    private final Map<Class<?>, MapperProxyFactory<?>> knownMappers = new HashMap<>();
 
     public <T> T getMapper(Class<T> type, SqlSession sqlSession) {
         final MapperProxyFactory<T> mapperProxyFactory = (MapperProxyFactory<T>) knownMappers.get(type);
@@ -38,11 +41,6 @@ public class MapperRegistry {
         }
     }
 
-    private <T> boolean hasMapper(Class<T> type) {
-        MapperProxyFactory<?> mapperProxyFactory = knownMappers.get(type);
-        return mapperProxyFactory != null;
-    }
-
     public void addMappers(String packageName) {
         Set<Class<?>> mapperSet = ClassScanner.scanPackage(packageName);
         for (Class<?> mapperClass : mapperSet) {
@@ -50,4 +48,7 @@ public class MapperRegistry {
         }
     }
 
+    public <T> boolean hasMapper(Class<T> type) {
+        return knownMappers.containsKey(type);
+    }
 }

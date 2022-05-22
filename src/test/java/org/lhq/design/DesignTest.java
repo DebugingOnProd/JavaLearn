@@ -52,7 +52,6 @@ import org.lhq.design.filter.Criteria;
 import org.lhq.design.filter.CriteriaFemale;
 import org.lhq.design.filter.CriteriaMale;
 import org.lhq.design.filter.CriteriaSingle;
-import org.lhq.design.filter.OrCriteria;
 import org.lhq.design.filter.Person;
 import org.lhq.design.memento.CareTaker;
 import org.lhq.design.memento.Originator;
@@ -469,7 +468,6 @@ class DesignTest {
 		Criteria female = new CriteriaFemale();
 		Criteria single = new CriteriaSingle();
 		Criteria singleMale = new AndCriteria(single, male);
-		Criteria singleOrFemale = new OrCriteria(single, female);
 
 
 		log.info("male:{}",male.meetCriteria(persons));
