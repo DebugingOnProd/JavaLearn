@@ -41,12 +41,10 @@ import org.lhq.design.corp.approval.impl.AuthLinkThr;
 import org.lhq.design.corp.approval.impl.AuthLinkTop;
 import org.lhq.design.decorator.LoginSsoDecorator;
 import org.lhq.design.decorator.SsoInterceptor;
-import org.lhq.design.factory.ICommodity;
-import org.lhq.design.factory.StoreFactory;
-import org.lhq.design.factory.abstracts.CacheService;
-import org.lhq.design.factory.abstracts.factory.impl.MySQlCacheAdapter;
-import org.lhq.design.factory.abstracts.factory.impl.OracleCacheAdapter;
-import org.lhq.design.factory.abstracts.factory.proxy.JDKProxy;
+import org.lhq.design.factory.AbstractFactory;
+import org.lhq.design.factory.DBDriver;
+import org.lhq.design.factory.DBDriverFactory;
+import org.lhq.design.factory.FactoryProducer;
 import org.lhq.design.filter.AndCriteria;
 import org.lhq.design.filter.Criteria;
 import org.lhq.design.filter.CriteriaFemale;
@@ -65,6 +63,7 @@ import org.lhq.design.state.StopState;
 import org.lhq.design.template.Basketball;
 import org.lhq.design.template.Cricket;
 import org.lhq.design.template.Game;
+import org.lhq.entity.enums.DbEnum;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -81,24 +80,18 @@ import java.util.Map;
 class DesignTest {
 	@Test
 	@DisplayName("测试工厂模式")
-	void test() {
-		StoreFactory storeFactory = new StoreFactory();
-		ICommodity commodityService = storeFactory.getCommodityService(1);
-		commodityService.sendCommodity("1", "2", "3", null);
-		ICommodity commodityService2 = storeFactory.getCommodityService(2);
-		commodityService2.sendCommodity("1", "2", "3", null);
-
-
+	void testFactory() {
+		DBDriverFactory factory = new DBDriverFactory();
+		DBDriver driverMySql = factory.getDbDriver(DbEnum.MySql);
+		driverMySql.getConnection();
+		DBDriver driverOracle = factory.getDbDriver(DbEnum.Oracle);
+		driverOracle.getConnection();
 	}
 
-	@SneakyThrows
 	@Test
 	@DisplayName("抽象工厂模式")
 	void absFactory() {
-		CacheService mysqlProxy = JDKProxy.getProxy(CacheService.class, MySQlCacheAdapter.class);
-		String mysql = mysqlProxy.get("");
-		CacheService oracleProxy = JDKProxy.getProxy(CacheService.class, OracleCacheAdapter.class);
-		String oracle = oracleProxy.get("");
+		AbstractFactory dataSource = FactoryProducer.getFactory("DataSource");
 	}
 
 	@Test
