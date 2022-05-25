@@ -17,10 +17,8 @@ import org.lhq.design.bridge.pay.mode.PayFace;
 import org.lhq.design.bridge.pay.mode.PayFingerprint;
 import org.lhq.design.builder.Builder;
 import org.lhq.design.builder.ComputerBuilder;
-import org.lhq.design.builder.entity.CPU;
+import org.lhq.design.builder.Director;
 import org.lhq.design.builder.entity.Computer;
-import org.lhq.design.builder.entity.GPU;
-import org.lhq.design.builder.entity.RAM;
 import org.lhq.design.command.Command;
 import org.lhq.design.command.Invoker;
 import org.lhq.design.command.impl.CmdReceiver;
@@ -109,12 +107,10 @@ class DesignTest {
 	void builder() {
 		log.info("装机模拟器");
 		Builder builder = new ComputerBuilder();
-		Computer computer = builder
-				.buildCPU(CPU.I9)
-				.buildRAM(RAM.SIXTEEN_GIGABYTES)
-				.buildGPU(GPU.RTX3090)
-				.buildGPU(GPU.RTX3060)
-				.build();
+		Director director = new Director();
+		director.construct(builder);
+		director.constructGamingPC();
+		Computer computer = builder.build();
 		log.info("我组装的电脑:{}",computer);
 
 	}
