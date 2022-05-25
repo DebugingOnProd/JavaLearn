@@ -25,7 +25,7 @@ public class DBDriverFactory extends AbstractFactory{
     }
 
     @Override
-    Connection getDb(DataSource dataSource) {
+    public Connection getDb(DataSource dataSource) {
         return null;
     }
 

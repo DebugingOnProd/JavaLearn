@@ -7,6 +7,6 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public abstract class AbstractFactory {
-    abstract DBDriver getDbDriver(DbEnum dbEnum);
-    abstract Connection getDb(DataSource dataSource) throws SQLException;
+    public abstract DBDriver getDbDriver(DbEnum dbEnum);
+    public abstract Connection getDb(DataSource dataSource) throws SQLException;
 }

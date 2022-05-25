@@ -1,7 +1,6 @@
 package org.lhq.design;
 
 import cn.hutool.json.JSONUtil;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -63,11 +62,14 @@ import org.lhq.design.state.StopState;
 import org.lhq.design.template.Basketball;
 import org.lhq.design.template.Cricket;
 import org.lhq.design.template.Game;
+import org.lhq.entity.enums.DataSource;
 import org.lhq.entity.enums.DbEnum;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.math.BigDecimal;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -90,8 +92,11 @@ class DesignTest {
 
 	@Test
 	@DisplayName("抽象工厂模式")
-	void absFactory() {
-		AbstractFactory dataSource = FactoryProducer.getFactory("DataSource");
+	void absFactory() throws SQLException {
+		AbstractFactory dataSourceFactory = FactoryProducer.getFactory("DataSource");
+		Connection db = dataSourceFactory.getDb(DataSource.SameCity);
+		DBDriver dbDriver = dataSourceFactory.getDbDriver(DbEnum.MySql);
+		log.info("获取同城Mysql数据库链接,{},{}",db,dbDriver);
 	}
 
 	@Test
