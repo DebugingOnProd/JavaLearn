@@ -65,7 +65,7 @@ import org.lhq.design.state.Context;
 import org.lhq.design.state.StartState;
 import org.lhq.design.state.StopState;
 import org.lhq.design.template.Basketball;
-import org.lhq.design.template.Cricket;
+import org.lhq.design.template.Football;
 import org.lhq.design.template.Game;
 import org.lhq.entity.enums.DataSource;
 import org.lhq.entity.enums.DbEnum;
@@ -451,7 +451,7 @@ class DesignTest {
 	@Test
 	@DisplayName("模板模式")
 	void template(){
-		Game game = new Cricket();
+		Game game = new Football();
 		game.play();
 		System.out.println();
 		game = new Basketball();

@@ -1,12 +1,12 @@
 package org.lhq.design.template;
 
-public abstract class Game {
-    abstract void initialize();
-    abstract void startPlay();
-    abstract void endPlay();
+public interface Game {
+    void initialize();
+    void startPlay();
+    void endPlay();
 
     //模板
-    public final void play(){
+    default void play(){
 
         //初始化游戏
         initialize();
