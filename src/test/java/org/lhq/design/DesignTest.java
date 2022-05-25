@@ -16,6 +16,11 @@ import org.lhq.design.bridge.pay.channel.WxPay;
 import org.lhq.design.bridge.pay.mode.PayFace;
 import org.lhq.design.bridge.pay.mode.PayFingerprint;
 import org.lhq.design.builder.Builder;
+import org.lhq.design.builder.ComputerBuilder;
+import org.lhq.design.builder.entity.CPU;
+import org.lhq.design.builder.entity.Computer;
+import org.lhq.design.builder.entity.GPU;
+import org.lhq.design.builder.entity.RAM;
 import org.lhq.design.command.Command;
 import org.lhq.design.command.Invoker;
 import org.lhq.design.command.impl.CmdReceiver;
@@ -102,13 +107,16 @@ class DesignTest {
 	@Test
 	@DisplayName("建造者模式")
 	void builder() {
-		Builder builder = new Builder();
-		// 豪华欧式
-		log.info(builder.levelOne(132.52D).getDetail());
-		// 轻奢田园
-		log.info(builder.levelTwo(98.25D).getDetail());
-		// 现代简约
-		log.info(builder.levelThree(85.43D).getDetail());
+		log.info("装机模拟器");
+		Builder builder = new ComputerBuilder();
+		Computer computer = builder
+				.buildCPU(CPU.I9)
+				.buildRAM(RAM.SIXTEEN_GIGABYTES)
+				.buildGPU(GPU.RTX3090)
+				.buildGPU(GPU.RTX3060)
+				.build();
+		log.info("我组装的电脑:{}",computer);
+
 	}
 
 	@Test

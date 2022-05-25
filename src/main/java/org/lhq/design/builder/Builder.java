@@ -1,24 +1,19 @@
 package org.lhq.design.builder;
 
-public class Builder {
-	public IMenu levelOne(Double area) {
-		return new DecorationPackageMenu(area, "豪华欧式")
-				.appendCeiling(new LevelTwoCeiling())    // 吊顶，二级顶
-				.appendCoat(new DuluxCoat())             // 涂料，多乐士
-				.appendFloor(new MarcoPoloTile());     // 地板，圣象
-	}
+import org.lhq.design.builder.entity.*;
 
-	public IMenu levelTwo(Double area){
-		return new DecorationPackageMenu(area, "轻奢田园")
-				.appendCeiling(new LevelTwoCeiling())   // 吊顶，二级顶
-				.appendCoat(new LiBangCoat())           // 涂料，立邦
-				.appendTile(new MarcoPoloTile());       // 地砖，马可波罗
-	}
+public interface Builder {
+    Builder buildCPU(CPU cpu);
 
-	public IMenu levelThree(Double area){
-		return new DecorationPackageMenu(area, "现代简约")
-				.appendCeiling(new LevelOneCeiling())   // 吊顶，二级顶
-				.appendCoat(new LiBangCoat())           // 涂料，立邦
-				.appendTile(new DongPengTile());        // 地砖，东鹏
-	}
+    Builder buildRAM(RAM ram);
+
+    Builder buildGPU(GPU gpu);
+
+    Builder buildDisk(Disk disk);
+
+    Builder buildPowerSupply(PowerSupply powerSupply);
+
+    Builder buildMotherboard(Motherboard motherboard);
+
+    Computer build();
 }
