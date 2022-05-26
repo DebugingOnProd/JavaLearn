@@ -11,9 +11,7 @@ public class Invoker {
     }
 
     public void placeOrders() {
-        for (Command order : orderList) {
-            order.execute();
-        }
+        orderList.forEach(Command::execute);
         orderList.clear();
     }
 }

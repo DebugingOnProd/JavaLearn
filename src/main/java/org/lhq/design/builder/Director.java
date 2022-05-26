@@ -17,6 +17,11 @@ public class Director {
         this.builder.buildMotherboard(Motherboard.ATX);
         this.builder.buildPowerSupply(PowerSupply.CORSAIR);
     }
+    public void constructOfficePC(){
+        this.builder.buildCPU(CPU.I3);
+        this.builder.buildGPU(GPU.RTX3060);
+        this.builder.buildRAM(RAM.SIXTEEN_GIGABYTES);
+    }
 
 }
 
