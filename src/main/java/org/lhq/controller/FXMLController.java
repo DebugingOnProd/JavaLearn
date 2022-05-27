@@ -17,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -51,7 +52,7 @@ public class FXMLController {
     }
     public void aboutAction(ActionEvent actionEvent) throws IOException {
         log.info("点击了关于按钮");
-        Scene scene = new Scene(FXMLLoader.load(getClass().getClassLoader().getResource("assets/fxml/about.fxml")));
+        Scene scene = new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("assets/fxml/about.fxml"))));
         JMetro jMetro = new JMetro(Style.LIGHT);
         jMetro.setScene(scene);
         Stage stage = new Stage();
