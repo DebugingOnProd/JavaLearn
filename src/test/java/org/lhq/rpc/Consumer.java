@@ -1,5 +1,6 @@
 package org.lhq.rpc;
 
+import lombok.extern.slf4j.Slf4j;
 import org.lhq.rpc.client.ClientStubProxyFactory;
 import org.lhq.rpc.client.netclient.NettyNetClient;
 import org.lhq.rpc.discovery.ZookeeperServiceInfoDiscoverer;
@@ -8,7 +9,7 @@ import org.lhq.rpc.protocol.RpcProtocol;
 import org.lhq.utils.PropertiesUtils;
 
 import java.util.HashMap;
-
+@Slf4j
 public class Consumer {
     public static void main(String[] args) {
         String protocol = PropertiesUtils.getProperties("rpc.protocol");
@@ -27,6 +28,6 @@ public class Consumer {
         DemoService demoService = cspf.getProxy(DemoService.class); // 获取远程服务代理
         String result = demoService.hello("jimi"); // 执行远程方法
 
-        System.out.println("获取到的结果；" + result);
+        log.info("获取到的结果；" + result);
     }
 }
