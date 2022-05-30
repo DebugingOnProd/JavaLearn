@@ -15,7 +15,7 @@ import java.util.Map;
 public class ZookeeperExportServiceRegister implements ServiceRegister{
     private ZkClient client;
 
-    private String centerRootPath = "/wang-rpc";
+    private static final String CENTER_ROOT_PATH = "/wang-rpc";
 
     private Map<String, ServiceObject> serviceMap = new HashMap<>();
 
@@ -53,7 +53,7 @@ public class ZookeeperExportServiceRegister implements ServiceRegister{
         String serviceName = serviceResource.getName();
         String uri = JSONUtil.toJsonStr(serviceResource);
         uri = URLEncoder.encode(uri, StandardCharsets.UTF_8);
-        String servicePath = centerRootPath + "/" + serviceName + "/service";
+        String servicePath = CENTER_ROOT_PATH + "/" + serviceName + "/service";
         if (!client.exists(servicePath)) {
             client.createPersistent(servicePath, true);
         }

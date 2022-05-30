@@ -1,6 +1,5 @@
 package org.lhq.rpc.discovery;
 
-import cn.hutool.json.JSON;
 import cn.hutool.json.JSONUtil;
 import org.I0Itec.zkclient.ZkClient;
 import org.lhq.utils.PropertiesUtils;
@@ -12,7 +11,7 @@ import java.util.List;
 
 public class ZookeeperServiceInfoDiscoverer implements ServiceInfoDiscoverer{
     ZkClient client;
-    private String centerRootPath = "/wang-rpc";
+    private static  final String CENTER_ROOT_PATH = "/wang-rpc";
 
     public ZookeeperServiceInfoDiscoverer() {
         String address = PropertiesUtils.getProperties("zk.address");
@@ -23,7 +22,7 @@ public class ZookeeperServiceInfoDiscoverer implements ServiceInfoDiscoverer{
 
     @Override
     public List<ServiceInfo> getServiceInfo(String name) {
-        String servicePath = centerRootPath + "/" + name + "/service";
+        String servicePath = CENTER_ROOT_PATH + "/" + name + "/service";
         List<String> children = client.getChildren(servicePath);
         List<ServiceInfo> resources = new ArrayList<>();
         for (String ch : children) {

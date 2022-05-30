@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 @Getter
 @Setter
-public class ClientStubProxyFactory {
+public class  ClientStubProxyFactory {
     //服务发现
     private ServiceInfoDiscoverer serviceInfoDiscoverer = new ZookeeperServiceInfoDiscoverer();
 
@@ -26,13 +26,12 @@ public class ClientStubProxyFactory {
     private Map<String, RpcProtocol> supportRpcProtocols;
 
     public <T> T getProxy(Class<T> interf) {
-        T obj = (T) this.objectCache.get(interf);
-        if (obj == null) {
-            obj = (T) Proxy.newProxyInstance(interf.getClassLoader(), new Class<?>[]{interf},
-                    new ClientStubInvocationHandler(interf, serviceInfoDiscoverer, netClient));
-            this.objectCache.put(interf, obj);
-        }
-        return obj;
+        Object obj = this.objectCache.computeIfAbsent(interf, key -> Proxy.newProxyInstance(
+                interf.getClassLoader(),
+                new Class<?>[]{interf},
+                new ClientStubInvocationHandler(interf, serviceInfoDiscoverer, netClient)
+        ));
+        return (T)obj;
     }
 
 }

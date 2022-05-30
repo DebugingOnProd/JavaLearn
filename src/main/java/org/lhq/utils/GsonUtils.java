@@ -1,9 +1,12 @@
 package org.lhq.utils;
 
+import cn.hutool.core.lang.ParameterizedTypeImpl;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import lombok.extern.slf4j.Slf4j;
+import org.lhq.rpc.common.Response;
 
+import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;
 
@@ -83,6 +86,16 @@ public class GsonUtils {
             t = gson.fromJson(gsonString, cls);
         }
         return t;
+    }
+
+    public static  Response<?> jsonStrToResponse(String jsonStr,Class<?> clazz) {
+        Type type = new ParameterizedTypeImpl(new Class[]{clazz}, Response.class, Response.class);
+        Response<?> bean = null;
+        if (gson != null) {
+            bean = gson.fromJson(jsonStr, type);
+        }
+        return  bean;
+
     }
 
     /**

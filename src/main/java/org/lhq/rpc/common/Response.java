@@ -1,19 +1,15 @@
 package org.lhq.rpc.common;
 
-import com.google.gson.annotations.Expose;
 import lombok.Data;
 
 import java.util.HashMap;
 import java.util.Map;
+
 @Data
-public class Response {
-    @Expose
+public class Response<T> {
     private Status status;
-    @Expose
-    private Map<String, String> headers = new   HashMap<>();
-    @Expose
-    private Object returnValue;
-    @Expose
+    private Map<String, String> headers = new HashMap<>();
+    private T returnValue;
     private Exception exception;
 
     public Response() {
