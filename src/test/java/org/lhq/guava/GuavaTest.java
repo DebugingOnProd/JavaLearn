@@ -20,16 +20,6 @@ class GuavaTest {
 	}
 	@Test
 	void aysnake(){
-		Futures.addCallback(null, new FutureCallback<Object>() {
-			@Override
-			public void onSuccess(Object result) {
-				log.info("成功输出");
-			}
 
-			@Override
-			public void onFailure(Throwable t) {
-				log.error("失败输出");
-			}
-		},null);
 	}
 }
