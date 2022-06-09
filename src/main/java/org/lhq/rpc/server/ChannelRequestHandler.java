@@ -27,6 +27,7 @@ public class ChannelRequestHandler extends ChannelInboundHandlerAdapter {
         ByteBuf msgBuf = (ByteBuf) msg;
         byte[] req = new byte[msgBuf.readableBytes()];
         msgBuf.readBytes(req);
+        // 处理请求数据
         byte[] res = handler.handleRequest(req);
         log.info("发送响应：" + msg);
         ByteBuf respBuf = Unpooled.buffer(res.length);

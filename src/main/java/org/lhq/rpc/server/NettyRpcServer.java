@@ -10,6 +10,7 @@ import io.netty.handler.logging.LoggingHandler;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.lhq.rpc.server.registry.RequestHandler;
 
 @Slf4j
@@ -39,7 +40,7 @@ public class NettyRpcServer {
             b.group(bossGroup, workerGroup).channel(NioServerSocketChannel.class).option(ChannelOption.SO_BACKLOG, 100)
                     .handler(new LoggingHandler(LogLevel.INFO)).childHandler(new ChannelInitializer<SocketChannel>() {
                         @Override
-                        public void initChannel(SocketChannel ch) {
+                        public void initChannel(@NotNull SocketChannel ch) {
                             ChannelPipeline p = ch.pipeline();
                             p.addLast(new ChannelRequestHandler(handler));
                         }
