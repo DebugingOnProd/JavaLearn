@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+	<body>
+		<script>
+		    function say() {
+				let array = [5711,5712,5741,5742,5743,5744];
+                console.log("删除前",array);
+                let array2 = [5741,5742];
+                let indexArray = array2.map(item => array.indexOf(item));
+                console.log("要删除的元素在数组中的下标",indexArray);
+                indexArray.forEach(item => {array.splice(item,1);});
+                console.log("删除后",array);
+			}
+			say();
+		</script>
+	</body>
+</html>
