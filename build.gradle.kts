@@ -36,6 +36,7 @@ dependencies {
     implementation ("xerces:xercesImpl:2.12.2")
     implementation ("io.netty:netty-all:4.1.77.Final")
     implementation ("cn.hutool:hutool-all:5.8.2")
+    implementation ("com.alibaba:easyexcel:3.1.0")
     compileOnly ("org.projectlombok:lombok:1.18.24")
     testCompileOnly ("org.projectlombok:lombok:1.18.24")
     annotationProcessor ("org.projectlombok:lombok:1.18.24")

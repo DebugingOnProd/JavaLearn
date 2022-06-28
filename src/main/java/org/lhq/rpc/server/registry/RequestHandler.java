@@ -41,8 +41,8 @@ public class RequestHandler {
         } else {
             // 3、反射调用对应的过程方法
             try {
-                Method m = so.getInterf().getMethod(req.getMethod(), req.getParameterTypes());
-                Object returnValue = m.invoke(so.getObj(), req.getParameters());
+                Method requestMethod = so.getInterf().getMethod(req.getMethod(), req.getParameterTypes());
+                Object returnValue = requestMethod.invoke(so.getObj(), req.getParameters());
                 rsp = new Response(Status.SUCCESS);
                 rsp.setReturnValue(returnValue);
             } catch (Exception e) {
