@@ -36,7 +36,6 @@ dependencies {
     implementation ("xerces:xercesImpl:2.12.2")
     implementation ("io.netty:netty-all:4.1.77.Final")
     implementation ("cn.hutool:hutool-all:5.8.2")
-    implementation ("com.alibaba:easyexcel:3.1.0")
     compileOnly ("org.projectlombok:lombok:1.18.24")
     testCompileOnly ("org.projectlombok:lombok:1.18.24")
     annotationProcessor ("org.projectlombok:lombok:1.18.24")
@@ -64,8 +63,14 @@ dependencies {
     implementation ("mysql:mysql-connector-java:8.0.29")
     testImplementation ("org.junit.jupiter:junit-jupiter-api:5.8.2")
     testRuntimeOnly ("org.junit.jupiter:junit-jupiter-engine:5.8.2")
+    implementation ("org.apache.poi:poi-ooxml:5.2.2")
 }
-
+tasks.compileJava {
+    options.encoding = "utf-8"
+}
+tasks.compileTestJava {
+    options.encoding = "utf-8"
+}
 tasks.named<Test>("test") {
     useJUnitPlatform()
 }

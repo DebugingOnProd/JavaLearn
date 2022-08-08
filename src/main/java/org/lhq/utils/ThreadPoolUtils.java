@@ -3,6 +3,9 @@ package org.lhq.utils;
 import java.util.concurrent.*;
 
 public class ThreadPoolUtils {
+
+    private ThreadPoolUtils(){}
+
     private volatile static ThreadPoolExecutor threadPool;
     public static final int CORE_POOL_SIZE = Runtime.getRuntime().availableProcessors() + 1;
     public static final int MAX_POOL_SIZE = Runtime.getRuntime().availableProcessors() * 2;

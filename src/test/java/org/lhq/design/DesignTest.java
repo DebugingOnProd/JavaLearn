@@ -64,6 +64,9 @@ import org.lhq.design.observer.Subject;
 import org.lhq.design.state.Context;
 import org.lhq.design.state.StartState;
 import org.lhq.design.state.StopState;
+import org.lhq.design.strategy.SelectStrategy;
+import org.lhq.design.strategy.impl.PoorGuyGrade;
+import org.lhq.design.strategy.impl.SvipGrade;
 import org.lhq.design.template.Basketball;
 import org.lhq.design.template.Football;
 import org.lhq.design.template.Game;
@@ -506,6 +509,19 @@ class DesignTest {
         stopState.doAction(context);
 
         log.info(context.getState().toString());
+    }
+
+    @Test
+    @DisplayName("策略模式")
+    void strategy(){
+        SelectStrategy poorGuy = new SelectStrategy(new PoorGuyGrade());
+        BigDecimal poorGuyPrice = poorGuy.executeCal(new BigDecimal("100"));
+        log.info("穷鬼价格是:{}元",poorGuyPrice.toString());
+
+        SelectStrategy svip = new SelectStrategy(new SvipGrade());
+        BigDecimal svipPrice = svip.executeCal(new BigDecimal("100"));
+        log.info("土豪的价格是:{}元",svipPrice.toString());
+
     }
 
 }
