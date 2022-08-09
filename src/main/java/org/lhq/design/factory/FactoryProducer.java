@@ -1,13 +1,16 @@
 package org.lhq.design.factory;
 
+import org.lhq.entity.enums.FactoryEnum;
+
 public class FactoryProducer {
-    public static AbstractFactory getFactory(String choice) {
-        if (choice.equalsIgnoreCase("DataSource")) {
-            return new DataSourceFactory();
-        } else if (choice.equalsIgnoreCase("DBDriver")) {
-            return new DBDriverFactory();
+    public static AbstractFactory getFactory(FactoryEnum factoryEnum) {
+        AbstractFactory factory = null;
+        switch (factoryEnum){
+            case DbType ->  factory = new DBDriverFactory();
+            case DataSource ->  factory = new DataSourceFactory();
         }
-        return null;
+        return factory;
+
     }
 
 }

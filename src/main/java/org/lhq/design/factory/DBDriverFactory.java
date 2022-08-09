@@ -3,6 +3,7 @@ package org.lhq.design.factory;
 import lombok.extern.slf4j.Slf4j;
 import org.lhq.design.factory.impl.MySqlDriver;
 import org.lhq.design.factory.impl.OracleDriver;
+import org.lhq.design.factory.impl.PostgreSqlDriver;
 import org.lhq.entity.enums.DataSource;
 import org.lhq.entity.enums.DbEnum;
 
@@ -20,12 +21,13 @@ public class DBDriverFactory extends AbstractFactory{
         switch (dbEnum){
             case MySql -> dbDriver = new MySqlDriver();
             case Oracle -> dbDriver = new OracleDriver();
+            case PostgreSql -> dbDriver = new PostgreSqlDriver();
         }
         return dbDriver;
     }
 
     @Override
-    public Connection getDb(DataSource dataSource) {
+    public IDataSource getDb(DataSource dataSource) {
         return null;
     }
 

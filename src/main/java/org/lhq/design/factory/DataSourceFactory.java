@@ -1,6 +1,8 @@
 package org.lhq.design.factory;
 
 
+import org.lhq.design.factory.impl.DisasterRecoveryDataSourceImpl;
+import org.lhq.design.factory.impl.SameCitySourceImpl;
 import org.lhq.entity.enums.DataSource;
 import org.lhq.entity.enums.DbEnum;
 
@@ -13,15 +15,15 @@ public class DataSourceFactory extends AbstractFactory{
     }
 
     @Override
-    public Connection getDb(DataSource dataSource) {
+    public IDataSource getDb(DataSource dataSource) {
         if (dataSource==null){
             return null;
         }
-        Connection connection = null;
+        IDataSource dataSourceConnection = null;
         switch (dataSource){
-            case SameCity, DisasterRecovery -> {
-            }
+            case SameCity -> dataSourceConnection = new SameCitySourceImpl();
+            case DisasterRecovery -> dataSourceConnection = new DisasterRecoveryDataSourceImpl();
         }
-        return connection;
+        return dataSourceConnection;
     }
 }

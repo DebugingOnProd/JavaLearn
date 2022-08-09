@@ -2,6 +2,7 @@ package org.lhq.design;
 
 import cn.hutool.json.JSONUtil;
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -45,10 +46,7 @@ import org.lhq.design.corp.approval.impl.AuthLinkThr;
 import org.lhq.design.corp.approval.impl.AuthLinkTop;
 import org.lhq.design.decorator.LoginSsoDecorator;
 import org.lhq.design.decorator.SsoInterceptor;
-import org.lhq.design.factory.AbstractFactory;
-import org.lhq.design.factory.DBDriver;
-import org.lhq.design.factory.DBDriverFactory;
-import org.lhq.design.factory.FactoryProducer;
+import org.lhq.design.factory.*;
 import org.lhq.design.filter.AndCriteria;
 import org.lhq.design.filter.Criteria;
 import org.lhq.design.filter.CriteriaFemale;
@@ -72,6 +70,7 @@ import org.lhq.design.template.Football;
 import org.lhq.design.template.Game;
 import org.lhq.entity.enums.DataSource;
 import org.lhq.entity.enums.DbEnum;
+import org.lhq.entity.enums.FactoryEnum;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -88,6 +87,10 @@ import java.util.Map;
 
 @Slf4j
 class DesignTest {
+
+    /**
+     * 定义一个创建对象的接口,让调用者根据条件决定调用哪个实现类,返回实现类对象
+     */
     @Test
     @DisplayName("测试工厂模式")
     void testFactory() {
@@ -96,15 +99,21 @@ class DesignTest {
         driverMySql.getConnection();
         DBDriver driverOracle = factory.getDbDriver(DbEnum.Oracle);
         driverOracle.getConnection();
+        DBDriver driverPostgreSql = factory.getDbDriver(DbEnum.PostgreSql);
+        driverPostgreSql.getConnection();
     }
+
+    /**
+     * 当有多个工厂需要管理的时候需要一个抽象工厂来统一管理工厂
+     * @throws SQLException
+     */
 
     @Test
     @DisplayName("抽象工厂模式")
     void absFactory() throws SQLException {
-        AbstractFactory dataSourceFactory = FactoryProducer.getFactory("DataSource");
-        Connection db = dataSourceFactory.getDb(DataSource.SameCity);
-        DBDriver dbDriver = dataSourceFactory.getDbDriver(DbEnum.MySql);
-        log.info("获取同城Mysql数据库链接,{},{}", db, dbDriver);
+        IDataSource db = FactoryProducer.getFactory(FactoryEnum.DataSource).getDb(DataSource.SameCity);
+        DBDriver dbDriver = FactoryProducer.getFactory(FactoryEnum.DbType).getDbDriver(DbEnum.MySql);
+        log.info("获取同城Mysql数据库链接,{},{}", db.getConnection(), dbDriver);
     }
 
     @Test
@@ -510,6 +519,13 @@ class DesignTest {
 
         log.info(context.getState().toString());
     }
+
+    /**
+     * 策略模式
+     * 让调用者去决定调用哪个算法,从而避免服务方产生大量if else 语句
+     * 好处是算法可以自由切换,避免过多判断语句,具有良好的拓展性
+     * 缺点是所有的算法类都需要对外暴露
+     */
 
     @Test
     @DisplayName("策略模式")
