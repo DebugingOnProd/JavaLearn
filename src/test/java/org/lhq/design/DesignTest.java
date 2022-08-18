@@ -68,6 +68,8 @@ import org.lhq.design.strategy.impl.SvipGrade;
 import org.lhq.design.template.Basketball;
 import org.lhq.design.template.Football;
 import org.lhq.design.template.Game;
+import org.lhq.design.visitor.ComputerPart;
+import org.lhq.design.visitor.ComputerPartDisplayVisitor;
 import org.lhq.entity.enums.DataSource;
 import org.lhq.entity.enums.DbEnum;
 import org.lhq.entity.enums.FactoryEnum;
@@ -538,6 +540,12 @@ class DesignTest {
         BigDecimal svipPrice = svip.executeCal(new BigDecimal("100"));
         log.info("土豪的价格是:{}元",svipPrice.toString());
 
+    }
+    @Test
+    @DisplayName("访问者模式")
+    void visitor(){
+        ComputerPart computerPart = new org.lhq.design.visitor.impl.Computer();
+        computerPart.accept(new ComputerPartDisplayVisitor());
     }
 
 }
