@@ -1,0 +1,2 @@
+id = "" resultType =
+select * from user where #{username}
