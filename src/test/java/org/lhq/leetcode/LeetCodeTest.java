@@ -21,12 +21,7 @@ import org.lhq.utils.HolidayEnum;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 
@@ -325,6 +320,18 @@ public class LeetCodeTest {
         listNode3.next = listNode4;
         boolean palindrome = leetCode.isPalindrome(listNode);
         log.info(String.valueOf(palindrome));
+    }
+    @Test
+    @DisplayName("重置矩阵")
+    void testMatrixReshape(){
+        int[][] matrixReshape = leetCode.matrixReshape(new int[][]{{1, 2}, {3, 4}}, 4, 1);
+        log.info(Arrays.deepToString(matrixReshape));
+    }
+    @Test
+    @DisplayName("杨辉三角")
+    void testGenerate(){
+        List<List<Integer>> list = leetCode.generate(5);
+        log.info(list.toString());
     }
 
 

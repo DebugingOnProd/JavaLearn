@@ -1,6 +1,7 @@
 package org.lhq.leetcode;
 
 import lombok.extern.slf4j.Slf4j;
+import org.lhq.anno.orm.Select;
 import org.lhq.leetcode.struc.ListNode;
 import org.lhq.leetcode.struc.TreeNode;
 
@@ -17,13 +18,95 @@ import java.util.concurrent.atomic.AtomicLong;
 public class LeetCode {
 
 
+    public List<List<Integer>> generate(int numRows) {
+        List<List<Integer>> result = new ArrayList<>();
+        for (int i = 0; i < numRows; i++) {
+            List<Integer> list = new ArrayList<>();
+            // 每一行的开头都为1
+            list.add(1);
+
+            for (int j = 1; j < i; j++) {
+                //获取上一行 的数组
+                List<Integer> sub = result.get(i - 1);
+                Integer cur = sub.get(j);
+                Integer pre = sub.get(j - 1);
+                list.add(cur + pre);
+            }
+            if (i != 0) {
+                // 给结尾 加上 1
+                list.add(1);
+            }
+            result.add(list);
+        }
+        return result;
+    }
+
+
+    public int[][] matrixReshape(int[][] mat, int r, int c) {
+        //行数
+        int m = mat.length;
+        // 列数
+        int n = mat[0].length;
+        if (m * n != r * c) {
+            return mat;
+        } else {
+            int[][] resultMartix = new int[r][c];
+            int newWidth = 0;
+            int oldWidth = 0;
+            int oldHigh = 0;
+            int newHigh = 0;
+            while (newHigh < r) {
+                resultMartix[newHigh][newWidth++] = mat[oldHigh][oldWidth++];
+                if (newWidth == c) {
+                    newHigh++;
+                    newWidth = 0;
+                }
+                if (oldWidth > n - 1) {
+                    oldHigh++;
+                    oldWidth = 0;
+                }
+            }
+            return resultMartix;
+        }
+
+    }
+
+    public int maxProfit(int[] prices) {
+        if (prices.length == 0) {
+            return 0;
+        }
+        int max = 0;
+        int min = prices[0];
+        for (int price : prices) {
+            //记录当前最大的差价,
+            max = Math.max(max, price - min);
+            // 记录当前股票最小价格
+            min = Math.min(min, price);
+        }
+        return max;
+    }
+
+    public int[] twoSum2(int[] nums, int target) {
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            if (map.containsKey(nums[i])) {
+                return new int[]{i, map.get(nums[i])};
+            } else {
+                map.put(target - nums[i], i);
+            }
+        }
+        return new int[0];
+
+    }
+
+
     public boolean hasCycle2(ListNode head) {
-        if (head==null){
+        if (head == null) {
             return false;
         }
         Set<ListNode> set = new HashSet<>();
         ListNode cur = head;
-        while (cur!=null){
+        while (cur != null) {
             if (set.contains(cur)) {
                 return true;
             }
@@ -40,24 +123,26 @@ public class LeetCode {
         for (int num : nums) {
             //当前和
             pre = Math.max(pre + maxSub, num);
-            maxSub = Math.max(maxSub,pre);
+            maxSub = Math.max(maxSub, pre);
         }
         return maxSub;
     }
+
     public boolean containsDuplicate(int[] nums) {
-        if (nums.length<=0){
+        if (nums.length <= 0) {
             return false;
         }
         Set<Integer> set = new HashSet<>();
         for (int num : nums) {
-            if (set.contains(num)){
+            if (set.contains(num)) {
                 return true;
-            }else {
+            } else {
                 set.add(num);
             }
         }
         return false;
     }
+
     public boolean isPalindrome(ListNode head) {
         Deque<Integer> stack = new LinkedList<>();
         ListNode cur = head;
