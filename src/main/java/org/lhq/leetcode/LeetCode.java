@@ -16,6 +16,82 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 @Slf4j
 public class LeetCode {
+    public int firstUniqChar(String s) {
+        return -1;
+    }
+    public void setZeroes(int[][] matrix) {
+        int width = matrix.length;
+        int high = matrix[0].length;
+        Set<Integer> colSet = new HashSet<>();
+        Set<Integer> rowSet = new HashSet<>();
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < high; j++) {
+                if (matrix[i][j] == 0) {
+                    rowSet.add(i);
+                    colSet.add(j);
+                }
+
+            }
+        }
+        for (int[] row : matrix) {
+            for (int i = 0; i < row.length; i++) {
+                if (colSet.contains(i)) {
+                    row[i] = 0;
+                }
+            }
+        }
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < high; j++) {
+                if (rowSet.contains(i)) {
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+    }
+
+
+    public boolean isValidSudoku(char[][] board) {
+        int width = board.length;
+        int high = board[0].length;
+        Set<Character> charSet = new HashSet<>();
+        int pHigh = 0;
+        int pWidth = 0;
+        while (pWidth < width) {
+            if (board[pWidth][pHigh] != '.' && !charSet.add(board[pWidth][pHigh])) {
+                return false;
+            }
+            if ((pHigh + 1) % 3 == 0 && (pWidth + 1) % 3 == 0) {
+                charSet = new HashSet<>();
+            }
+            if ((pWidth + 1) % 3 == 0) {
+                pHigh++;
+                pWidth -= 3;
+            }
+            if (pHigh == high) {
+                pWidth += 3;
+                pHigh = 0;
+            }
+            pWidth++;
+        }
+        for (char[] chars : board) {
+            Set<Character> hashSet = new HashSet<>();
+            for (char c : chars) {
+                if (c != '.' && !hashSet.add(c)) {
+                    return false;
+                }
+            }
+        }
+        for (int i = 0; i < high; i++) {
+            Set<Character> hashSet = new HashSet<>();
+            for (char[] chars : board) {
+                if (chars[i] != '.' && !hashSet.add(chars[i])) {
+                    return false;
+                }
+            }
+        }
+        return true;
+
+    }
 
 
     public List<List<Integer>> generate(int numRows) {

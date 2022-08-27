@@ -308,9 +308,10 @@ public class LeetCodeTest {
         log.info("是否完全平方数{}", b);
         log.info("xxxxx:{}", b);
     }
+
     @Test
     @DisplayName("回文链表")
-    void testIsPalindrome(){
+    void testIsPalindrome() {
         ListNode listNode = new ListNode(1);
         ListNode listNode2 = new ListNode(2);
         ListNode listNode3 = new ListNode(2);
@@ -321,17 +322,51 @@ public class LeetCodeTest {
         boolean palindrome = leetCode.isPalindrome(listNode);
         log.info(String.valueOf(palindrome));
     }
+
     @Test
     @DisplayName("重置矩阵")
-    void testMatrixReshape(){
+    void testMatrixReshape() {
         int[][] matrixReshape = leetCode.matrixReshape(new int[][]{{1, 2}, {3, 4}}, 4, 1);
         log.info(Arrays.deepToString(matrixReshape));
     }
+
     @Test
     @DisplayName("杨辉三角")
-    void testGenerate(){
+    void testGenerate() {
         List<List<Integer>> list = leetCode.generate(5);
         log.info(list.toString());
+    }
+
+    @Test
+    @DisplayName("有效数独")
+    void testIsValidSudoku() {
+        char[][] sudoku = new char[][]{
+                {'5', '3', '.', '.', '7', '.', '.', '.', '.'},
+                {'6', '.', '.', '1', '9', '5', '.', '.', '.'},
+                {'.', '9', '8', '.', '.', '.', '.', '6', '.'},
+                {'8', '.', '.', '.', '6', '.', '.', '.', '3'},
+                {'4', '.', '.', '8', '.', '3', '.', '.', '1'},
+                {'7', '.', '.', '.', '2', '.', '.', '.', '6'},
+                {'.', '6', '.', '.', '.', '.', '2', '8', '.'},
+                {'.', '.', '.', '4', '1', '9', '.', '.', '5'},
+                {'.', '.', '.', '.', '8', '.', '.', '7', '9'},
+        };
+        boolean validSudoku = leetCode.isValidSudoku(sudoku);
+        log.info(String.valueOf(validSudoku));
+    }
+    @Test
+    @DisplayName("置零矩阵")
+    void testSetZeroes(){
+       int[][] matrix = new int[][]{{1,1,1},{1,0,1},{1,1,1}};
+        log.info("原始矩阵");
+        for (int[] ints : matrix) {
+            log.info(Arrays.toString(ints));
+        }
+        leetCode.setZeroes(matrix);
+        log.info("修改后矩阵");
+        for (int[] ints : matrix) {
+            log.info(Arrays.toString(ints));
+        }
     }
 
 
