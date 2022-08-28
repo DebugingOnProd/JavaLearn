@@ -354,10 +354,11 @@ public class LeetCodeTest {
         boolean validSudoku = leetCode.isValidSudoku(sudoku);
         log.info(String.valueOf(validSudoku));
     }
+
     @Test
     @DisplayName("置零矩阵")
-    void testSetZeroes(){
-       int[][] matrix = new int[][]{{1,1,1},{1,0,1},{1,1,1}};
+    void testSetZeroes() {
+        int[][] matrix = new int[][]{{1, 1, 1}, {1, 0, 1}, {1, 1, 1}};
         log.info("原始矩阵");
         for (int[] ints : matrix) {
             log.info(Arrays.toString(ints));
@@ -367,6 +368,19 @@ public class LeetCodeTest {
         for (int[] ints : matrix) {
             log.info(Arrays.toString(ints));
         }
+    }
+
+    @Test
+    @DisplayName("找到第一个不重复的数")
+    void testFirstUniqChar() {
+        int index = leetCode.firstUniqChar("loveleetcode");
+        log.info("下标是{}", index);
+    }
+    @Test
+    @DisplayName("赎金信")
+    void testCanConstruct(){
+        boolean b = leetCode.canConstruct("aa", "aab");
+        log.info(String.valueOf(b));
     }
 
 

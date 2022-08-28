@@ -16,7 +16,58 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 @Slf4j
 public class LeetCode {
+
+    public boolean isAnagram(String s, String t) {
+        Map<Character,Integer> charMap = new HashMap<>();
+        for (char c : s.toCharArray()) {
+            Integer count = charMap.getOrDefault(c, 0);
+            charMap.put(c,count+1);
+        }
+        for (char c : t.toCharArray()) {
+            charMap.computeIfPresent(c,(key,value)->value-1);
+            if (!charMap.containsKey(c)){
+                return false;
+            }
+            if (charMap.containsKey(c) && charMap.get(c).equals(0)){
+                charMap.remove(c);
+            }
+        }
+        return charMap.isEmpty();
+    }
+
+    public boolean canConstruct(String ransomNote, String magazine) {
+        char[] chars = magazine.toCharArray();
+        Map<Character,Integer> charMap = new HashMap<>();
+        for (char c : chars) {
+            Integer count = charMap.getOrDefault(c, 0);
+            charMap.put(c,count+1);
+        }
+        char[] array = ransomNote.toCharArray();
+        for (char c : array) {
+            charMap.computeIfPresent(c,(key,value)-> value-1);
+            if (!charMap.containsKey(c)){
+                return false;
+            }
+            if (charMap.containsKey(c) && charMap.get(c).equals(0)){
+                charMap.remove(c);
+            }
+        }
+        return true;
+    }
+
+
     public int firstUniqChar(String s) {
+        char[] chars = s.toCharArray();
+        Map<Character,Integer> charMap = new HashMap<>();
+        for (char c : chars) {
+            Integer count = charMap.getOrDefault(c, 0);
+            charMap.put(c,count+1);
+        }
+        for (int i = 0; i < chars.length; i++) {
+            if (charMap.get(chars[i]).equals(1)){
+                return i;
+            }
+        }
         return -1;
     }
     public void setZeroes(int[][] matrix) {
