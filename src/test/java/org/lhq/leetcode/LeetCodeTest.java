@@ -376,11 +376,42 @@ public class LeetCodeTest {
         int index = leetCode.firstUniqChar("loveleetcode");
         log.info("下标是{}", index);
     }
+
     @Test
     @DisplayName("赎金信")
-    void testCanConstruct(){
+    void testCanConstruct() {
         boolean b = leetCode.canConstruct("aa", "aab");
         log.info(String.valueOf(b));
+    }
+
+    @Test
+    @DisplayName("合并两个有序链表")
+    void testMergeTwoLists() {
+        ListNode cur = leetCode.mergeTwoLists(
+                new ListNode(1, new ListNode(2, new ListNode(4))),
+                new ListNode(1, new ListNode(3, new ListNode(4)))
+        );
+        while (cur.next != null) {
+            log.info(String.valueOf(cur.val));
+            cur = cur.next;
+        }
+    }
+
+    @Test
+    @DisplayName("?")
+    void testRemoveElements(){
+        ListNode listNode = new ListNode(7, new ListNode(7, new ListNode(7, new ListNode(7, new ListNode(7, new ListNode(7, new ListNode(7)))))));
+        ListNode cur = leetCode.removeElements(listNode, 7);
+        while (cur != null) {
+            log.info(String.valueOf(cur.val));
+            cur = cur.next;
+        }
+    }
+    @Test
+    @DisplayName("有效的括号")
+    void testIsValid(){
+        boolean valid2 = leetCode.isValid2("()[]{}");
+        log.info("{}",valid2);
     }
 
 

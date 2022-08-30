@@ -16,19 +16,92 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 @Slf4j
 public class LeetCode {
+    public boolean isValid2(String s) {
+        Map<Character, Character> map = new HashMap<>();
+        map.put('}', '{');
+        map.put(']', '[');
+        map.put(')', '(');
+        int length = s.length();
+        if (length % 2 != 0) {
+            return false;
+        }
+        Deque<Character> stack = new LinkedList<>();
+        for (char c : s.toCharArray()) {
+            if (map.containsKey(c)){
+                if (stack.isEmpty() || !stack.peek().equals(map.get(c))){
+                    return false;
+                }
+                stack.pop();
+            }else {
+                stack.push(c);
+            }
+        }
+        return stack.isEmpty();
+    }
+
+    public ListNode reverseList(ListNode head) {
+        ListNode cur = head;
+        ListNode pre = null;
+        while (cur != null) {
+            // 当前节点的下一节点
+            ListNode next = cur.next;
+            // 吧当前节点的下一节点指向前一个节点
+            cur.next = pre;
+            // 前一个节点为当前节点
+            pre = cur;
+            // 指针往下一个节点移动
+            cur = next;
+        }
+        return head;
+    }
+
+    public ListNode removeElements(ListNode head, int val) {
+        ListNode perHead = new ListNode(-1);
+        perHead.next = head;
+        ListNode cur = head;
+        while (cur.next != null) {
+            if (cur.val == val) {
+                cur.next = cur.next.next;
+            } else {
+                cur = cur.next;
+            }
+
+        }
+        return perHead.next;
+    }
+
+
+    public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+        ListNode p1 = list1;
+        ListNode p2 = list2;
+        ListNode temp = new ListNode(-1);
+        ListNode cur = temp;
+        while (p1 != null && p2 != null) {
+            if (p1.val <= p2.val) {
+                cur.next = p1;
+                p1 = p1.next;
+            } else {
+                cur.next = p2;
+                p2 = p2.next;
+            }
+            cur = cur.next;
+        }
+        cur.next = p1 == null ? p2 : p1;
+        return temp.next;
+    }
 
     public boolean isAnagram(String s, String t) {
-        Map<Character,Integer> charMap = new HashMap<>();
+        Map<Character, Integer> charMap = new HashMap<>();
         for (char c : s.toCharArray()) {
             Integer count = charMap.getOrDefault(c, 0);
-            charMap.put(c,count+1);
+            charMap.put(c, count + 1);
         }
         for (char c : t.toCharArray()) {
-            charMap.computeIfPresent(c,(key,value)->value-1);
-            if (!charMap.containsKey(c)){
+            charMap.computeIfPresent(c, (key, value) -> value - 1);
+            if (!charMap.containsKey(c)) {
                 return false;
             }
-            if (charMap.containsKey(c) && charMap.get(c).equals(0)){
+            if (charMap.containsKey(c) && charMap.get(c).equals(0)) {
                 charMap.remove(c);
             }
         }
@@ -37,18 +110,18 @@ public class LeetCode {
 
     public boolean canConstruct(String ransomNote, String magazine) {
         char[] chars = magazine.toCharArray();
-        Map<Character,Integer> charMap = new HashMap<>();
+        Map<Character, Integer> charMap = new HashMap<>();
         for (char c : chars) {
             Integer count = charMap.getOrDefault(c, 0);
-            charMap.put(c,count+1);
+            charMap.put(c, count + 1);
         }
         char[] array = ransomNote.toCharArray();
         for (char c : array) {
-            charMap.computeIfPresent(c,(key,value)-> value-1);
-            if (!charMap.containsKey(c)){
+            charMap.computeIfPresent(c, (key, value) -> value - 1);
+            if (!charMap.containsKey(c)) {
                 return false;
             }
-            if (charMap.containsKey(c) && charMap.get(c).equals(0)){
+            if (charMap.containsKey(c) && charMap.get(c).equals(0)) {
                 charMap.remove(c);
             }
         }
@@ -58,18 +131,19 @@ public class LeetCode {
 
     public int firstUniqChar(String s) {
         char[] chars = s.toCharArray();
-        Map<Character,Integer> charMap = new HashMap<>();
+        Map<Character, Integer> charMap = new HashMap<>();
         for (char c : chars) {
             Integer count = charMap.getOrDefault(c, 0);
-            charMap.put(c,count+1);
+            charMap.put(c, count + 1);
         }
         for (int i = 0; i < chars.length; i++) {
-            if (charMap.get(chars[i]).equals(1)){
+            if (charMap.get(chars[i]).equals(1)) {
                 return i;
             }
         }
         return -1;
     }
+
     public void setZeroes(int[][] matrix) {
         int width = matrix.length;
         int high = matrix[0].length;
@@ -1214,16 +1288,18 @@ public class LeetCode {
             return false;
         }
 
-        Map<Character, Character> pairs = new HashMap<Character, Character>() {{
+        Map<Character, Character> pairs = new HashMap<>() {{
             put(')', '(');
             put(']', '[');
             put('}', '{');
         }};
         // 新建一个栈
-        Deque<Character> stack = new LinkedList<Character>();
+        Deque<Character> stack = new LinkedList<>();
         for (int i = 0; i < n; i++) {
             char ch = s.charAt(i);
+            // 如果map里面有这个key就说明是右括号，
             if (pairs.containsKey(ch)) {
+                // 如果栈为空，或者栈里面取出来的map value里面的左括号不能栈顶的左括号
                 if (stack.isEmpty() || !stack.peek().equals(pairs.get(ch))) {
                     return false;
                 }
