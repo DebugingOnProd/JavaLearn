@@ -1,7 +1,7 @@
 package org.lhq.leetcode;
 
+import io.vavr.collection.Tree;
 import lombok.extern.slf4j.Slf4j;
-import org.lhq.anno.orm.Select;
 import org.lhq.leetcode.struc.ListNode;
 import org.lhq.leetcode.struc.TreeNode;
 
@@ -16,6 +16,84 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 @Slf4j
 public class LeetCode {
+
+    public List<Integer> postorderTraversal(TreeNode root) {
+        if (root == null) {
+            return Collections.emptyList();
+        }
+        List<Integer> list = new ArrayList<>();
+        Deque<TreeNode> stack = new LinkedList<>();
+        TreeNode prev = null;
+        // 如果 当前节点为空 或者 栈不为空
+        while (root != null || !stack.isEmpty()) {
+            // 当前节点不为空
+            while (root != null) {
+                // 栈推入当前节点
+                stack.push(root);
+                // 当前节点等于 左子节点
+                root = root.left;
+            }
+            // 栈一直推入到左子节点为空
+            // 栈推出
+            root = stack.pop();
+            // 如果 当前节点 的右子节点为空  或者右子节点等于前驱节点
+            if (root.right == null || root.right == prev) {
+                list.add(root.val);
+                // 前驱节点等于 当前节点
+                prev = root;
+                // 当前节点置空
+                root = null;
+            } else {
+                // 如果当前节点右子节点不为空或者 当前节点的右子节点 等于前驱节点
+                stack.push(root);
+                // 当前节点 等于 右子节点
+                root = root.right;
+            }
+        }
+        return list;
+    }
+
+
+    public List<Integer> inorderTraversal2(TreeNode root) {
+        TreeNode cur = root;
+        Deque<TreeNode> stack = new LinkedList<>();
+        List<Integer> inOrder = new ArrayList<>();
+        while (cur != null || !stack.isEmpty()) {
+            while (cur != null) {
+                stack.push(cur);
+                cur = cur.left;
+            }
+            if (!stack.isEmpty()) {
+                TreeNode pop = stack.pop();
+                inOrder.add(pop.val);
+                cur = pop.right;
+            }
+        }
+        return inOrder;
+    }
+
+
+    public List<Integer> preorderTraversal(TreeNode root) {
+        if (root == null) {
+            return Collections.emptyList();
+        }
+        Deque<TreeNode> stack = new LinkedList<>();
+        List<Integer> preList = new ArrayList<>();
+        stack.addFirst(root);
+        if (!stack.isEmpty()) {
+            TreeNode treeNode = stack.removeFirst();
+            preList.add(treeNode.val);
+            if (treeNode.right != null) {
+                stack.addFirst(treeNode.right);
+            }
+            if (treeNode.left != null) {
+                stack.addFirst(treeNode.left);
+            }
+
+        }
+        return preList;
+    }
+
     public boolean isValid2(String s) {
         Map<Character, Character> map = new HashMap<>();
         map.put('}', '{');
@@ -27,12 +105,12 @@ public class LeetCode {
         }
         Deque<Character> stack = new LinkedList<>();
         for (char c : s.toCharArray()) {
-            if (map.containsKey(c)){
-                if (stack.isEmpty() || !stack.peek().equals(map.get(c))){
+            if (map.containsKey(c)) {
+                if (stack.isEmpty() || !stack.peek().equals(map.get(c))) {
                     return false;
                 }
                 stack.pop();
-            }else {
+            } else {
                 stack.push(c);
             }
         }
