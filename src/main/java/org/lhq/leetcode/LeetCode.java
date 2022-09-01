@@ -37,6 +37,7 @@ public class LeetCode {
             // 栈推出
             root = stack.pop();
             // 如果 当前节点 的右子节点为空  或者右子节点等于前驱节点
+            // 如果右子节点为空，或者右子节点等于前驱节点 说明没值或者刚刚遍历过
             if (root.right == null || root.right == prev) {
                 list.add(root.val);
                 // 前驱节点等于 当前节点
@@ -45,6 +46,8 @@ public class LeetCode {
                 root = null;
             } else {
                 // 如果当前节点右子节点不为空或者 当前节点的右子节点 等于前驱节点
+                // 将刚刚推出的节点又放回去
+                // 然后将当前节点指向右子节点
                 stack.push(root);
                 // 当前节点 等于 右子节点
                 root = root.right;
