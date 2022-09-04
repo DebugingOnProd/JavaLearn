@@ -17,6 +17,164 @@ import java.util.concurrent.atomic.AtomicLong;
 @Slf4j
 public class LeetCode {
 
+
+    public TreeNode insertIntoBST(TreeNode root, int val) {
+        if (root == null) {
+            return new TreeNode(val);
+        }
+        TreeNode cur = root;
+        while (cur != null) {
+            // 如果值小于当前节点的值,就说明值应该放在左子书中
+            if (val < cur.val) {
+                // 如果当前节点发左子节点为空就说明当前节点为叶子节点,改节点
+                if (cur.left == null) {
+                    cur.left = new TreeNode(val);
+                    break;
+                } else {
+                    cur = cur.left;
+                }
+                // 否则就存在与右子树中
+            } else {
+                if (cur.right == null) {
+                    cur.right = new TreeNode(val);
+                    break;
+                } else {
+                    cur = cur.right;
+                }
+            }
+        }
+        return root;
+
+    }
+
+    public TreeNode searchBST(TreeNode root, int val) {
+        if (root == null) {
+            return null;
+        }
+        Deque<TreeNode> stack = new LinkedList<>();
+        stack.push(root);
+        while (!stack.isEmpty()) {
+            TreeNode treeNode = stack.pop();
+            if (treeNode.val == val) {
+                return treeNode;
+            }
+            if (treeNode.left != null) {
+                stack.push(treeNode.left);
+            }
+            if (treeNode.right != null) {
+                stack.push(treeNode.right);
+            }
+        }
+        return root;
+    }
+
+
+    public boolean hasPathSum(TreeNode root, int targetSum) {
+        if (root == null) {
+            return false;
+        }
+        Queue<TreeNode> queue = new LinkedList<>();
+        Queue<Integer> valQueue = new LinkedList<>();
+        queue.offer(root);
+        valQueue.offer(root.val);
+        while (!queue.isEmpty()) {
+            TreeNode treeNode = queue.poll();
+            int treeValue = valQueue.poll();
+            if (treeNode.left == null && treeNode.right == null) {
+                if (treeValue == targetSum) {
+                    return true;
+                }
+                continue;
+            }
+
+            if (treeNode.left != null) {
+                queue.offer(treeNode.left);
+                valQueue.offer(treeValue + treeNode.left.val);
+            }
+            if (treeNode.right != null) {
+                queue.offer(treeNode.right);
+                valQueue.offer(treeValue + treeNode.right.val);
+            }
+        }
+        return false;
+    }
+
+    public TreeNode invertTree(TreeNode root) {
+        if (root == null) {
+            return null;
+        }
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        while (!queue.isEmpty()) {
+            TreeNode treeNode = queue.poll();
+            TreeNode left = treeNode.left;
+            treeNode.left = treeNode.right;
+            treeNode.right = left;
+            if (treeNode.right != null) {
+                queue.offer(treeNode.right);
+            }
+            if (treeNode.left != null) {
+                queue.offer(treeNode.left);
+            }
+        }
+        return root;
+    }
+
+
+    public boolean isSymmetric(TreeNode root) {
+        return check(root, root);
+    }
+
+    private boolean check(TreeNode root, TreeNode root1) {
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        queue.offer(root1);
+        while (!queue.isEmpty()) {
+            TreeNode t = queue.poll();
+            TreeNode t2 = queue.poll();
+            if (t == null && t2 == null) {
+                continue;
+            }
+            if ((t == null || t2 == null) || t.val != t2.val) {
+                return false;
+            }
+            queue.offer(t.right);
+            queue.offer(t2.left);
+
+            queue.offer(t.left);
+            queue.offer(t2.right);
+        }
+        return true;
+    }
+
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        if (root == null) {
+            return Collections.emptyList();
+        }
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        List<List<Integer>> list = new ArrayList<>();
+        int count = 0;
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            List<Integer> teamList = new ArrayList<>();
+            count++;
+            for (int i = 0; i < size; i++) {
+                TreeNode treeNode = queue.poll();
+                teamList.add(treeNode.val);
+                if (treeNode.left != null) {
+                    queue.offer(treeNode.left);
+                }
+                if (treeNode.right != null) {
+                    queue.offer(treeNode.right);
+                }
+            }
+            list.add(teamList);
+
+        }
+        return list;
+    }
+
     public List<Integer> postorderTraversal(TreeNode root) {
         if (root == null) {
             return Collections.emptyList();

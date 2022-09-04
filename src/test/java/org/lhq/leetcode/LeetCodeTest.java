@@ -23,7 +23,6 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.*;
 import java.util.function.BiFunction;
-import java.util.stream.Collectors;
 
 
 /**
@@ -399,7 +398,7 @@ public class LeetCodeTest {
 
     @Test
     @DisplayName("?")
-    void testRemoveElements(){
+    void testRemoveElements() {
         ListNode listNode = new ListNode(7, new ListNode(7, new ListNode(7, new ListNode(7, new ListNode(7, new ListNode(7, new ListNode(7)))))));
         ListNode cur = leetCode.removeElements(listNode, 7);
         while (cur != null) {
@@ -407,11 +406,12 @@ public class LeetCodeTest {
             cur = cur.next;
         }
     }
+
     @Test
     @DisplayName("有效的括号")
-    void testIsValid(){
+    void testIsValid() {
         boolean valid2 = leetCode.isValid2("()[]{}");
-        log.info("{}",valid2);
+        log.info("{}", valid2);
     }
 
 
