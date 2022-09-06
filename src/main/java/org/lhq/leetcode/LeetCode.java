@@ -7,6 +7,7 @@ import org.lhq.leetcode.struc.TreeNode;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.stream.Collectors;
 
 /**
  * @program: org.lhq.leetcode
@@ -16,6 +17,91 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 @Slf4j
 public class LeetCode {
+
+
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        if (root == null) {
+            return null;
+        }
+        List<TreeNode> pathP = getPath(root, p);
+        List<TreeNode> pathQ = getPath(root, q);
+        TreeNode result = null;
+        for (int i = 0; i < pathP.size() && i < pathQ.size(); ++i) {
+            if (pathP.get(i) == pathQ.get(i)) {
+                result = pathP.get(i);
+            } else {
+                break;
+            }
+        }
+        return result;
+    }
+
+    private List<TreeNode> getPath(TreeNode root, TreeNode p) {
+        List<TreeNode> list = new ArrayList<>();
+        TreeNode node = root;
+        while (node != p) {
+            list.add(node);
+            if (node.val < p.val) {
+                node = node.left;
+            }
+            if (node.val > p.val) {
+                node = node.right;
+            }
+        }
+        list.add(node);
+        return list;
+    }
+
+
+    public boolean findTarget(TreeNode root, int k) {
+        if (root == null) {
+            return false;
+        }
+        Set<Integer> set = new HashSet<>();
+        Queue<TreeNode> queue = new ArrayDeque<>();
+        queue.offer(root);
+        while (!queue.isEmpty()) {
+            TreeNode treeNode = queue.poll();
+            if (set.contains(k - treeNode.val)) {
+                return true;
+            }
+            set.add(treeNode.val);
+            if (treeNode.left != null) {
+                queue.offer(treeNode.left);
+            }
+            if (treeNode.right != null) {
+                queue.offer(treeNode.right);
+            }
+        }
+        return false;
+    }
+
+
+    public boolean isValidBST(TreeNode root) {
+        TreeNode cur = root;
+        Deque<TreeNode> stack = new LinkedList<>();
+        Integer curValue = null;
+
+        while (cur != null || !stack.isEmpty()) {
+            while (cur != null) {
+                stack.push(cur);
+                cur = cur.left;
+            }
+            if (!stack.isEmpty()) {
+                TreeNode pop = stack.pop();
+                if (curValue == null) {
+                    curValue = pop.val;
+                } else {
+                    if (curValue > pop.val) {
+                        return false;
+                    }
+                }
+                cur = pop.right;
+            }
+        }
+        return true;
+
+    }
 
 
     public TreeNode insertIntoBST(TreeNode root, int val) {
@@ -154,11 +240,9 @@ public class LeetCode {
         Queue<TreeNode> queue = new LinkedList<>();
         queue.offer(root);
         List<List<Integer>> list = new ArrayList<>();
-        int count = 0;
         while (!queue.isEmpty()) {
             int size = queue.size();
             List<Integer> teamList = new ArrayList<>();
-            count++;
             for (int i = 0; i < size; i++) {
                 TreeNode treeNode = queue.poll();
                 teamList.add(treeNode.val);

@@ -413,6 +413,11 @@ public class LeetCodeTest {
         boolean valid2 = leetCode.isValid2("()[]{}");
         log.info("{}", valid2);
     }
-
+    @Test
+    @DisplayName("验证二叉搜索树")
+    void testIsValidBST(){
+        boolean validBST = leetCode.isValidBST(new TreeNode(5, new TreeNode(4), new TreeNode(6, new TreeNode(3), new TreeNode(7))));
+        log.info("{}",validBST);
+    }
 
 }
