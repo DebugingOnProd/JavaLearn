@@ -1,13 +1,11 @@
 package org.lhq.leetcode;
 
-import io.vavr.collection.Tree;
 import lombok.extern.slf4j.Slf4j;
 import org.lhq.leetcode.struc.ListNode;
 import org.lhq.leetcode.struc.TreeNode;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
-import java.util.stream.Collectors;
 
 /**
  * @program: org.lhq.leetcode
@@ -17,6 +15,124 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 public class LeetCode {
+
+    public int maximumWealth(int[][] accounts) {
+        int sum = 0;
+        for (int[] account : accounts) {
+            sum = Math.max(sum, Arrays.stream(account).sum());
+        }
+        return sum;
+    }
+
+    public int sumOddLengthSubarrays(int[] arr) {
+        int sum = 0;
+        int n = arr.length;
+        for (int start = 0; start < n; start++) {
+            for (int length = 1; start + length <= n; length += 2) {
+                int end = start + length - 1;
+                for (int i = start; i <= end; i++) {
+                    sum += arr[i];
+                }
+            }
+        }
+        return sum;
+
+    }
+
+
+    public boolean areAlmostEqual(String s1, String s2) {
+
+        if (s1.length() < 3) {
+            if (!s1.equals(s2)) {
+                return false;
+            }
+        }
+        if (s1.equals(s2)) {
+            return true;
+        }
+        char[] s1chars = s1.toCharArray();
+        char[] s2chars = s2.toCharArray();
+        int count = 0;
+        int s1char = -1, s2char = -1;
+        Set<Character> set = new HashSet<>();
+        for (int i = 0; i < s1chars.length; i++) {
+            set.add(s1chars[i]);
+            if (s1chars[i] != s2chars[i]) {
+                s1char = s1chars[i];
+                s2char = s2chars[i];
+                if (s2char == -1) {
+                    s2char = i;
+                }
+                if (s1char == -1 && s2char != i) {
+                    s1char = i;
+                }
+                count++;
+            }
+        }
+        for (char c : s2chars) {
+            if (!set.contains(c)) {
+                return false;
+            }
+        }
+        if (count == 2 && s1.charAt(s1char) == s2.charAt(s2char) && s1.charAt(s2char) == s2.charAt(s1char)) {
+            return true;
+        }
+        return count == 0;
+    }
+
+    public int nearestValidPoint(int x, int y, int[][] points) {
+        int min = Integer.MAX_VALUE;
+        int index = -1;
+        for (int i = 0; i < points.length; i++) {
+            if (points[i][0] == x || points[i][1] == y) {
+                int absX = Math.abs(points[i][0] - x);
+                int absY = Math.abs(points[i][1] - y);
+                int des = absX + absY;
+                if (des < min) {
+                    min = des;
+                    index = i;
+                }
+            }
+        }
+        return index;
+    }
+
+    public int largestPerimeter(int[] nums) {
+        Arrays.sort(nums);
+        for (int i = nums.length - 1; i >= 2; --i) {
+            if (nums[i - 2] + nums[i - 1] > nums[i]) {
+                return nums[i] + nums[i - 1] + nums[i - 2];
+            }
+        }
+        return 0;
+    }
+
+
+    public double average(int[] salary) {
+        int sum = 0;
+        int min = Integer.MAX_VALUE;
+        int max = Integer.MIN_VALUE;
+        for (int i : salary) {
+            sum += i;
+            min = Math.min(min, i);
+            max = Math.max(max, i);
+        }
+        return (sum - (min + max)) / (double) (salary.length - 2);
+    }
+
+    public int countOdds(int low, int high) {
+        int cur = low;
+        int count = 0;
+        while (cur <= high) {
+            if (cur % 2 != 0) {
+                cur += 2;
+                count++;
+            } else {
+                cur++;
+            }
+        }
+        return count;
+    }
 
 
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
