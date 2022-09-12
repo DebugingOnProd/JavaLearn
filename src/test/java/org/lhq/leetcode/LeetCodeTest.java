@@ -419,5 +419,11 @@ public class LeetCodeTest {
         boolean validBST = leetCode.isValidBST(new TreeNode(5, new TreeNode(4), new TreeNode(6, new TreeNode(3), new TreeNode(7))));
         log.info("{}",validBST);
     }
+    @Test
+    @DisplayName("找不同")
+    void testFindTheDifference(){
+        char theDifference2 = leetCode.findTheDifference2("a", "aa");
+        log.info("{}",theDifference2);
+    }
 
 }

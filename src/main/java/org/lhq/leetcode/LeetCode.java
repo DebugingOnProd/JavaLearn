@@ -16,6 +16,69 @@ import java.util.concurrent.atomic.AtomicLong;
 @Slf4j
 public class LeetCode {
 
+
+
+    public char findTheDifference2(String s, String t) {
+        char[] chars = s.toCharArray();
+        Map<Character, Integer> charMap = new HashMap<>();
+        for (char c : chars) {
+            Integer count = charMap.getOrDefault(c, 0);
+            charMap.put(c, ++count);
+        }
+        for (char c : t.toCharArray()) {
+            Integer count = charMap.get(c);
+            if (count <= 0) {
+                charMap.remove(c);
+            }
+            charMap.put(c, --count);
+            if (!charMap.containsKey(c)) {
+                return c;
+            }
+        }
+        return ' ';
+    }
+
+
+    public String interpret(String command) {
+        Map<String, String> hashMap = new HashMap<>();
+        hashMap.put("G", "G");
+        hashMap.put("()", "o");
+        hashMap.put("(al)", "al");
+        for (Map.Entry<String, String> entry : hashMap.entrySet()) {
+            command = command.replace(entry.getKey(), entry.getValue());
+        }
+        return command;
+    }
+
+    public String mergeAlternately(String word1, String word2) {
+        int length = word1.length();
+        int length1 = word2.length();
+        int index = 0;
+        char[] chars = new char[length1 + length];
+        for (int i = 0; i < length1 || i < length; ++i) {
+            if (i < length) {
+                chars[index++] = word1.charAt(i);
+            }
+            if (i < length1) {
+                chars[index++] = word2.charAt(i);
+            }
+        }
+        return new String(chars);
+
+    }
+
+
+    public int diagonalSum(int[][] mat) {
+        int x = mat.length;
+        int sum = 0;
+        int mid = x / 2;
+        for (int i = 0; i < x; ++i) {
+            sum += mat[i][i] + mat[i][x - i - 1];
+        }
+        return sum - mat[mid][mid] * (mid & 2);
+
+    }
+
     public int maximumWealth(int[][] accounts) {
         int sum = 0;
         for (int[] account : accounts) {
