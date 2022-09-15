@@ -17,6 +17,28 @@ import java.util.concurrent.atomic.AtomicLong;
 public class LeetCode {
 
 
+    public int[] sortByBits(int[] arr) {
+        List<Integer> list = new ArrayList<>();
+        for (int i : arr) {
+            list.add(i);
+        }
+        list.sort(((o1, o2) -> {
+            int bitCountO1 = Integer.bitCount(o1);
+            int bitCountO2 = Integer.bitCount(o2);
+            if (bitCountO2 == bitCountO1) {
+                return o1 - o2;
+            } else {
+                return bitCountO1 - bitCountO2;
+            }
+        }));
+        int[] result = new int[list.size()];
+        for (int i = 0; i < list.size(); i++) {
+            result[i] = list.get(i);
+        }
+        return result;
+
+    }
+
 
     public char findTheDifference2(String s, String t) {
         char[] chars = s.toCharArray();
