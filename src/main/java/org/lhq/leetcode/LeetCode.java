@@ -15,6 +15,48 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 @Slf4j
 public class LeetCode {
+    public int sumOfLeftLeaves(TreeNode root) {
+        int sum = 0;
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        while (!queue.isEmpty()){
+            TreeNode treeNode = queue.poll();
+            if (treeNode.left!=null){
+                if (isLeaf(treeNode.left)){
+                    sum+=treeNode.left.val;
+                }else {
+                    queue.offer(treeNode.left);
+                }
+            }
+            if (treeNode.right!=null){
+                if (!isLeaf(treeNode.right)){
+                    queue.offer(treeNode.right);
+                }
+            }
+
+        }
+        return sum;
+    }
+
+    public boolean isLeaf(TreeNode treeNode){
+        return treeNode.right == null && treeNode.left == null;
+    }
+
+    public int getDecimalValue(ListNode head) {
+        List<Integer> list = new ArrayList<>();
+        while (head != null) {
+            list.add(head.val);
+            head = head.next;
+        }
+        int result = 0;
+        Collections.reverse(list);
+        for (int i = 0; i < list.size(); i++) {
+            int item = list.get(i);
+            double v = item * Math.pow(2, i + 1);
+            result += v;
+        }
+        return result;
+    }
 
 
     public int[] sortByBits(int[] arr) {

@@ -35,7 +35,7 @@ dependencies {
     implementation ("org.dom4j:dom4j:2.1.3")
     implementation ("xerces:xercesImpl:2.12.2")
     implementation ("io.netty:netty-all:4.1.77.Final")
-    implementation ("cn.hutool:hutool-all:5.8.2")
+    implementation ("cn.hutool:hutool-all:5.8.6")
     compileOnly ("org.projectlombok:lombok:1.18.24")
     testCompileOnly ("org.projectlombok:lombok:1.18.24")
     annotationProcessor ("org.projectlombok:lombok:1.18.24")
