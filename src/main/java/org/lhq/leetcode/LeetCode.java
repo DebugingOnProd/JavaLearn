@@ -1,7 +1,9 @@
+
 package org.lhq.leetcode;
 
 import lombok.extern.slf4j.Slf4j;
 import org.lhq.leetcode.struc.ListNode;
+import org.lhq.leetcode.struc.Node;
 import org.lhq.leetcode.struc.TreeNode;
 
 import java.util.*;
@@ -15,21 +17,75 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 @Slf4j
 public class LeetCode {
+
+    public int pivotIndex(int[] nums) {
+        int sum = Arrays.stream(nums).sum();
+        int leftSum = 0;
+        for (int i = 0; i < nums.length; i++) {
+            sum-=nums[i];
+            if (leftSum==sum){
+                return i;
+            }
+            leftSum+=nums[i];
+        }
+        return -1;
+    }
+    public List<Integer> preorder(Node root) {
+        if (root==null){
+            return Collections.emptyList();
+        }
+        List<Integer> list = new ArrayList<>();
+        ter(root,list);
+        return list;
+    }
+
+    private void ter(Node root,List<Integer> list){
+        if (root == null){
+            return;
+        }
+        list.add(root.val);
+        for (Node child : root.children) {
+            ter(child,list);
+        }
+    }
+
+
+    public boolean checkStraightLine(int[][] coordinates) {
+        int deltaX = coordinates[0][0];
+        int deltaY = coordinates[0][1];
+        int length = coordinates.length;
+        for (int i = 0; i < length; i++) {
+            coordinates[i][0] -= deltaX;
+            coordinates[i][1] -= deltaY;
+        }
+        int a = coordinates[1][1];
+        int b = coordinates[1][0];
+        for (int i = 2; i < length; i++) {
+            int x = coordinates[i][0];
+            int y = coordinates[i][1];
+            if (a * x != b * y) {
+                return false;
+            }
+        }
+        return true;
+
+    }
+
     public int sumOfLeftLeaves(TreeNode root) {
         int sum = 0;
         Queue<TreeNode> queue = new LinkedList<>();
         queue.offer(root);
-        while (!queue.isEmpty()){
+        while (!queue.isEmpty()) {
             TreeNode treeNode = queue.poll();
-            if (treeNode.left!=null){
-                if (isLeaf(treeNode.left)){
-                    sum+=treeNode.left.val;
-                }else {
+            if (treeNode.left != null) {
+                if (isLeaf(treeNode.left)) {
+                    sum += treeNode.left.val;
+                } else {
                     queue.offer(treeNode.left);
                 }
             }
-            if (treeNode.right!=null){
-                if (!isLeaf(treeNode.right)){
+            if (treeNode.right != null) {
+                if (!isLeaf(treeNode.right)) {
                     queue.offer(treeNode.right);
                 }
             }
@@ -38,7 +94,7 @@ public class LeetCode {
         return sum;
     }
 
-    public boolean isLeaf(TreeNode treeNode){
+    public boolean isLeaf(TreeNode treeNode) {
         return treeNode.right == null && treeNode.left == null;
     }
 
