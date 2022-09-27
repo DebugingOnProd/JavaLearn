@@ -425,5 +425,20 @@ public class LeetCodeTest {
         char theDifference2 = leetCode.findTheDifference2("a", "aa");
         log.info("{}",theDifference2);
     }
+    @Test
+    @DisplayName("查找二维数组")
+    void testSearchMatrix(){
+        int[][]  matrix = {
+                {1,4,7,11,15},
+                {2,5,8,12,19},
+                {3,6,9,16,22},
+                {10,13,14,17,24},
+                {18,21,23,26,30}
+        };
+        int [][] ma = {{-5}};
+        int [][] three = {{1,4},{2,5}};
+        //boolean b = leetCode.searchMatrix2(matrix, 20);
+        log.info("{}",leetCode.searchMatrix2(three,2));
+    }
 
 }

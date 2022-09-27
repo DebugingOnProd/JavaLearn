@@ -18,34 +18,231 @@ import java.util.concurrent.atomic.AtomicLong;
 @Slf4j
 public class LeetCode {
 
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        ListNode pre = new ListNode();
+        while (l1 != null || l2 != null) {
+            pre.next = new ListNode(l1.val + l2.val);
+            l1 = l1.next;
+            l2 = l2.next;
+            pre = pre.next;
+        }
+        return pre.next;
+    }
+
+
+    public ListNode detectCycle(ListNode head) {
+        Set<ListNode> set = new HashSet<>();
+        while (head != null) {
+            if (!set.add(head)) {
+                return head;
+            } else {
+                head = head.next;
+            }
+        }
+        return null;
+    }
+
+
+    public boolean searchMatrix2(int[][] matrix, int target) {
+        if (matrix == null || matrix.length == 0) return false;
+        int m = 0;
+        int n = matrix[0].length - 1;
+        while (m < matrix.length && n >= 0) {
+            if (matrix[m][n] == target) {
+                return true;
+            } else if (matrix[m][n] > target) {
+                n--;
+            } else {
+                m++;
+            }
+        }
+        return false;
+    }
+
+
+    public void rotate(int[][] matrix) {
+        int row = matrix.length;
+        int col = matrix[0].length;
+        for (int i = 0; i < (row) / 2; i++) {
+            int[] temp = matrix[i];
+            matrix[i] = matrix[row - 1 - i];
+            matrix[row - 1 - i] = temp;
+        }
+        for (int i = 0; i < row; i++) {
+            for (int j = i; j < col; j++) {
+                int temp = matrix[i][j];
+                matrix[i][j] = matrix[j][i];
+                matrix[j][i] = temp;
+            }
+        }
+    }
+
+    public List<Integer> getRow(int rowIndex) {
+        List<Integer> list = new ArrayList<>();
+        list.add(1);
+        for (int i = 0; i < rowIndex; i++) {
+            list.add(0);
+            for (int j = list.size() - 1; j > 0; j--) {
+                list.set(j, list.get(j) + list.get(j - 1));
+            }
+        }
+        return list;
+    }
+
+    public int[][] generateMatrix(int n) {
+        int[][] res = new int[n][n];
+        int p1 = 0;
+        int p2 = 0;
+        int cur = 2;
+        res[0][0] = 1;
+        while (cur <= n * n) {
+            while (p2 < n - 1 && res[p1][p2 + 1] == 0) {
+                res[p1][++p2] = cur;
+                cur++;
+            }
+            while (p1 < n - 1 && res[p1 + 1][p2] == 0) {
+                res[++p1][p2] = cur;
+                cur++;
+            }
+            while (p2 > 0 && res[p1][p2 - 1] == 0) {
+                res[p1][--p2] = cur;
+                cur++;
+            }
+            while (p1 > 0 && res[p1 - 1][p2] == 0) {
+                res[--p1][p2] = cur;
+                cur++;
+            }
+
+        }
+        return res;
+    }
+
+
+    public int[][] merge(int[][] intervals) {
+        Arrays.sort(intervals, Comparator.comparingInt(o -> o[0]));
+        List<int[]> result = new ArrayList<>();
+        for (int i = 0; i < intervals.length - 1; i++) {
+            int left = intervals[i][0];
+            int right = intervals[i][1];
+            if (result.isEmpty() || result.get(result.size() - 1)[1] < left) {
+                result.add(new int[]{left, right});
+            } else {
+                result.get(result.size() - 1)[1] = Math.max(result.get(result.size() - 1)[1], right);
+            }
+        }
+        return result.toArray(new int[result.size()][]);
+    }
+
+    public void sortColors(int[] nums) {
+        int n = nums.length;
+        int p = 0;
+        for (int i = 0; i < n; i++) {
+            if (nums[i] == 0) {
+                int temp = nums[i];
+                nums[i] = nums[p];
+                nums[p] = temp;
+                p++;
+            }
+        }
+        for (int i = p; i < n; i++) {
+            if (nums[i] == 1) {
+                int temp = nums[i];
+                nums[i] = nums[p];
+                nums[p] = temp;
+                p++;
+            }
+        }
+    }
+
+    public List<List<Integer>> threeSum(int[] nums) {
+        Arrays.sort(nums);
+        int right = nums.length - 1;
+        int left = 0;
+        List<List<Integer>> result = new ArrayList<>();
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] > 0) {
+                return result;
+            }
+            if (i > 0 && nums[i] == nums[i - 1]) {
+                continue;
+            }
+            while (right > left) {
+                int sum = nums[right] + nums[left] + nums[i];
+                if (sum > 0) {
+                    right--;
+                } else if (sum < 0) {
+                    left++;
+                } else {
+                    result.add(Arrays.asList(nums[i], nums[left], nums[right]));
+                    while (left < right && nums[left] == nums[left + 1]) {
+                        left++;
+                    }
+                    while (right > left && nums[right] == nums[right - 1]) {
+                        right--;
+                    }
+                }
+
+            }
+        }
+        return result;
+    }
+
+
+    public int singleNumber(int[] nums) {
+        int result = nums[0];
+        for (int i = 1; i < nums.length; i++) {
+            result = result ^ nums[i];
+        }
+        return result;
+    }
+
+
+    public int majorityElement2(int[] nums) {
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int num : nums) {
+            Integer count = map.getOrDefault(num, 0);
+            map.put(num, count + 1);
+        }
+        Map.Entry<Integer, Integer> max = null;
+        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+            if (max == null) {
+                max = entry;
+            } else if (entry.getValue() > max.getValue()) {
+                max = entry;
+            }
+        }
+        return max.getKey();
+    }
+
     public int pivotIndex(int[] nums) {
         int sum = Arrays.stream(nums).sum();
         int leftSum = 0;
         for (int i = 0; i < nums.length; i++) {
-            sum-=nums[i];
-            if (leftSum==sum){
+            sum -= nums[i];
+            if (leftSum == sum) {
                 return i;
             }
-            leftSum+=nums[i];
+            leftSum += nums[i];
         }
         return -1;
     }
+
     public List<Integer> preorder(Node root) {
-        if (root==null){
+        if (root == null) {
             return Collections.emptyList();
         }
         List<Integer> list = new ArrayList<>();
-        ter(root,list);
+        ter(root, list);
         return list;
     }
 
-    private void ter(Node root,List<Integer> list){
-        if (root == null){
+    private void ter(Node root, List<Integer> list) {
+        if (root == null) {
             return;
         }
         list.add(root.val);
         for (Node child : root.children) {
-            ter(child,list);
+            ter(child, list);
         }
     }
 
